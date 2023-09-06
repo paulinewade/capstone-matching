@@ -1,0 +1,4 @@
+[Service]
+WorkingDirectory=/home/ubuntu/capstone-matching-deploy
+ExecStart=bash start-server.sh
+ExecStop=bash stop-server.sh

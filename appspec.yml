@@ -1,0 +1,20 @@
+version: 0.0
+os: linux
+files:
+  - source: /
+    destination: /home/ubuntu/capstone-matching-deploy
+    file_exists_behavior: OVERWRITE
+permissions:
+  - object: /home/ubuntu/capstone-matching-deploy
+    pattern: "**"
+    owner: ubuntu
+    group: ubuntu
+    mode: 777
+hooks:
+  AfterInstall:
+    - location: start-script.sh
+      runas: ubuntu
+  ApplicationStop:
+    - location: stop-script.sh
+      timeout: 300
+      runas: ubuntu
