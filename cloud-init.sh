@@ -47,3 +47,9 @@ mkdir /home/ubuntu/capstone-matching-deploy
 # sudo vi /etc/systemd/system/capstonematching.service
 sudo cp /home/ubuntu/capstone-matching/capstonematching.service /etc/systemd/system/capstonematching.service
 sudo systemctl daemon-reload
+
+# AWS CLOUD9
+sudo apt install python3-pip
+sudo apt install python2
+# install from the aws console
+# this may be helpful: https://linux.how2shout.com/how-to-install-python-2-7-on-ubuntu-20-04-lts/

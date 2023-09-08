@@ -24,6 +24,10 @@
 2. walk through cloud-init.sh
 3. bash start-script.sh
 
+## Cloud Architecture
+![Alt text](.cloud/capstone-matching-cloud.png)
+
+
 ## Info
 * Ruby version
 3.2.2
@@ -45,5 +49,6 @@
 
 https://guides.rubyonrails.org/command_line.html
 
-
 we will redeploy to heroku after completion
+
+AWS Cloud9 is an optional IDE
