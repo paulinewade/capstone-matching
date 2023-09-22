@@ -53,3 +53,5 @@ sudo apt install python3-pip
 sudo apt install python2
 # install from the aws console
 # this may be helpful: https://linux.how2shout.com/how-to-install-python-2-7-on-ubuntu-20-04-lts/
+
+a
