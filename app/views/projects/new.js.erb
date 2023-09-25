@@ -1,0 +1,4 @@
+<% if @product.errors.any? %>
+// JavaScript code to show a pop-up message
+alert("<%= j @product.errors.full_messages.join(', ').html_safe %>");
+<% end %>

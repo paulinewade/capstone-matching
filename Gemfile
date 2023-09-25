@@ -69,4 +69,7 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
   gem "webdrivers"
+  gem "cucumber-rails"
+  gem "rspec-rails"
+  gem "database_cleaner"
 end

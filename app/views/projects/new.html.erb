@@ -1,0 +1,71 @@
+<html>
+<head>
+  <title>Professor Registration</title>
+  <style>
+      /* Light Mode Styles */
+  </style>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+</head>
+<body>
+<% if @project.errors.any? %>
+  <p style="color: green"><%= @project.errors.full_messages.join(', ').html_safe %></p>
+<% end %>
+
+<div class="d-flex justify-content-between align-items-center">
+  <button href="#" class="btn btn-danger custom-maroon-button ml-3" id="back-button">Back to Login</button>
+  <button class="btn btn-danger custom-maroon-button" id="dark-mode-toggle">Toggle Dark Mode</button>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
+      <h1 class="text-center mb-4">Project Registration</h1>
+
+      <%= form_with(model: @project, url: "/addProjects", local: true) do |form| %>
+        <div class="form-group mb-3">
+          <%= form.label :Name %><span class="text-danger">*</span>
+          <%= form.text_field :Name, placeholder: 'Enter name of the project', :class => "form-control", :required => true%>
+        </div>
+        <div class="form-group mb-3">
+          <%= form.label :Semester %><span class="text-danger">*</span>
+          <%= form.text_field :Semester, placeholder: 'Enter the semester. (Spring 2024...)', :class => "form-control", :required => true%>
+        </div>
+        <div class="form-group mb-3">
+          <%= form.label :Sponsor %><span class="text-danger">*</span>
+          <%= form.text_field :Sponsor, placeholder: 'Enter Name of the sponsor', :class => "form-control", :required => true%>
+        </div>
+
+        <div class="form-group mb-3">
+          <%= form.label :Description %><span class="text-danger">*</span>
+          <%= form.text_area :Description, placeholder: 'Give a brief description about the project', :class => "form-control", :required => true%>
+        </div>
+
+        <div class="form-group mb-3">
+          <%= form.label :Link %>
+          <%= form.text_field :Link , placeholder: 'Enter additional links' , :class => "form-control"%>
+        </div>
+
+        <div class="text-center mt-4">
+          <%= form.submit 'Create Project' %>
+        </div>
+      <% end %>
+
+    </div>
+  </div>
+</div>
+
+<script>
+    // JavaScript to toggle dark mode
+    const darkModeToggle = document.getElementById('dark-mode-toggle');
+    const htmlElement = document.documentElement;
+
+    darkModeToggle.addEventListener('click', () => {
+        htmlElement.classList.toggle('dark-mode');
+    });
+
+
+</script>
+</body>
+</html>
+
+
