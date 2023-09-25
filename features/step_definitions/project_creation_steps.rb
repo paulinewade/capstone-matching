@@ -1,5 +1,3 @@
-# features/step_definitions/project_creation_steps.rb
-
 Given("I am on the new project page") do
   visit addProjects_path
 end

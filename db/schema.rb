@@ -10,7 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_25_015457) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_28_193038) do
+  create_table "professors", force: :cascade do |t|
+    t.string "email"
+    t.string "semester", default: "{}"
+    t.string "section", default: "{}"
+    t.string "first_name"
+    t.string "last_name"
+    t.boolean "admin_approved", default: false
+    t.boolean "admin", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "projects", force: :cascade do |t|
     t.string "Semester"
     t.string "Name"
