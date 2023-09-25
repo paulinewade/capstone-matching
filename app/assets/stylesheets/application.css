@@ -13,6 +13,7 @@
  *= require_tree .
  *= require_self
  */
+
 body {
     background-color: #fff;
     color: #333;
@@ -47,3 +48,4 @@ html.dark-mode .btn.btn-danger.custom-maroon-button {
 html.dark-mode a, html.dark-mode label {
     color: #bbb; /* Lighter color for links and labels in dark mode */
 }
+
