@@ -49,3 +49,46 @@ html.dark-mode a, html.dark-mode label {
     color: #bbb; /* Lighter color for links and labels in dark mode */
 }
 
+<<<<<<< HEAD
+=======
+body {
+    background-color: #f8f9fa;
+    font-family: Arial, sans-serif;
+}
+
+.header {
+    background-color: #500000;
+    color: #ffffff;
+    padding: 30px 0;
+    text-align: center;
+}
+
+.container {
+    margin-top: 30px;
+}
+
+.jumbotron {
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+}
+
+.btn-primary {
+    background-color: #500000;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #300000;
+}
+
+.custom-button {
+    color: white;
+}
+
+.custom-button a {
+    color: inherit;
+    text-decoration: none;
+}
+>>>>>>> 6f75294 (Front-end modifications added)

@@ -69,10 +69,19 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
   gem "webdrivers"
-  gem "cucumber-rails"
+  gem "cucumber-rails", require: false
   gem "rspec-rails"
   gem "database_cleaner"
   gem "rails-controller-testing"
   gem 'factory_bot_rails'
   gem "rails-controller-testing"
 end
+
+# For Authentication Purposes
+gem 'devise'
+gem 'omniauth'
+gem 'omniauth-google-oauth2'
+gem "omniauth-rails_csrf_protection", "~> 1.0"
+
+# Environment Files
+gem 'dotenv-rails', groups: [:development, :test]

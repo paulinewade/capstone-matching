@@ -5,6 +5,14 @@
 # files.
 
 require 'cucumber/rails'
+require 'capybara/cucumber'
+require 'selenium-webdriver'
+
+Capybara.register_driver :selenium_chrome do |app|
+  Capybara::Selenium::Driver.new(app, browser: :chrome)
+end
+
+Capybara.default_driver = :selenium_chrome
 
 # frozen_string_literal: true
 
@@ -60,4 +68,3 @@ end
 # The :transaction strategy is faster, but might give you threading problems.
 # See https://github.com/cucumber/cucumber-rails/blob/master/features/choose_javascript_database_strategy.feature
 Cucumber::Rails::Database.javascript_strategy = :truncation
-
