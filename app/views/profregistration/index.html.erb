@@ -1,56 +1,157 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <title>Professor Registration</title>
-  <%= javascript_include_tag 'dark_mode' %>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professor Registration - Capstone Matching System</title>
+    
+    <!-- Include Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    
+    <!-- Custom CSS -->
+    <style>
+        /* Common Styles */
+        body {
+            font-family: Arial, sans-serif;
+        }
+        
+        /* Light Mode Styles */
+        body.light-mode {
+            background-color: #f8f9fa; /* Light gray background */
+            color: #333;
+        }
+        body.light-mode .form-control {
+            background-color: #f8f9fa; /* Light gray for input fields */
+            color: #333;
+        }
+        body.light-mode .btn.btn-danger.custom-maroon-button {
+            background-color: maroon;
+            border-color: maroon;
+            color: #fff;
+        }
+        body.light-mode a, body.light-mode label {
+            color: maroon;
+        }
+        
+        /* Dark Mode Styles */
+        body.dark-mode {
+            background-color: #333;
+            color: #fff;
+        }
+        body.dark-mode .form-control {
+            background-color: #444;
+            color: #fff;
+        }
+        body.dark-mode .btn.btn-danger.custom-maroon-button {
+            background-color: maroon;
+            border-color: maroon;
+            color: #fff;
+        }
+        body.dark-mode a, body.dark-mode label {
+            color: #bbb; /* Lighter color for links and labels in dark mode */
+        }
+        
+        /* Header Styles */
+        .header {
+            background-color: #500000; /* Maroon header background */
+            color: #ffffff; /* White text */
+            padding: 30px 0;
+            text-align: center;
+        }
+        
+        /* Improved Form Styles */
+        .registration-form {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        }
+        .registration-form h2 {
+            text-align: center;
+            color: maroon;
+        }
+        .registration-form .form-group {
+            margin-bottom: 20px;
+        }
+        .registration-form label {
+            font-weight: bold;
+        }
+        .registration-form .btn-custom-maroon {
+            background-color: maroon;
+            border-color: maroon;
+            color: #fff;
+            padding: 10px 20px;
+            font-size: 18px;
+            border-radius: 5px;
+        }
+        .registration-form .btn-custom-maroon:hover {
+            background-color: #300000;
+        }
+    </style>
 </head>
-<body>
-  <div class="d-flex justify-content-between align-items-center">
-    <button href="#" class="btn btn-danger custom-maroon-button ml-3" id="back-button">Back to Login</button>
-    <button class="btn btn-danger custom-maroon-button" id="dark-mode-toggle">Toggle Dark Mode</button>
-  </div>
-  <div class="container">
-    <div class="row">
-      <div class="col-md-8 offset-md-2">
-        <h1 class="text-center mb-4">Professor Registration</h1>
-        <!-- Registration Form -->
-        <form action="/profregistration" method="post">
-        <div class="form-group mb-3">
-            <label for="email">TAMU Email Address<span class="text-danger">*</span></label>
-            <input type="email" class="form-control" id="email" name="email" placeholder="Enter your TAMU email address" required>
-          </div>
-          <div class="form-group mb-3">
-            <label for="first-name">First Name<span class="text-danger">*</span></label>
-            <input type="text" class="form-control" id="first-name" name="first_name" placeholder="Enter your first name" required>
-          </div>
-          <div class="form-group mb-3">
-            <label for="last-name">Last Name<span class="text-danger">*</span></label>
-            <input type="text" class="form-control" id="last-name" name="last_name" placeholder="Enter your last name" required>
-          </div>
-          <div class="text-center mt-4">
-            <button type="submit" class="btn btn-danger custom-maroon-button">Register</button>
-          </div>          
-        </form>
-        <hr>
-      </div>
+<body class="light-mode">
+    
+    <!-- Dark Mode Toggle Button and Back Button -->
+    <div class="container mt-3">
+        <div class="d-flex justify-content-between align-items-center">
+            <%= link_to "Back to Main Page", root_path, class: "btn btn-danger custom-maroon-button ml-3", id: "back-button" %>
+            <button class="btn btn-danger custom-maroon-button" id="dark-mode-toggle">Toggle Dark Mode</button>
+        </div>
     </div>
-  </div>
-</div>
-<!-- Showing Alerts after reigster is pressed -->
-<% if flash[:success].present? %>
-    <div class="alert alert-success alert-dismissible fade show m-4" role="alert">
-      <%= flash[:success] %>
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-      </button>
+    
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 mt-4">
+                <div class="registration-form">
+                    <h2>Professor Registration</h2>
+                    <!-- Registration Form -->
+                    <form>
+                        <div class="form-group">
+                            <label for="email">TAMU Email Address</label>
+                            <input type="email" class="form-control" id="email" placeholder="Enter your TAMU email address">
+                        </div>
+                        <div class="form-group">
+                            <label for="first-name">First Name</label>
+                            <input type="text" class="form-control" id="first-name" placeholder="Enter your first name">
+                        </div>
+                        <div class="form-group">
+                            <label for="last-name">Last Name</label>
+                            <input type="text" class="form-control" id="last-name" placeholder="Enter your last name">
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-custom-maroon">Register</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-  <% end %>
-
-  <% if flash[:error].present? %>
-    <div class="alert alert-danger alert-dismissible fade show m-1" role="alert">
-      <%= flash[:error] %>
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-  <% end %>
+    
+    <!-- Include Bootstrap 5 JS (with Popper.js) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    
+    <!-- JavaScript for Dark Mode Toggle -->
+    <script>
+        const darkModeToggle = document.getElementById('dark-mode-toggle');
+        const bodyElement = document.body;
+        
+        darkModeToggle.addEventListener('click', () => {
+            bodyElement.classList.toggle('dark-mode');
+            if (bodyElement.classList.contains('dark-mode')) {
+                // Switched to dark mode
+                localStorage.setItem('dark-mode', 'true');
+            } else {
+                // Switched to light mode
+                localStorage.setItem('dark-mode', 'false');
+            }
+        });
+        
+        // Check for dark mode preference in local storage
+        const isDarkMode = localStorage.getItem('dark-mode') === 'true';
+        if (isDarkMode) {
+            bodyElement.classList.add('dark-mode');
+        }
+    </script>
 </body>
 </html>
-
-
