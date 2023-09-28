@@ -33,7 +33,7 @@ a, label {
 
 /* Dark Mode Styles */
 html.dark-mode body {
-    background-color: #333;
+    background-color: #202124;
     color: #fff;
 }
 html.dark-mode .form-control {

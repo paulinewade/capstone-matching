@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   get "addProjects", to: "projects#new"
   post "addProjects", to: "projects#create"
   get "projects", to:"projects#index"
+  get "StudentForm", to:"student_form#index"
   # Defines the root path route ("/")
   # root "articles#index"
 end
