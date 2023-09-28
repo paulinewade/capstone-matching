@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>CapstoneMatching</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+	<head>
+		<title>CapstoneMatching</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+		<%= csrf_meta_tags %>
+		<%= csp_meta_tag %>
 
     <!-- jquery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -18,7 +18,16 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
-    <%= yield %>
-  </body>
+	<body>
+		<%= yield %>
+		<script>
+			// JavaScript to toggle dark mode
+			const darkModeToggle = document.getElementById('dark-mode-toggle');
+			const htmlElement = document.documentElement;
+
+			darkModeToggle.addEventListener('click', () => {
+				htmlElement.classList.toggle('dark-mode');
+			});
+		</script> 
+	</body>
 </html>
