@@ -8,13 +8,8 @@
 </head>
 <body>
 <% if @project.errors.any? %>
-  <div class="alert alert-danger text-center">
-    <% @project.errors.full_messages.each do |message| %>
-      <p><%= message %></p>
-    <% end %>
-  </div>
+  <p style="color: green"><%= @project.errors.full_messages.join(', ').html_safe %></p>
 <% end %>
-
 
 <div class="d-flex justify-content-between align-items-center">
   <button href="#" class="btn btn-danger custom-maroon-button ml-3" id="back-button">Back to Login</button>
@@ -51,7 +46,7 @@
         </div>
 
         <div class="text-center mt-4">
-          <%= form.submit 'Create Project', :class => "btn btn-danger custom-maroon-button" %>
+          <%= form.submit 'Create Project' %>
         </div>
       <% end %>
 
@@ -67,6 +62,8 @@
     darkModeToggle.addEventListener('click', () => {
         htmlElement.classList.toggle('dark-mode');
     });
+
+
 </script>
 </body>
 </html>
