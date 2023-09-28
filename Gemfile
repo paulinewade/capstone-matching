@@ -72,6 +72,7 @@ group :test do
   gem "cucumber-rails"
   gem "rspec-rails"
   gem "database_cleaner"
+  gem "rails-controller-testing"
   gem 'factory_bot_rails'
   gem "rails-controller-testing"
 end
