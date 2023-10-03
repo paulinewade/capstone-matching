@@ -14,7 +14,8 @@ Rails.application.routes.draw do
   post "addProjects", to: "projects#create"
   get "projects", to:"projects#index"
   get "/profLanding", to: "prof_landing#index"
-  get "StudentForm", to:"student_form#index"
+  get "StudentForm", to:"studentform#index"
+  post "StudentForm", to: "studentform#create"
   # Defines the root path route ("/")
   # root "articles#index"
 end
