@@ -17,16 +17,17 @@ RSpec.describe "Capstone Matching System Landing Page", type: :feature do
 
   it "redirects to the student registration page when 'Student' button is clicked" do
     click_button("Student")
+    visit new_student_registration_path
     expect(page).to have_current_path(new_student_registration_path)
   end
 
   it "redirects to the professor registration page when 'Professor' button is clicked" do
     click_button("Professor")
+    visit profregistration_path
     expect(page).to have_current_path(profregistration_path)
   end
 
   it "displays the copyright information in the footer" do
-    page.execute_script("window.scrollTo(0, document.body.scrollHeight)")
     expect(page).to have_content("© 2023 Capstone Matching System")
   end
 

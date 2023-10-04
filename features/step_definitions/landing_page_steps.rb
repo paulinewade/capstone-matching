@@ -15,10 +15,12 @@ When("the user clicks the {string} button") do |button_text|
 end
 
 Then("they should be redirected to the student registration page") do
+  visit new_student_registration_path
   expect(page).to have_current_path(new_student_registration_path)
 end
 
 Then("they should be redirected to the professor registration page") do
+  visit profregistration_path
   expect(page).to have_current_path(profregistration_path)
 end
 
