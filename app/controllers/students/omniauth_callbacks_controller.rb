@@ -29,15 +29,18 @@ class Students::OmniauthCallbacksController < Devise::OmniauthCallbacksControlle
   # end
 
   def google_oauth2
-    student = Student.from_omniauth(auth)
-
-    if student.present?
-      sign_out_all_scopes
-      flash[:success] = t 'devise.omniauth_callbacks.success', kind: 'Google'
-      sign_in_and_redirect student, event: :authentication
+    if auth.is_a?(OmniAuth::AuthHash)
+      student = Student.from_omniauth(auth)
+      if student.present?
+        sign_out_all_scopes
+        flash[:success] = t 'devise.omniauth_callbacks.success', kind: 'Google'
+        sign_in_and_redirect student, event: :authentication
+      # else
+      #   flash[:alert] = t 'devise.omniauth_callbacks.failure', kind: 'Google', reason: "#{auth.info.email} is not authorized."
+      #   redirect_to new_student_session_path
+      end
     else
-      flash[:alert] =
-        t 'devise.omniauth_callbacks.failure', kind: 'Google', reason: "#{auth.info.email} is not authorized."
+      flash[:alert] = t 'devise.omniauth_callbacks.failure', kind: 'Google', reason: 'Invalid credentials received.'
       redirect_to new_student_session_path
     end
   end
@@ -49,7 +52,7 @@ class Students::OmniauthCallbacksController < Devise::OmniauthCallbacksControlle
   end
 
   def after_sign_in_path_for(resource_or_scope)
-    stored_location_for(resource_or_scope) || root_path
+    stored_location_for(resource_or_scope) || "/StudentForm"
   end
 
   private
