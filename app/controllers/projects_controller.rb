@@ -1,5 +1,13 @@
 class ProjectsController < ApplicationController
   def index
+    @semesters = Project.pluck(:Semester).uniq
+    @selected_semester = params[:semester]
+
+    @projects = if @selected_semester.present?
+      Project.where(Semester: @selected_semester)
+    else
+      Project.all
+    end
   end
 
   def new
@@ -10,7 +18,8 @@ class ProjectsController < ApplicationController
     @project = Project.new(project_params)
     respond_to do |format|
       if @project.save
-        format.html { redirect_to "/projects", notice: "Project was successfully created." }
+        flash[:notice] = "Project was successfully created"
+        format.html { redirect_to "/projects", notice: "Project was successfully created" }
       else
         format.html { render :new, status: :unprocessable_entity}
         format.json { render json: @product.errors, status: :unprocessable_entity }

@@ -1,0 +1,13 @@
+<!-- app/views/shared/_notification.html.erb -->
+<% if flash[:notice].present?%>
+<div id="notification" class="alert alert-success fixed-top w-50 mx-auto" >
+  <%= flash[:notice] %>
+</div>
+
+<script>
+    //Automatically hide the notification after 3 seconds
+    setTimeout(function() {
+        $("#notification").fadeOut("slow");
+    }, 2000);
+</script>
+<% end %>
