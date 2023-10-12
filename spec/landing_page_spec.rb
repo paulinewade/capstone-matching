@@ -30,5 +30,4 @@ RSpec.describe "Capstone Matching System Landing Page", type: :feature do
   it "displays the copyright information in the footer" do
     expect(page).to have_content("© 2023 Capstone Matching System")
   end
-
 end
