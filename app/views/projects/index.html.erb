@@ -1,1 +1,52 @@
-<p style="color: green"><%= notice %></p>
+<body>
+<div class="container">
+  <%= render 'shared/notification' %>
+
+  <!-- ... your page content ... -->
+</div>
+<%# app/views/projects/index.html.erb %>
+<div class="container">
+  <h1 class="text-center my-4">Texas A&M University Projects</h1>
+
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">Filter by Semester</div>
+        <div class="card-body">
+          <%= form_tag(projects_path, method: :get, class: 'form-inline') do %>
+            <div class="form-group mb-2 mr-2">
+              <%= select_tag :semester, options_for_select(@semesters, @selected_semester), include_blank: "All Semesters", class: 'form-control', id: 'Semester' %>
+            </div>
+            <%= submit_tag "Filter", class: 'btn btn-primary mb-2' %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row justify-content-center mt-4">
+    <div class="col-md-8">
+      <% @projects.each do |project| %>
+        <div class="card mb-4">
+          <div class="card-header">
+            <h5 class="card-title"><%= project.Name %></h5>
+          </div>
+          <div id="description<%= project.id %>" >
+            <div class="card-body">
+              <h5 class="card-title"><%= project.Sponsor %></h5>
+              <p class="card-text"><%= project.Description %></p>
+              <% if project.Link.present? %>
+              <a href="<%= project.Link %>" class="btn btn-primary">Link</a>
+              <%end %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+
+
+
+</body>
