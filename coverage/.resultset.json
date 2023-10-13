@@ -1,7 +1,7 @@
 {
   "Cucumber Features": {
     "coverage": {
-      "/Users/aakashdeepsil/Documents/university/capstone-matching/app/models/student.rb": {
+      "/Users/aakashdeepsil/Documents/university/capstone-matching/app/models/user.rb": {
         "lines": [
           1,
           null,
@@ -20,7 +20,15 @@
           null,
           null,
           null,
+          0,
           null,
+          null,
+          null,
+          null,
+          null,
+          0,
+          null,
+          0,
           null,
           null,
           null,
@@ -63,7 +71,7 @@
           null
         ]
       },
-      "/Users/aakashdeepsil/Documents/university/capstone-matching/app/controllers/students/registrations_controller.rb": {
+      "/Users/aakashdeepsil/Documents/university/capstone-matching/app/controllers/users/sessions_controller.rb": {
         "lines": [
           null,
           null,
@@ -92,39 +100,12 @@
           null,
           null,
           null,
+          1,
+          0,
           null,
           null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
+          1,
+          0,
           null,
           null
         ]
@@ -224,7 +205,7 @@
           null
         ]
       },
-      "/Users/aakashdeepsil/Documents/university/capstone-matching/app/controllers/students/omniauth_callbacks_controller.rb": {
+      "/Users/aakashdeepsil/Documents/university/capstone-matching/app/controllers/users/omniauth_callbacks_controller.rb": {
         "lines": [
           null,
           null,
@@ -326,45 +307,6 @@
           null
         ]
       },
-      "/Users/aakashdeepsil/Documents/university/capstone-matching/app/controllers/students/sessions_controller.rb": {
-        "lines": [
-          null,
-          null,
-          1,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          1,
-          0,
-          null,
-          null,
-          1,
-          0,
-          null,
-          null
-        ]
-      },
       "/Users/aakashdeepsil/Documents/university/capstone-matching/app/channels/application_cable/channel.rb": {
         "lines": [
           0,
@@ -385,7 +327,7 @@
         "branches": {
         }
       },
-      "/Users/aakashdeepsil/Documents/university/capstone-matching/app/controllers/students/confirmations_controller.rb": {
+      "/Users/aakashdeepsil/Documents/university/capstone-matching/app/controllers/users/confirmations_controller.rb": {
         "lines": [
           null,
           null,
@@ -421,7 +363,7 @@
         "branches": {
         }
       },
-      "/Users/aakashdeepsil/Documents/university/capstone-matching/app/controllers/students/passwords_controller.rb": {
+      "/Users/aakashdeepsil/Documents/university/capstone-matching/app/controllers/users/passwords_controller.rb": {
         "lines": [
           null,
           null,
@@ -461,7 +403,75 @@
         "branches": {
         }
       },
-      "/Users/aakashdeepsil/Documents/university/capstone-matching/app/controllers/students/unlocks_controller.rb": {
+      "/Users/aakashdeepsil/Documents/university/capstone-matching/app/controllers/users/registrations_controller.rb": {
+        "lines": [
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "branches": {
+        }
+      },
+      "/Users/aakashdeepsil/Documents/university/capstone-matching/app/controllers/users/unlocks_controller.rb": {
         "lines": [
           null,
           null,
@@ -534,11 +544,11 @@
         }
       }
     },
-    "timestamp": 1697122513
+    "timestamp": 1697165335
   },
   "RSpec": {
     "coverage": {
-      "/Users/aakashdeepsil/Documents/university/capstone-matching/app/models/student.rb": {
+      "/Users/aakashdeepsil/Documents/university/capstone-matching/app/models/user.rb": {
         "lines": [
           1,
           null,
@@ -557,7 +567,15 @@
           null,
           null,
           null,
+          1,
           null,
+          null,
+          null,
+          null,
+          null,
+          1,
+          null,
+          1,
           null,
           null,
           null,
@@ -652,7 +670,7 @@
           null
         ]
       },
-      "/Users/aakashdeepsil/Documents/university/capstone-matching/app/controllers/students/omniauth_callbacks_controller.rb": {
+      "/Users/aakashdeepsil/Documents/university/capstone-matching/app/controllers/users/omniauth_callbacks_controller.rb": {
         "lines": [
           null,
           null,
@@ -719,7 +737,7 @@
           null
         ]
       },
-      "/Users/aakashdeepsil/Documents/university/capstone-matching/app/controllers/students/sessions_controller.rb": {
+      "/Users/aakashdeepsil/Documents/university/capstone-matching/app/controllers/users/sessions_controller.rb": {
         "lines": [
           null,
           null,
@@ -785,80 +803,6 @@
           null
         ]
       },
-      "/Users/aakashdeepsil/Documents/university/capstone-matching/app/controllers/home_controller.rb": {
-        "lines": [
-          1,
-          1,
-          null,
-          null
-        ]
-      },
-      "/Users/aakashdeepsil/Documents/university/capstone-matching/app/controllers/students/registrations_controller.rb": {
-        "lines": [
-          null,
-          null,
-          1,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null
-        ]
-      },
       "/Users/aakashdeepsil/Documents/university/capstone-matching/app/channels/application_cable/channel.rb": {
         "lines": [
           0,
@@ -870,6 +814,16 @@
         }
       },
       "/Users/aakashdeepsil/Documents/university/capstone-matching/app/channels/application_cable/connection.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/Users/aakashdeepsil/Documents/university/capstone-matching/app/controllers/home_controller.rb": {
         "lines": [
           0,
           0,
@@ -926,7 +880,7 @@
         "branches": {
         }
       },
-      "/Users/aakashdeepsil/Documents/university/capstone-matching/app/controllers/students/confirmations_controller.rb": {
+      "/Users/aakashdeepsil/Documents/university/capstone-matching/app/controllers/users/confirmations_controller.rb": {
         "lines": [
           null,
           null,
@@ -962,7 +916,7 @@
         "branches": {
         }
       },
-      "/Users/aakashdeepsil/Documents/university/capstone-matching/app/controllers/students/passwords_controller.rb": {
+      "/Users/aakashdeepsil/Documents/university/capstone-matching/app/controllers/users/passwords_controller.rb": {
         "lines": [
           null,
           null,
@@ -1002,7 +956,75 @@
         "branches": {
         }
       },
-      "/Users/aakashdeepsil/Documents/university/capstone-matching/app/controllers/students/unlocks_controller.rb": {
+      "/Users/aakashdeepsil/Documents/university/capstone-matching/app/controllers/users/registrations_controller.rb": {
+        "lines": [
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "branches": {
+        }
+      },
+      "/Users/aakashdeepsil/Documents/university/capstone-matching/app/controllers/users/unlocks_controller.rb": {
         "lines": [
           null,
           null,
@@ -1075,6 +1097,6 @@
         }
       }
     },
-    "timestamp": 1697122507
+    "timestamp": 1697165330
   }
 }
