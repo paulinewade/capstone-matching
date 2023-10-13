@@ -24,3 +24,21 @@ Feature: Student Form
     And I fill in "First Name" with "Invalid"
     And I fill in "Last Name" with "User"
 
+  Scenario: Successful Registration
+    Given I am on the student registration page
+    When I fill in "Email" with "john.doe@tamu.edu"
+    And I fill in "first_name" with "John"
+    And I fill in "last_name" with "Doe"
+    And I fill in "UIN" with "123456789"
+    And I press "Submit"
+    Then I should see "Registration Successful!"
+
+  Scenario: Registration Failure
+    Given I am on the student registration page
+    When I fill in "Email" with "john.doe@gmail.com"
+    And I fill in "first_name" with "John"
+    And I fill in "last_name" with "Doe"
+    And I fill in "UIN" with "123456789"
+    And I press "Submit"
+    Then I should see "Not a valid tamu.edu email address."
+
