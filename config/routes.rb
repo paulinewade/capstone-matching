@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   get "/profLanding", to: "prof_landing#index"
   get "StudentForm", to:"studentform#index"
   post "StudentForm", to: "studentform#create"
+  get "adminlanding", to: "adminlanding#index"
   # Defines the root path route ("/")
   # root "articles#index"
   get '/devtest', to: 'dev_test#index'
