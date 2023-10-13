@@ -15,7 +15,7 @@ RSpec.describe ProjectsController, type: :controller do
         }.to change(Project, :count).by(1)
 
         expect(response).to redirect_to('/projects')
-        expect(flash[:notice]).to eq('Project was successfully created.')
+        expect(flash[:notice]).to eq('Project was successfully created')
       end
     end
 
