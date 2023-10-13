@@ -18,4 +18,8 @@ Rails.application.routes.draw do
   post "StudentForm", to: "studentform#create"
   # Defines the root path route ("/")
   # root "articles#index"
+  get '/devtest', to: 'dev_test#index'
+  post '/devtest/upload_resume', to: 'dev_test#upload_resume'
+
+
 end
