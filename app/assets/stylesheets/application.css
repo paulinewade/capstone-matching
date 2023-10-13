@@ -49,6 +49,11 @@ html.dark-mode a, html.dark-mode label {
     color: #bbb; /* Lighter color for links and labels in dark mode */
 }
 
+html.dark-mode table {
+    color: #fff; /* Set text color for table content in dark mode */
+}
+
+
 <<<<<<< HEAD
 =======
 body {
