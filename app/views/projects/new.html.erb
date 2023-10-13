@@ -1,19 +1,15 @@
 <html>
 <head>
   <title>Professor Registration</title>
+  <div class="container">
+    <%= render 'shared/notification' %>
+  </div>
   <style>
       /* Light Mode Styles */
   </style>
   <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
 </head>
 <body>
-<% if @project.errors.any? %>
-  <div class="alert alert-danger text-center">
-    <% @project.errors.full_messages.each do |message| %>
-      <p><%= message %></p>
-    <% end %>
-  </div>
-<% end %>
 
 
 <div class="d-flex justify-content-between align-items-center">
@@ -31,10 +27,11 @@
           <%= form.label :Name %><span class="text-danger">*</span>
           <%= form.text_field :Name, placeholder: 'Enter name of the project', :class => "form-control", :required => true%>
         </div>
-        <div class="form-group mb-3">
+        <div class="form-group mb-3 mr-2">
           <%= form.label :Semester %><span class="text-danger">*</span>
-          <%= form.text_field :Semester, placeholder: 'Enter the semester. (Spring 2024...)', :class => "form-control", :required => true%>
+          <%= form.select :Semester, options_for_select(@semesters), prompt: 'Select a Semester', :class => "form-control", required: true %>
         </div>
+
         <div class="form-group mb-3">
           <%= form.label :Sponsor %><span class="text-danger">*</span>
           <%= form.text_field :Sponsor, placeholder: 'Enter Name of the sponsor', :class => "form-control", :required => true%>
