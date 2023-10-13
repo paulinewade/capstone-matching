@@ -48,7 +48,7 @@
           </div>
           <div class="text-center mt-4">
             <button type="submit" class="btn btn-danger custom-maroon-button">Register</button>
-            <p class="mt-2">Already registered as a professor? <a href="<%= new_user_session_path %>" style="color: maroon;">Login here</a></p>
+            <p class="mt-2">Already registered as a professor? <a href="<%= new_user_session_path(user_type: "professor") %>" style="color: maroon;">Login here</a></p>
           </div>          
         </form>
         <hr>
