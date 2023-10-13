@@ -1,7 +1,7 @@
 {
   "Cucumber Features": {
     "coverage": {
-      "/home/ubuntu/capstone-matching/app/models/user.rb": {
+      "/home/shripad/capstone-matching/app/models/user.rb": {
         "lines": [
           1,
           null,
@@ -38,14 +38,14 @@
           null
         ]
       },
-      "/home/ubuntu/capstone-matching/app/models/application_record.rb": {
+      "/home/shripad/capstone-matching/app/models/application_record.rb": {
         "lines": [
           1,
           1,
           null
         ]
       },
-      "/home/ubuntu/capstone-matching/app/controllers/home_controller.rb": {
+      "/home/shripad/capstone-matching/app/controllers/home_controller.rb": {
         "lines": [
           1,
           1,
@@ -53,25 +53,31 @@
           null
         ]
       },
-      "/home/ubuntu/capstone-matching/app/controllers/application_controller.rb": {
+      "/home/shripad/capstone-matching/app/controllers/application_controller.rb": {
         "lines": [
           1,
           null
         ]
       },
-      "/home/ubuntu/capstone-matching/app/helpers/application_helper.rb": {
+      "/home/shripad/capstone-matching/app/helpers/application_helper.rb": {
         "lines": [
           1,
           null
         ]
       },
-      "/home/ubuntu/capstone-matching/app/helpers/home_helper.rb": {
+      "/home/shripad/capstone-matching/app/helpers/dev_test_helper.rb": {
         "lines": [
           1,
           null
         ]
       },
-      "/home/ubuntu/capstone-matching/app/controllers/users/sessions_controller.rb": {
+      "/home/shripad/capstone-matching/app/helpers/home_helper.rb": {
+        "lines": [
+          1,
+          null
+        ]
+      },
+      "/home/shripad/capstone-matching/app/controllers/users/sessions_controller.rb": {
         "lines": [
           null,
           null,
@@ -110,7 +116,7 @@
           null
         ]
       },
-      "/home/ubuntu/capstone-matching/app/controllers/ProfregistrationController.rb": {
+      "/home/shripad/capstone-matching/app/controllers/ProfregistrationController.rb": {
         "lines": [
           1,
           1,
@@ -141,7 +147,7 @@
           null
         ]
       },
-      "/home/ubuntu/capstone-matching/app/models/professor.rb": {
+      "/home/shripad/capstone-matching/app/models/professor.rb": {
         "lines": [
           1,
           1,
@@ -159,7 +165,7 @@
           null
         ]
       },
-      "/home/ubuntu/capstone-matching/app/controllers/prof_landing_controller.rb": {
+      "/home/shripad/capstone-matching/app/controllers/prof_landing_controller.rb": {
         "lines": [
           1,
           1,
@@ -167,7 +173,7 @@
           null
         ]
       },
-      "/home/ubuntu/capstone-matching/app/controllers/projects_controller.rb": {
+      "/home/shripad/capstone-matching/app/controllers/projects_controller.rb": {
         "lines": [
           1,
           1,
@@ -205,7 +211,7 @@
           null
         ]
       },
-      "/home/ubuntu/capstone-matching/app/models/project.rb": {
+      "/home/shripad/capstone-matching/app/models/project.rb": {
         "lines": [
           1,
           1,
@@ -214,7 +220,7 @@
           null
         ]
       },
-      "/home/ubuntu/capstone-matching/app/controllers/users/omniauth_callbacks_controller.rb": {
+      "/home/shripad/capstone-matching/app/controllers/users/omniauth_callbacks_controller.rb": {
         "lines": [
           null,
           null,
@@ -281,7 +287,7 @@
           null
         ]
       },
-      "/home/ubuntu/capstone-matching/app/controllers/studentform_Controller.rb": {
+      "/home/shripad/capstone-matching/app/controllers/studentform_Controller.rb": {
         "lines": [
           1,
           1,
@@ -316,7 +322,7 @@
           null
         ]
       },
-      "/home/ubuntu/capstone-matching/app/channels/application_cable/channel.rb": {
+      "/home/shripad/capstone-matching/app/channels/application_cable/channel.rb": {
         "lines": [
           0,
           0,
@@ -326,7 +332,7 @@
         "branches": {
         }
       },
-      "/home/ubuntu/capstone-matching/app/channels/application_cable/connection.rb": {
+      "/home/shripad/capstone-matching/app/channels/application_cable/connection.rb": {
         "lines": [
           0,
           0,
@@ -336,7 +342,161 @@
         "branches": {
         }
       },
-      "/home/ubuntu/capstone-matching/app/controllers/users/confirmations_controller.rb": {
+      "/home/shripad/capstone-matching/app/controllers/adminlanding_controller.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/home/shripad/capstone-matching/app/controllers/dev_test_controller.rb": {
+        "lines": [
+          null,
+          null,
+          0,
+          null,
+          0,
+          0,
+          null,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          null,
+          null,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          null,
+          null,
+          null,
+          0,
+          null,
+          null,
+          0,
+          null,
+          0,
+          null,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          null,
+          null,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/home/shripad/capstone-matching/app/controllers/manageprof_controller.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          null,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          null,
+          null
+        ],
+        "branches": {
+        }
+      },
+      "/home/shripad/capstone-matching/app/controllers/users/confirmations_controller.rb": {
         "lines": [
           null,
           null,
@@ -372,7 +532,7 @@
         "branches": {
         }
       },
-      "/home/ubuntu/capstone-matching/app/controllers/users/passwords_controller.rb": {
+      "/home/shripad/capstone-matching/app/controllers/users/passwords_controller.rb": {
         "lines": [
           null,
           null,
@@ -412,7 +572,7 @@
         "branches": {
         }
       },
-      "/home/ubuntu/capstone-matching/app/controllers/users/registrations_controller.rb": {
+      "/home/shripad/capstone-matching/app/controllers/users/registrations_controller.rb": {
         "lines": [
           null,
           null,
@@ -480,7 +640,7 @@
         "branches": {
         }
       },
-      "/home/ubuntu/capstone-matching/app/controllers/users/unlocks_controller.rb": {
+      "/home/shripad/capstone-matching/app/controllers/users/unlocks_controller.rb": {
         "lines": [
           null,
           null,
@@ -516,7 +676,7 @@
         "branches": {
         }
       },
-      "/home/ubuntu/capstone-matching/app/jobs/application_job.rb": {
+      "/home/shripad/capstone-matching/app/jobs/application_job.rb": {
         "lines": [
           0,
           null,
@@ -529,7 +689,7 @@
         "branches": {
         }
       },
-      "/home/ubuntu/capstone-matching/app/mailers/application_mailer.rb": {
+      "/home/shripad/capstone-matching/app/mailers/application_mailer.rb": {
         "lines": [
           0,
           0,
@@ -539,7 +699,7 @@
         "branches": {
         }
       },
-      "/home/ubuntu/capstone-matching/app/models/studentForm.rb": {
+      "/home/shripad/capstone-matching/app/models/studentForm.rb": {
         "lines": [
           0,
           0,
@@ -553,7 +713,7 @@
         }
       }
     },
-    "timestamp": 1697204758
+    "timestamp": 1697227675
   },
   "RSpec": {
     "coverage": {
