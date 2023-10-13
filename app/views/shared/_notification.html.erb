@@ -11,3 +11,16 @@
     }, 2000);
 </script>
 <% end %>
+
+<% if flash[:error].present?%>
+  <div id="notification_error" class="alert alert-danger fixed-top w-50 mx-auto" >
+    <%= flash[:error] %>
+  </div>
+
+  <script>
+      //Automatically hide the notification after 3 seconds
+      setTimeout(function() {
+          $("#notification_error").fadeOut("slow");
+      }, 2000);
+  </script>
+<% end %>
