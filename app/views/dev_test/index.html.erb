@@ -1,0 +1,17 @@
+<h1>Development Test Page</h1>
+<p>This is a test page for development purposes.</p>
+
+<%= form_with(url: '/devtest/upload_resume', multipart: true) do |form| %>
+  <%= form.label :resume, 'Upload Resume (PDF)' %>
+  <%= form.file_field :resume %>
+  <%= form.submit 'Upload' %>
+<% end %>
+
+<% if flash[:resume_text].present? %>
+  <h2>Resume Text</h2>
+  <pre><%= flash[:resume_text] %></pre>
+<% end %>
+
+<% if flash[:error].present? %>
+  <p class="error"><%= flash[:error] %></p>
+<% end %>

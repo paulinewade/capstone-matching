@@ -22,4 +22,8 @@ Rails.application.routes.draw do
   post '/manageprof/add_professor', to: 'manageprof#add_professor', as: 'add_professor'
   # Defines the root path route ("/")
   # root "articles#index"
+  get '/devtest', to: 'dev_test#index'
+  post '/devtest/upload_resume', to: 'dev_test#upload_resume'
+
+
 end
