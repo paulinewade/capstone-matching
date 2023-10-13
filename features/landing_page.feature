@@ -10,7 +10,7 @@ Feature: Capstone Matching System
     When the user goes to the homepage
     Then they should see a "Student" button
     When the user clicks the "Student" button
-    Then they should be redirected to the student registration page
+    Then they should be redirected to the student sign in page
 
   Scenario: User visits the homepage and clicks on the "Professor" button
     When the user goes to the homepage

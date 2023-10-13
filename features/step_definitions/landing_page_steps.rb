@@ -14,9 +14,9 @@ When("the user clicks the {string} button") do |button_text|
   click_button(button_text)
 end
 
-Then("they should be redirected to the student registration page") do
-  visit new_student_registration_path
-  expect(page).to have_current_path(new_student_registration_path)
+Then("they should be redirected to the student sign in page") do
+  visit new_user_session_path
+  expect(page).to have_current_path(new_user_session_path)
 end
 
 Then("they should be redirected to the professor registration page") do
