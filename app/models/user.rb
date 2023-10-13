@@ -5,7 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :omniauthable, omniauth_providers: [:google_oauth2]
 
-  def self.from_omniauth(auth)
+  def self.from_omniauth(auth, user_type)
     if auth.is_a?(OmniAuth::AuthHash)
       user = where(email: auth.info.email).first_or_initialize do |u|
         u.email = auth.info.email
@@ -15,7 +15,7 @@ class User < ApplicationRecord
       end
 
       # Set the user's role to "Student" for new records
-      user.role ||= "Student" # This sets the role to "Student" only if it's not already set
+      user.role ||= user_type # This sets the role to "Student" only if it's not already set
 
       # If you are using confirmable and the provider(s) you use validate emails,
       # uncomment the line below to skip the confirmation emails.

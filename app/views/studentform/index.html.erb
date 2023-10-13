@@ -22,10 +22,26 @@
 </head>
 
 <body>
-	<div class="d-flex justify-content-between align-items-center">
-		<button class="btn btn-danger custom-maroon-button" id="dark-mode-toggle">Toggle Dark Mode</button>
-		<%= button_to "Logout", destroy_user_session_path, { class: "btn btn-danger custom-maroon-button", data: { turbo: "false" }, method: :delete } %>
-	</div>
+	<div class="container mt-3">
+      <div class="d-flex justify-content-between align-items-center">
+        <button class="btn btn-danger custom-maroon-button" id="dark-mode-toggle">Toggle Dark Mode</button>
+        <%= button_to "Logout", destroy_user_session_path, { class: "btn btn-danger custom-maroon-button", data: { turbo: "false" }, method: :delete } %>
+      </div>
+    </div>
+	<% if flash[:success].present? %>
+		<div class="alert alert-success alert-dismissible fade show m-4" role="alert">
+			<%= flash[:success] %>
+			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+			</button>
+		</div>
+	<% end %>
+
+	<% if flash[:error].present? %>
+		<div class="alert alert-danger alert-dismissible fade show m-1" role="alert">
+			<%= flash[:error] %>
+			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+		</div>
+	<% end %>
 	<div class="container">
 		<div class="row">
 			<div class="col-md-8 offset-md-2">
@@ -34,6 +50,8 @@
 				<br/>
 				<p>Howdy! Let us know which student-proposed projects you are interested in.</p>
 				<br/>
+
+				
 
 				<!-- Registration Form -->
 				<h4>Student Information</h4>
@@ -346,19 +364,5 @@
 			</div>
 		</div>
 	</div>
-	<% if flash[:success].present? %>
-	    <div class="alert alert-success alert-dismissible fade show m-4" role="alert">
-	      <%= flash[:success] %>
-	      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-	      </button>
-	    </div>
-	  <% end %>
-
-	  <% if flash[:error].present? %>
-	    <div class="alert alert-danger alert-dismissible fade show m-1" role="alert">
-	      <%= flash[:error] %>
-	      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-	    </div>
-	  <% end %>
 </body>
 </html>

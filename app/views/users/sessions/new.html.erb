@@ -24,7 +24,7 @@
             <p>Join our community of students and educators to discover or propose capstone projects.</p>
             <% if devise_mapping.omniauthable? %>
                 <% resource_class.omniauth_providers.each do |provider| %>
-                    <%= form_for "Login", url: omniauth_authorize_path(resource_name, provider), method: :post, data: { turbo: "false" } do |f| %>
+                    <%= form_for "Login", url: omniauth_authorize_path(resource_name, provider, user_type:  params[:user_type]), method: :post, data: { turbo: "false" } do |f| %>
                     <%= image_submit_tag("btn_google_signin_light_normal_web.png", alt: "Login with #{provider}", class: "oauth-login-button") %>
                     <% end %>
                 <% end %>

@@ -30,7 +30,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   def google_oauth2
     if auth.is_a?(OmniAuth::AuthHash)
-      user = User.from_omniauth(auth)
+      user = User.from_omniauth(auth, request.env['omniauth.params']['user_type'])
       if user.present?
         sign_out_all_scopes
         flash[:success] = t 'devise.omniauth_callbacks.success', kind: 'Google'
@@ -52,7 +52,13 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def after_sign_in_path_for(resource_or_scope)
-    stored_location_for(resource_or_scope) || "/StudentForm"
+    if resource_or_scope.is_a?(User)
+      if resource_or_scope.role == 'student'
+        return "/StudentForm"
+      elsif resource_or_scope.role == 'professor'
+        return profLanding_path
+      end
+    end
   end
 
   private

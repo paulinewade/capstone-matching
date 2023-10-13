@@ -1,7 +1,7 @@
 {
   "Cucumber Features": {
     "coverage": {
-      "/home/shripad/capstone-matching/app/models/user.rb": {
+      "/Users/aakashdeepsil/Documents/university/capstone-matching/app/models/user.rb": {
         "lines": [
           1,
           null,
@@ -38,14 +38,14 @@
           null
         ]
       },
-      "/home/shripad/capstone-matching/app/models/application_record.rb": {
+      "/Users/aakashdeepsil/Documents/university/capstone-matching/app/models/application_record.rb": {
         "lines": [
           1,
           1,
           null
         ]
       },
-      "/home/shripad/capstone-matching/app/controllers/home_controller.rb": {
+      "/Users/aakashdeepsil/Documents/university/capstone-matching/app/controllers/home_controller.rb": {
         "lines": [
           1,
           1,
@@ -53,31 +53,31 @@
           null
         ]
       },
-      "/home/shripad/capstone-matching/app/controllers/application_controller.rb": {
+      "/Users/aakashdeepsil/Documents/university/capstone-matching/app/controllers/application_controller.rb": {
         "lines": [
           1,
           null
         ]
       },
-      "/home/shripad/capstone-matching/app/helpers/application_helper.rb": {
+      "/Users/aakashdeepsil/Documents/university/capstone-matching/app/helpers/application_helper.rb": {
         "lines": [
           1,
           null
         ]
       },
-      "/home/shripad/capstone-matching/app/helpers/dev_test_helper.rb": {
+      "/Users/aakashdeepsil/Documents/university/capstone-matching/app/helpers/dev_test_helper.rb": {
         "lines": [
           1,
           null
         ]
       },
-      "/home/shripad/capstone-matching/app/helpers/home_helper.rb": {
+      "/Users/aakashdeepsil/Documents/university/capstone-matching/app/helpers/home_helper.rb": {
         "lines": [
           1,
           null
         ]
       },
-      "/home/shripad/capstone-matching/app/controllers/users/sessions_controller.rb": {
+      "/Users/aakashdeepsil/Documents/university/capstone-matching/app/controllers/users/sessions_controller.rb": {
         "lines": [
           null,
           null,
@@ -109,14 +109,14 @@
           1,
           0,
           null,
-          null,
-          1,
-          0,
-          null,
           null
         ]
       },
+<<<<<<< HEAD
       "/home/shripad/capstone-matching/app/controllers/ProfregistrationController.rb": {
+=======
+      "/Users/aakashdeepsil/Documents/university/capstone-matching/app/controllers/ProfregistrationController.rb": {
+>>>>>>> e4d0232 (Role Based Access Control after Google OAuth added)
         "lines": [
           1,
           1,
@@ -147,7 +147,11 @@
           null
         ]
       },
+<<<<<<< HEAD
       "/home/shripad/capstone-matching/app/models/professor.rb": {
+=======
+      "/Users/aakashdeepsil/Documents/university/capstone-matching/app/models/professor.rb": {
+>>>>>>> e4d0232 (Role Based Access Control after Google OAuth added)
         "lines": [
           1,
           1,
@@ -165,7 +169,11 @@
           null
         ]
       },
+<<<<<<< HEAD
       "/home/shripad/capstone-matching/app/controllers/prof_landing_controller.rb": {
+=======
+      "/Users/aakashdeepsil/Documents/university/capstone-matching/app/controllers/prof_landing_controller.rb": {
+>>>>>>> e4d0232 (Role Based Access Control after Google OAuth added)
         "lines": [
           1,
           1,
@@ -173,7 +181,11 @@
           null
         ]
       },
+<<<<<<< HEAD
       "/home/shripad/capstone-matching/app/controllers/projects_controller.rb": {
+=======
+      "/Users/aakashdeepsil/Documents/university/capstone-matching/app/controllers/projects_controller.rb": {
+>>>>>>> e4d0232 (Role Based Access Control after Google OAuth added)
         "lines": [
           1,
           1,
@@ -211,7 +223,11 @@
           null
         ]
       },
+<<<<<<< HEAD
       "/home/shripad/capstone-matching/app/models/project.rb": {
+=======
+      "/Users/aakashdeepsil/Documents/university/capstone-matching/app/models/project.rb": {
+>>>>>>> e4d0232 (Role Based Access Control after Google OAuth added)
         "lines": [
           1,
           1,
@@ -220,7 +236,11 @@
           null
         ]
       },
+<<<<<<< HEAD
       "/home/shripad/capstone-matching/app/controllers/users/omniauth_callbacks_controller.rb": {
+=======
+      "/Users/aakashdeepsil/Documents/university/capstone-matching/app/controllers/users/omniauth_callbacks_controller.rb": {
+>>>>>>> e4d0232 (Role Based Access Control after Google OAuth added)
         "lines": [
           null,
           null,
@@ -277,6 +297,12 @@
           null,
           1,
           0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          null,
           null,
           null,
           1,
@@ -287,7 +313,11 @@
           null
         ]
       },
+<<<<<<< HEAD
       "/home/shripad/capstone-matching/app/controllers/studentform_Controller.rb": {
+=======
+      "/Users/aakashdeepsil/Documents/university/capstone-matching/app/controllers/studentform_Controller.rb": {
+>>>>>>> e4d0232 (Role Based Access Control after Google OAuth added)
         "lines": [
           1,
           1,
@@ -322,7 +352,11 @@
           null
         ]
       },
+<<<<<<< HEAD
       "/home/shripad/capstone-matching/app/channels/application_cable/channel.rb": {
+=======
+      "/Users/aakashdeepsil/Documents/university/capstone-matching/app/channels/application_cable/channel.rb": {
+>>>>>>> e4d0232 (Role Based Access Control after Google OAuth added)
         "lines": [
           0,
           0,
@@ -332,7 +366,11 @@
         "branches": {
         }
       },
+<<<<<<< HEAD
       "/home/shripad/capstone-matching/app/channels/application_cable/connection.rb": {
+=======
+      "/Users/aakashdeepsil/Documents/university/capstone-matching/app/channels/application_cable/connection.rb": {
+>>>>>>> e4d0232 (Role Based Access Control after Google OAuth added)
         "lines": [
           0,
           0,
@@ -342,7 +380,11 @@
         "branches": {
         }
       },
+<<<<<<< HEAD
       "/home/shripad/capstone-matching/app/controllers/adminlanding_controller.rb": {
+=======
+      "/Users/aakashdeepsil/Documents/university/capstone-matching/app/controllers/adminlanding_controller.rb": {
+>>>>>>> e4d0232 (Role Based Access Control after Google OAuth added)
         "lines": [
           0,
           0,
@@ -352,7 +394,11 @@
         "branches": {
         }
       },
+<<<<<<< HEAD
       "/home/shripad/capstone-matching/app/controllers/dev_test_controller.rb": {
+=======
+      "/Users/aakashdeepsil/Documents/university/capstone-matching/app/controllers/dev_test_controller.rb": {
+>>>>>>> e4d0232 (Role Based Access Control after Google OAuth added)
         "lines": [
           null,
           null,
@@ -404,7 +450,11 @@
         "branches": {
         }
       },
+<<<<<<< HEAD
       "/home/shripad/capstone-matching/app/controllers/manageprof_controller.rb": {
+=======
+      "/Users/aakashdeepsil/Documents/university/capstone-matching/app/controllers/manageprof_controller.rb": {
+>>>>>>> e4d0232 (Role Based Access Control after Google OAuth added)
         "lines": [
           0,
           0,
@@ -496,7 +546,11 @@
         "branches": {
         }
       },
+<<<<<<< HEAD
       "/home/shripad/capstone-matching/app/controllers/users/confirmations_controller.rb": {
+=======
+      "/Users/aakashdeepsil/Documents/university/capstone-matching/app/controllers/users/confirmations_controller.rb": {
+>>>>>>> e4d0232 (Role Based Access Control after Google OAuth added)
         "lines": [
           null,
           null,
@@ -532,7 +586,11 @@
         "branches": {
         }
       },
+<<<<<<< HEAD
       "/home/shripad/capstone-matching/app/controllers/users/passwords_controller.rb": {
+=======
+      "/Users/aakashdeepsil/Documents/university/capstone-matching/app/controllers/users/passwords_controller.rb": {
+>>>>>>> e4d0232 (Role Based Access Control after Google OAuth added)
         "lines": [
           null,
           null,
@@ -572,7 +630,11 @@
         "branches": {
         }
       },
+<<<<<<< HEAD
       "/home/shripad/capstone-matching/app/controllers/users/registrations_controller.rb": {
+=======
+      "/Users/aakashdeepsil/Documents/university/capstone-matching/app/controllers/users/registrations_controller.rb": {
+>>>>>>> e4d0232 (Role Based Access Control after Google OAuth added)
         "lines": [
           null,
           null,
@@ -640,7 +702,11 @@
         "branches": {
         }
       },
+<<<<<<< HEAD
       "/home/shripad/capstone-matching/app/controllers/users/unlocks_controller.rb": {
+=======
+      "/Users/aakashdeepsil/Documents/university/capstone-matching/app/controllers/users/unlocks_controller.rb": {
+>>>>>>> e4d0232 (Role Based Access Control after Google OAuth added)
         "lines": [
           null,
           null,
@@ -676,7 +742,11 @@
         "branches": {
         }
       },
+<<<<<<< HEAD
       "/home/shripad/capstone-matching/app/jobs/application_job.rb": {
+=======
+      "/Users/aakashdeepsil/Documents/university/capstone-matching/app/jobs/application_job.rb": {
+>>>>>>> e4d0232 (Role Based Access Control after Google OAuth added)
         "lines": [
           0,
           null,
@@ -689,7 +759,11 @@
         "branches": {
         }
       },
+<<<<<<< HEAD
       "/home/shripad/capstone-matching/app/mailers/application_mailer.rb": {
+=======
+      "/Users/aakashdeepsil/Documents/university/capstone-matching/app/mailers/application_mailer.rb": {
+>>>>>>> e4d0232 (Role Based Access Control after Google OAuth added)
         "lines": [
           0,
           0,
@@ -699,7 +773,11 @@
         "branches": {
         }
       },
+<<<<<<< HEAD
       "/home/shripad/capstone-matching/app/models/studentForm.rb": {
+=======
+      "/Users/aakashdeepsil/Documents/university/capstone-matching/app/models/studentForm.rb": {
+>>>>>>> e4d0232 (Role Based Access Control after Google OAuth added)
         "lines": [
           0,
           0,
@@ -713,11 +791,15 @@
         }
       }
     },
+<<<<<<< HEAD
     "timestamp": 1697227675
+=======
+    "timestamp": 1697220954
+>>>>>>> e4d0232 (Role Based Access Control after Google OAuth added)
   },
   "RSpec": {
     "coverage": {
-      "/home/ubuntu/capstone-matching/app/models/user.rb": {
+      "/Users/aakashdeepsil/Documents/university/capstone-matching/app/models/user.rb": {
         "lines": [
           1,
           null,
@@ -727,24 +809,24 @@
           null,
           null,
           1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
           null,
           null,
           null,
-          1,
+          2,
           null,
           null,
           null,
           null,
           null,
-          1,
+          2,
           null,
-          1,
+          2,
           null,
           null,
           null,
@@ -754,26 +836,32 @@
           null
         ]
       },
-      "/home/ubuntu/capstone-matching/app/models/application_record.rb": {
+      "/Users/aakashdeepsil/Documents/university/capstone-matching/app/models/application_record.rb": {
         "lines": [
           1,
           1,
           null
         ]
       },
-      "/home/ubuntu/capstone-matching/app/helpers/application_helper.rb": {
+      "/Users/aakashdeepsil/Documents/university/capstone-matching/app/helpers/application_helper.rb": {
         "lines": [
           1,
           null
         ]
       },
-      "/home/ubuntu/capstone-matching/app/helpers/home_helper.rb": {
+      "/Users/aakashdeepsil/Documents/university/capstone-matching/app/helpers/dev_test_helper.rb": {
         "lines": [
           1,
           null
         ]
       },
-      "/home/ubuntu/capstone-matching/app/controllers/ProfregistrationController.rb": {
+      "/Users/aakashdeepsil/Documents/university/capstone-matching/app/helpers/home_helper.rb": {
+        "lines": [
+          1,
+          null
+        ]
+      },
+      "/Users/aakashdeepsil/Documents/university/capstone-matching/app/controllers/ProfregistrationController.rb": {
         "lines": [
           1,
           1,
@@ -804,13 +892,13 @@
           null
         ]
       },
-      "/home/ubuntu/capstone-matching/app/controllers/application_controller.rb": {
+      "/Users/aakashdeepsil/Documents/university/capstone-matching/app/controllers/application_controller.rb": {
         "lines": [
           1,
           null
         ]
       },
-      "/home/ubuntu/capstone-matching/app/controllers/projects_controller.rb": {
+      "/Users/aakashdeepsil/Documents/university/capstone-matching/app/controllers/projects_controller.rb": {
         "lines": [
           1,
           1,
@@ -848,7 +936,7 @@
           null
         ]
       },
-      "/home/ubuntu/capstone-matching/app/controllers/users/omniauth_callbacks_controller.rb": {
+      "/Users/aakashdeepsil/Documents/university/capstone-matching/app/controllers/users/omniauth_callbacks_controller.rb": {
         "lines": [
           null,
           null,
@@ -879,43 +967,49 @@
           null,
           null,
           null,
-          null,
-          1,
-          2,
-          1,
-          1,
-          1,
-          1,
-          1,
-          null,
-          null,
-          null,
-          null,
-          null,
-          1,
-          1,
-          null,
-          null,
-          null,
-          1,
-          null,
-          1,
-          1,
-          null,
-          null,
-          1,
-          1,
-          null,
-          null,
-          1,
           null,
           1,
           3,
+          2,
+          2,
+          2,
+          2,
+          2,
+          null,
+          null,
+          null,
+          null,
+          null,
+          1,
+          1,
+          null,
+          null,
+          null,
+          1,
+          null,
+          1,
+          1,
+          null,
+          null,
+          1,
+          2,
+          2,
+          1,
+          1,
+          1,
+          null,
+          null,
+          null,
+          null,
+          1,
+          null,
+          1,
+          5,
           null,
           null
         ]
       },
-      "/home/ubuntu/capstone-matching/app/controllers/users/sessions_controller.rb": {
+      "/Users/aakashdeepsil/Documents/university/capstone-matching/app/controllers/users/sessions_controller.rb": {
         "lines": [
           null,
           null,
@@ -947,14 +1041,10 @@
           1,
           1,
           null,
-          null,
-          1,
-          0,
-          null,
           null
         ]
       },
-      "/home/ubuntu/capstone-matching/app/models/professor.rb": {
+      "/Users/aakashdeepsil/Documents/university/capstone-matching/app/models/professor.rb": {
         "lines": [
           1,
           1,
@@ -972,7 +1062,7 @@
           null
         ]
       },
-      "/home/ubuntu/capstone-matching/app/models/project.rb": {
+      "/Users/aakashdeepsil/Documents/university/capstone-matching/app/models/project.rb": {
         "lines": [
           1,
           1,
@@ -981,7 +1071,7 @@
           null
         ]
       },
-      "/home/ubuntu/capstone-matching/app/channels/application_cable/channel.rb": {
+      "/Users/aakashdeepsil/Documents/university/capstone-matching/app/channels/application_cable/channel.rb": {
         "lines": [
           0,
           0,
@@ -991,7 +1081,7 @@
         "branches": {
         }
       },
-      "/home/ubuntu/capstone-matching/app/channels/application_cable/connection.rb": {
+      "/Users/aakashdeepsil/Documents/university/capstone-matching/app/channels/application_cable/connection.rb": {
         "lines": [
           0,
           0,
@@ -1001,7 +1091,7 @@
         "branches": {
         }
       },
-      "/home/ubuntu/capstone-matching/app/controllers/home_controller.rb": {
+      "/Users/aakashdeepsil/Documents/university/capstone-matching/app/controllers/adminlanding_controller.rb": {
         "lines": [
           0,
           0,
@@ -1011,7 +1101,59 @@
         "branches": {
         }
       },
-      "/home/ubuntu/capstone-matching/app/controllers/prof_landing_controller.rb": {
+      "/Users/aakashdeepsil/Documents/university/capstone-matching/app/controllers/dev_test_controller.rb": {
+        "lines": [
+          null,
+          null,
+          0,
+          null,
+          0,
+          0,
+          null,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          null,
+          null,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          null,
+          null,
+          null,
+          0,
+          null,
+          null,
+          0,
+          null,
+          0,
+          null,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          null,
+          null,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/Users/aakashdeepsil/Documents/university/capstone-matching/app/controllers/home_controller.rb": {
         "lines": [
           0,
           0,
@@ -1021,7 +1163,109 @@
         "branches": {
         }
       },
-      "/home/ubuntu/capstone-matching/app/controllers/studentform_Controller.rb": {
+      "/Users/aakashdeepsil/Documents/university/capstone-matching/app/controllers/manageprof_controller.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          null,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          null,
+          null
+        ],
+        "branches": {
+        }
+      },
+      "/Users/aakashdeepsil/Documents/university/capstone-matching/app/controllers/prof_landing_controller.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/Users/aakashdeepsil/Documents/university/capstone-matching/app/controllers/studentform_Controller.rb": {
         "lines": [
           0,
           0,
@@ -1058,7 +1302,7 @@
         "branches": {
         }
       },
-      "/home/ubuntu/capstone-matching/app/controllers/users/confirmations_controller.rb": {
+      "/Users/aakashdeepsil/Documents/university/capstone-matching/app/controllers/users/confirmations_controller.rb": {
         "lines": [
           null,
           null,
@@ -1094,7 +1338,7 @@
         "branches": {
         }
       },
-      "/home/ubuntu/capstone-matching/app/controllers/users/passwords_controller.rb": {
+      "/Users/aakashdeepsil/Documents/university/capstone-matching/app/controllers/users/passwords_controller.rb": {
         "lines": [
           null,
           null,
@@ -1134,7 +1378,7 @@
         "branches": {
         }
       },
-      "/home/ubuntu/capstone-matching/app/controllers/users/registrations_controller.rb": {
+      "/Users/aakashdeepsil/Documents/university/capstone-matching/app/controllers/users/registrations_controller.rb": {
         "lines": [
           null,
           null,
@@ -1202,7 +1446,7 @@
         "branches": {
         }
       },
-      "/home/ubuntu/capstone-matching/app/controllers/users/unlocks_controller.rb": {
+      "/Users/aakashdeepsil/Documents/university/capstone-matching/app/controllers/users/unlocks_controller.rb": {
         "lines": [
           null,
           null,
@@ -1238,7 +1482,7 @@
         "branches": {
         }
       },
-      "/home/ubuntu/capstone-matching/app/jobs/application_job.rb": {
+      "/Users/aakashdeepsil/Documents/university/capstone-matching/app/jobs/application_job.rb": {
         "lines": [
           0,
           null,
@@ -1251,7 +1495,7 @@
         "branches": {
         }
       },
-      "/home/ubuntu/capstone-matching/app/mailers/application_mailer.rb": {
+      "/Users/aakashdeepsil/Documents/university/capstone-matching/app/mailers/application_mailer.rb": {
         "lines": [
           0,
           0,
@@ -1261,7 +1505,7 @@
         "branches": {
         }
       },
-      "/home/ubuntu/capstone-matching/app/models/studentForm.rb": {
+      "/Users/aakashdeepsil/Documents/university/capstone-matching/app/models/studentForm.rb": {
         "lines": [
           0,
           0,
@@ -1275,6 +1519,6 @@
         }
       }
     },
-    "timestamp": 1697204740
+    "timestamp": 1697220958
   }
 }
