@@ -1,10 +1,10 @@
 Rails.application.routes.draw do
   root 'home#index'
 
-  devise_for :students, controllers: {
-    omniauth_callbacks: 'students/omniauth_callbacks',
-    sessions: 'students/sessions',
-    registrations: 'students/registrations'
+  devise_for :users, controllers: {
+    omniauth_callbacks: 'users/omniauth_callbacks',
+    sessions: 'users/sessions',
+    registrations: 'users/registrations'
   }
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

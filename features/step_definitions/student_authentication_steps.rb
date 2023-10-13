@@ -1,5 +1,5 @@
-Given("I am on the student registration page") do
-  visit new_student_registration_path
+Given("I am on the student sign in page") do
+  visit new_user_session_path
 end
 
 Then("I should see the Google OAuth2 login button") do
@@ -15,7 +15,7 @@ When("I click the Google OAuth2 login button") do
   within('form') do
     google_oauth2_button = find('.oauth-login-button')
     # google_oauth2_button.click
-    visit '/students/auth/google_oauth2'
+    visit '/users/auth/google_oauth2'
   end
 end
 
@@ -36,7 +36,7 @@ When("I try to sign in with non-TAMU email credentials") do
   OmniAuth.config.mock_auth[:google_oauth2] = :invalid_credentials
 end
 
-Then("I should see an error page with message access blocked and I should be redirected to the student registration page") do
-  visit new_student_session_path
-  expect(page).to have_current_path(new_student_session_path)
+Then("I should see an error page with message access blocked and I should be redirected to the student sign in page") do
+  visit new_user_session_path
+  expect(page).to have_current_path(new_user_session_path)
 end
