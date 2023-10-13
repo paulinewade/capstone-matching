@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_13_135143) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_13_230220) do
   create_table "classes_new", force: :cascade do |t|
     t.integer "class_id"
     t.integer "professor_id"
@@ -79,6 +79,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_13_135143) do
     t.integer "scores_id"
     t.integer "attribute_id"
     t.float "feature_score"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "sections", force: :cascade do |t|
+    t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
