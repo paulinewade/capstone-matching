@@ -18,7 +18,6 @@ class ProjectsController < ApplicationController
   def create
     @semesters = generate_semesters
     @project = Project.new(project_params)
-    puts("Semester name" , @project.Semester)
     respond_to do |format|
       if @project.save
         flash[:notice] = "Project was successfully created"
