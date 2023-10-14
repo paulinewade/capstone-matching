@@ -15,3 +15,13 @@
 <% if flash[:error].present? %>
   <p class="error"><%= flash[:error] %></p>
 <% end %>
+
+<h1>Classification Result CALCULATION USES TESTING RESUME STRING</h1>
+<p>The most similar job description is:</p>
+<% if flash[:most_similar_job_description].present? %>
+  <p><%= flash[:most_similar_job_description] %></p>
+<% end %>
+<p>with a score of:</p>
+<% if flash[:similarity_score].present? %>
+  <p><%= flash[:similarity_score] %></p>
+<% end %>
