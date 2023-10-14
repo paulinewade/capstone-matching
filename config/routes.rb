@@ -25,5 +25,6 @@ Rails.application.routes.draw do
   get '/devtest', to: 'dev_test#index'
   post '/devtest/upload_resume', to: 'dev_test#upload_resume'
   resources :sections, only: [:new, :create]
-
+  # get 'dev_test/classify', to: 'dev_test#classify'
+  
 end
