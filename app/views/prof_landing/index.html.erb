@@ -67,20 +67,15 @@
         margin-bottom: 10px;
       }
     </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
   </head>
   <body>
-    <div class="d-flex justify-content-between align-items-center">
-      <button
-        href="#"
-        class="btn btn-danger custom-maroon-button ml-3"
-        id="back-button"
-      >
-        Log Out
-      </button>
-      <!-- <h1>Welcome, Professor!</h1> -->
-      <button class="btn btn-danger custom-maroon-button" id="dark-mode-toggle">
-        Toggle Dark Mode
-      </button>
+    <div class="container mt-3">
+      <div class="d-flex justify-content-between align-items-center">
+        <button class="btn btn-danger custom-maroon-button" id="dark-mode-toggle">Toggle Dark Mode</button>
+        <%= button_to "Logout", destroy_user_session_path, { class: "btn btn-danger custom-maroon-button", data: { turbo: "false" }, method: :delete } %>
+      </div>
     </div>
     <div class="buttons">
       <div class="vertical-center-container">
@@ -91,6 +86,8 @@
         <%= link_to "Add Projects", addProjects_path, class: "btn btn-danger btn-equal-size custom-maroon-button mb-2"%>
         <%= link_to "View Projects", projects_path, class: "btn btn-danger btn-equal-size custom-maroon-button mb-2"%>
         <a href="#" class="btn btn-danger btn-equal-size custom-maroon-button mb-2">Remove Projects</a>
+        <%= link_to "Add Section", new_section_path, class: "btn btn-danger btn-equal-size custom-maroon-button mb-2"%>
+        <a href="#" class="btn btn-danger btn-equal-size custom-maroon-button mb-2">Add section</a>
     </div>
       </div>
     </div>

@@ -7,7 +7,7 @@ Feature: Project Creation
 
   Scenario: Creating a new project
     Given I am on the new project page
-    When I fill in "Semester" with "Fall 2023"
+    When I select "Fall 2023" from "Semester"
     And I fill in "Name" with "My Project"
     And I fill in "Sponsor" with "Sponsor Name"
     And I fill in "Description" with "This is a test project"
@@ -18,7 +18,7 @@ Feature: Project Creation
 
   Scenario: Creating a new project with an empty field
     Given I am on the new project page
-    When I fill in "Semester" with "Fall 2023"
+    When I select "Fall 2023" from "Semester"
     And I fill in "Name" with ""
     And I fill in "Sponsor" with "Sponsor Name"
     And I fill in "Description" with "This is a test project"

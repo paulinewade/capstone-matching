@@ -17,11 +17,30 @@ RSpec.describe Users::OmniauthCallbacksController, type: :controller do
           info: { name: 'John Doe', email: 'john.doe@tamu.edu' }
         )
         request.env['omniauth.auth'] = OmniAuth.config.mock_auth[:google_oauth2]
+        request.env['omniauth.params'] = { 'user_type' => 'student' }
       end
 
       it 'signs in the user and redirects to Student Form page' do
         get :google_oauth2
         expect(response).to redirect_to('/StudentForm')
+        expect(flash[:success]).to eq(I18n.t('devise.omniauth_callbacks.success', kind: 'Google'))
+      end
+    end
+
+    context 'when a professor is found or created' do
+      before do
+        OmniAuth.config.mock_auth[:google_oauth2] = OmniAuth::AuthHash.new(
+          provider: 'google_oauth2',
+          uid: '12345',
+          info: { name: 'John Doe', email: 'john.doe@tamu.edu' }
+        )
+        request.env['omniauth.auth'] = OmniAuth.config.mock_auth[:google_oauth2]
+        request.env['omniauth.params'] = { 'user_type' => 'professor' }
+      end
+
+      it 'signs in the user and redirects to Professor Landing page' do
+        get :google_oauth2
+        expect(response).to redirect_to(profLanding_path)
         expect(flash[:success]).to eq(I18n.t('devise.omniauth_callbacks.success', kind: 'Google'))
       end
     end

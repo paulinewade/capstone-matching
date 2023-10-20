@@ -27,8 +27,13 @@ gem "stimulus-rails"
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
 
-# read pdf files
+# FOR RESUME PARSING
+
+# 1. read pdf files
 gem 'pdf-reader'
+
+# 2. A gem for calculating TF-IDF (Term Frequency-Inverse Document Frequency) similarity between text documents.
+gem 'tf-idf-similarity'
 
 
 # Use Redis adapter to run Action Cable in production
