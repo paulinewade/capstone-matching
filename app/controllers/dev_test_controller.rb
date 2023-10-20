@@ -96,7 +96,7 @@ class DevTestController < ApplicationController
     resumeidx = corpus.length # last index of corpus
     
     # Process the resume and calculate TF-IDF scores
-    resume = "I am a software engineer with extensive experience in Ruby and Ruby on Rails."
+    resume = resume_text
     corpus[resumeidx] = TfIdfSimilarity::Document.new(remove_stop_words(resume.downcase.gsub(/[^a-z\s]/, ''), stop_words))
 
     model = TfIdfSimilarity::TfIdfModel.new(corpus)
