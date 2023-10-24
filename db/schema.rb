@@ -59,7 +59,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_13_230220) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "scores_attributes_new", force: :cascade do |t|
+  create_table "scores_attributes", force: :cascade do |t|
     t.integer "attribute_id"
     t.string "feature_name"
     t.float "feature_weight"
