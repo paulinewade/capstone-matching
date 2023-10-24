@@ -1,0 +1,42 @@
+<html>
+<head>
+  <title>Change Weights Page</title>
+</head>
+<body>
+  <div class="d-flex justify-content-between align-items-center">
+    <%= link_to "Log Out", root_path, class: "btn btn-danger custom-maroon-button ml-3", id: "back-button" %>
+    <button class="btn btn-danger custom-maroon-button" id="dark-mode-toggle">Toggle Dark Mode</button>
+  </div>
+  <div class="d-flex justify-content-center align-items-center">
+      <h1>Change Score Weights</h1>
+  </div>
+
+  <div class="container mt-4">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Attribute ID</th>
+          <th>Feature Name</th>
+          <th>Feature Weight</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="table-body">
+        <% @score_attributes.each do |score_attribute| %>
+          <tr>
+            <td><%= score_attribute.attribute_id %></td>
+            <td><%= score_attribute.feature_name %></td>
+            <td><%= score_attribute.feature_weight %></td>
+            <td>
+              <div class="btn-group">
+                <button class="btn btn-sm btn-secondary" onclick="moveRowUp(this)">&#8593</button>
+                <button class="btn btn-sm btn-secondary" onclick="moveRowDown(this)">&#8595</button>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  
+</body>

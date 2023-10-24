@@ -18,13 +18,14 @@ Rails.application.routes.draw do
   post "StudentForm", to: "studentform#create"
   get "adminlanding", to: "adminlanding#index"
   get "manageprof", to: "manageprof#index"
-  post '/manageprof/save_change', to: 'manageprof#save_change', as: 'save_change'
+  patch '/manageprof/save_change', to: 'manageprof#save_change', as: 'save_change'
   post '/manageprof/add_professor', to: 'manageprof#add_professor', as: 'add_professor'
   # Defines the root path route ("/")
   # root "articles#index"
   get '/devtest', to: 'dev_test#index'
   post '/devtest/upload_resume', to: 'dev_test#upload_resume'
   resources :sections, only: [:new, :create]
+  get 'changeweights', to: 'changeweights#index'
   # get 'dev_test/classify', to: 'dev_test#classify'
   
 end
