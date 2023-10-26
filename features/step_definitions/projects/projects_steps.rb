@@ -21,3 +21,7 @@ end
 When("I click the {string} button") do |button_text|
   click_button(button_text)
 end
+
+When("I confirm the deletion") do
+  page.driver.browser.switch_to.alert.accept
+end
