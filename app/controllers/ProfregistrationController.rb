@@ -22,6 +22,6 @@ class ProfregistrationController < ApplicationController
     else
       flash[:error] = "Not a valid tamu.edu email address."
     end
-    redirect_to profregistration_path and return
+    render :index
   end
 end
