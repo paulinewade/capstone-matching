@@ -4,7 +4,7 @@ class ManageprofController < ApplicationController
     end
     
     def save_change
-        if params[:admin_approved] || param[:admin]
+        if params[:admin_approved] || params[:admin]
             update_values
         end
 

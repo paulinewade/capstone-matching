@@ -29,6 +29,8 @@ Rails.application.routes.draw do
   get '/devtest', to: 'dev_test#index'
   post '/devtest/upload_resume', to: 'dev_test#upload_resume'
   resources :sections, only: [:new, :create]
+  get 'changeweights', to: 'changeweights#index'
+  post 'changeweights/save_weights', to: 'changeweights#save_weights', as: 'save_weights'
   # get 'dev_test/classify', to: 'dev_test#classify'
   
 

@@ -46,7 +46,7 @@ class CreateAllTables < ActiveRecord::Migration[7.0]
       t.timestamps
     end
 
-    create_table :scores_attributes_new do |t|
+    create_table :scores_attributes do |t|
       t.integer :attribute_id
       t.string :feature_name
       t.float :feature_weight
