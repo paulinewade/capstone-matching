@@ -44,6 +44,7 @@ Rails.application.routes.draw do
     member do
       get "projects", to:"projects#index"
       delete "projects/:id", to:"projects#destroy"
+      post 'add_preferred', to: 'professor_preferences#add_preferred'
     end
   end
   

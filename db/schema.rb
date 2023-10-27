@@ -10,13 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_22_160635) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_27_163209) do
   create_table "classes_new", force: :cascade do |t|
     t.integer "class_id"
     t.integer "professor_id"
     t.string "semester"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "professor_preferences", force: :cascade do |t|
+    t.integer "professor_id", null: false
+    t.integer "project_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["professor_id"], name: "index_professor_preferences_on_professor_id"
+    t.index ["project_id"], name: "index_professor_preferences_on_project_id"
   end
 
   create_table "professors", force: :cascade do |t|
@@ -134,4 +143,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_22_160635) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "professor_preferences", "professors"
+  add_foreign_key "professor_preferences", "projects"
 end
