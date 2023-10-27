@@ -35,6 +35,8 @@ gem 'pdf-reader'
 # 2. A gem for calculating TF-IDF (Term Frequency-Inverse Document Frequency) similarity between text documents.
 gem 'tf-idf-similarity'
 
+gem 'jquery-rails'
+
 
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
