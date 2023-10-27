@@ -13,7 +13,8 @@ class ManageprofController < ApplicationController
         end
         
         flash[:success] = "Changes saved."
-        redirect_to manageprof_path and return
+        @professors = Professor.all
+        render :index
     end
 
     def delete_professor
@@ -60,7 +61,8 @@ class ManageprofController < ApplicationController
         else
             flash[:error] = "Not a valid tamu.edu email address."
         end
-        redirect_to manageprof_path and return
+        @professors = Professor.all
+        render :index
     end
 
     def update_values
