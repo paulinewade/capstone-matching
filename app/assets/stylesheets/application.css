@@ -53,13 +53,17 @@ html.dark-mode table {
     color: #fff; /* Set text color for table content in dark mode */
 }
 
+.form-check-input:checked + .form-check-label::before {
+    background-color: maroon;
+  }
+  .form-check-label {
+    color: maroon;
+  }
 
-<<<<<<< HEAD
-=======
-body {
-    background-color: #f8f9fa;
-    font-family: Arial, sans-serif;
-}
+  /* Add hover effect */
+  .form-check-input:checked + .form-check-label::before:hover {
+    background-color: #800000; /* A slightly darker shade of maroon */
+  }
 
 .header {
     background-color: #500000;
@@ -88,12 +92,7 @@ body {
     background-color: #300000;
 }
 
-.custom-button {
-    color: white;
-}
-
 .custom-button a {
     color: inherit;
     text-decoration: none;
 }
->>>>>>> 6f75294 (Front-end modifications added)
