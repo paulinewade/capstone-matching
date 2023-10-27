@@ -11,7 +11,6 @@
     <div class="alert alert-success alert-dismissible fade show m-4" role="alert">
       <%= flash[:success] %>
       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-      </button>
     </div>
   <% end %>
 
@@ -25,18 +24,20 @@
       <h1>Change Feature Weights</h1>
   </div>
   <div class="container mt-4">
-    <%= form_tag changeweights_path, method: :patch do %>
+    <form method="post" action="<%= save_weights_path %>" id="change-weights-form">
       <table class="table table-bordered">
         <thead>
           <tr>
             <th>Feature Name</th>
-            <th>Feature Weight</th>
+            <th>Current Weight</th>
+            <th>New Weight</th>
           </tr>
         </thead>
         <tbody id="table-body">
           <% @score_attributes.each do |score_attribute| %>
             <tr>
               <td><%= score_attribute.feature_name %></td>
+              <td><%= number_with_precision(score_attribute.feature_weight * 100, precision: 2) %>%</td>
               <td>
                 <div class="input-group">
                 <input type="text" class="form-control" name="feature_weights[]" value="<%= number_with_precision(score_attribute.feature_weight * 100, precision: 2) %>" />
@@ -52,6 +53,6 @@
       <div class="d-flex justify-content-center align-items-center">
         <button class="btn btn-danger custom-maroon-button ml-3" id="save-button" type="submit">Save Changes</button>
       </div>
-    <% end %>
+    </form>
   </div>
 </body>

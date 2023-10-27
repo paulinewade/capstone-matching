@@ -3,7 +3,7 @@ class ChangeweightsController < ApplicationController
         @score_attributes = ScoresAttribute.all
     end
 
-    def save_change
+    def save_weights
         feature_weights = params[:feature_weights]
 
         total = feature_weights.sum do |weight|
