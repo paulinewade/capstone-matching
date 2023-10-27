@@ -121,13 +121,13 @@ RSpec.describe ManageprofController, type: :controller do
         end
         it 'updates values when admin_approved or admin params are present' do
           post :save_change, params: admin_params
-          expect(response).to redirect_to(manageprof_path)
+          expect(response).to render_template('index')
           expect(flash[:success]).to eq("Changes saved.")
         end
     
         it 'deletes professors when delete_professor_emails param is present' do
           post :save_change, params: delete_params
-          expect(response).to redirect_to(manageprof_path)
+          expect(response).to render_template('index')
           expect(flash[:success]).to eq("Changes saved.")
         end
 
