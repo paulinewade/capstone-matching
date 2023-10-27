@@ -32,6 +32,12 @@ Rails.application.routes.draw do
   get 'changeweights', to: 'changeweights#index'
   post 'changeweights/save_weights', to: 'changeweights#save_weights', as: 'save_weights'
   # get 'dev_test/classify', to: 'dev_test#classify'
+  resources :projects do
+    member do
+      get "projects", to:"projects#index"
+      delete "projects/:id", to:"projects#destroy"
+    end
+  end
   
 
   resources :projects do
