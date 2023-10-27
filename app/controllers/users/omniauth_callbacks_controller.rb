@@ -31,6 +31,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def google_oauth2
     if auth.is_a?(OmniAuth::AuthHash)
       user = User.from_omniauth(auth, request.env['omniauth.params']['user_type'])
+      puts(user)
       if user.present?
         sign_out_all_scopes
         flash[:success] = t 'devise.omniauth_callbacks.success', kind: 'Google'
@@ -57,7 +58,9 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
         return "/StudentForm"
       elsif resource_or_scope.role == 'professor'
         return profLanding_path
-      end
+      elsif resource_or_scope.role == 'admin'
+        return adminlanding_path
+      end 
     end
   end
 

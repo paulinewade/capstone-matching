@@ -20,3 +20,9 @@ scores_attributes_data = [
 scores_attributes_data.each do |data|
   ScoresAttribute.create(data)
 end
+
+Course.create(course_id: 429, section_number: 602, professor_id: nil, semester: "Fall 2023")
+Course.create(course_id: 429, section_number: 601, professor_id: 1, semester: "Spring 2023")
+Course.create(course_id: 429, section_number: 600, professor_id: nil, semester: "Fall 2023")
+
+

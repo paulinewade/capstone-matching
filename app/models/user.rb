@@ -2,16 +2,22 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable,
+         :recoverable, :validatable,
          :omniauthable, omniauth_providers: [:google_oauth2]
+  before_create :set_user_id
+
+  def password_required?
+    false
+  end
 
   def self.from_omniauth(auth, user_type)
     if auth.is_a?(OmniAuth::AuthHash)
       user = where(email: auth.info.email).first_or_initialize do |u|
+        u.user_id = u.id
         u.email = auth.info.email
         u.password = Devise.friendly_token[0, 20]
-        u.full_name = auth.info.name # assuming the user model has a name
-        u.avatar_url = auth.info.image # assuming the user model has an image
+        u.first_name = auth.info.first_name # assuming the user model has a name
+        u.last_name = auth.info.last_name # assuming the user model has an image
       end
 
       # Set the user's role to "Student" for new records
@@ -30,4 +36,15 @@ class User < ApplicationRecord
       return nil
     end
   end
+
+  def set_user_id
+    self.user_id = self.id
+  end
+    # Fields from the table
+
+    validates :email, presence: true
+    validates :first_name, presence: true
+    validates :last_name, presence: true
+    validates :role, presence: true
+    validates :user_id, presence: true
 end

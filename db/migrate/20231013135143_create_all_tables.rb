@@ -1,6 +1,6 @@
 class CreateAllTables < ActiveRecord::Migration[7.0]
   def change
-    create_table :users_new do |t|
+    create_table :users do |t|
       t.integer :user_id
       t.string :email
       t.string :first_name
@@ -9,7 +9,7 @@ class CreateAllTables < ActiveRecord::Migration[7.0]
       t.timestamps
     end
 
-    create_table :professors_new do |t|
+    create_table :professors do |t|
       t.integer :professor_id
       t.boolean :admin
       t.boolean :verified
@@ -18,7 +18,8 @@ class CreateAllTables < ActiveRecord::Migration[7.0]
 
     create_table :students_new do |t|
       t.integer :student_id
-      t.integer :class_id
+      t.integer :course_id
+      t.integer :section_number
       t.integer :uin
       t.timestamps
     end
@@ -28,12 +29,13 @@ class CreateAllTables < ActiveRecord::Migration[7.0]
       t.string :project_name
       t.string :description
       t.string :sponsor
-      t.integer :class_id
+      t.integer :course_id
+      t.integer :section_number
       t.timestamps
     end
 
-    create_table :classes_new do |t|
-      t.integer :class_id
+    create_table :courses do |t|
+      t.integer :course_id
       t.integer :professor_id
       t.string :semester
       t.timestamps
