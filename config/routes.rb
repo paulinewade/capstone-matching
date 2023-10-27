@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   post "profregistration", to: "profregistration#create"
   get "addProjects", to: "projects#new"
   post "addProjects", to: "projects#create"
-  get "projects", to:"projects#index"
+
   get "/profLanding", to: "prof_landing#index"
   get "StudentForm", to:"studentform#index"
   post "StudentForm", to: "studentform#create"
@@ -26,5 +26,11 @@ Rails.application.routes.draw do
   post '/devtest/upload_resume', to: 'dev_test#upload_resume'
   resources :sections, only: [:new, :create]
   # get 'dev_test/classify', to: 'dev_test#classify'
+  resources :projects do
+    member do
+      get "projects", to:"projects#index"
+      delete "projects/:id", to:"projects#destroy"
+    end
+  end
   
 end
