@@ -4,8 +4,8 @@
 </head>
 <body>
   <div class="d-flex justify-content-between align-items-center">
-    <%= link_to "Back to Admin Home Page", adminlanding_path, class: "btn btn-danger custom-maroon-button ml-3", id: "back-button" %>
-    <button class="btn btn-danger custom-maroon-button" id="dark-mode-toggle">Toggle Dark Mode</button>
+    <%= link_to "Back to Admin Home Page", adminlanding_path, class: "btn btn-danger custom-maroon-button m-3", id: "back-button" %>
+    <button class="btn btn-danger custom-maroon-button m-3" id="dark-mode-toggle">Toggle Dark Mode</button>
   </div>
   <% if flash[:success].present? %>
     <div class="alert alert-success alert-dismissible fade show m-4" role="alert">
@@ -21,7 +21,7 @@
       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
   <% end %>
-  <div class="d-flex justify-content-center align-items-center">
+  <div class="d-flex justify-content-center align-items-center mt-4">
       <h1>Change Feature Weights</h1>
   </div>
   <div class="container mt-4">

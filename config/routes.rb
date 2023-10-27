@@ -28,5 +28,6 @@ Rails.application.routes.draw do
   get 'changeweights', to: 'changeweights#index'
   patch 'changeweights', to: 'changeweights#save_change'
   # get 'dev_test/classify', to: 'dev_test#classify'
+  get 'manageclasses', to: 'manageclasses#index'
   
 end
