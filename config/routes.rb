@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   post "profregistration", to: "profregistration#create"
   get "addProjects", to: "projects#new"
   post "addProjects", to: "projects#create"
-  get "projects", to:"projects#index"
+
   get "/profLanding", to: "prof_landing#index"
   get "StudentForm", to:"studentform#index"
   post "StudentForm", to: "studentform#create"
@@ -20,6 +20,10 @@ Rails.application.routes.draw do
   get "manageprof", to: "manageprof#index"
   post '/manageprof/save_change', to: 'manageprof#save_change', as: 'save_change'
   post '/manageprof/add_professor', to: 'manageprof#add_professor', as: 'add_professor'
+  get "lock_unlock_form", to: "adminlanding#lock_unlock_form"
+  post "lock_unlock", to: "adminlanding#lock_unlock", as: :lock_unlock
+  post 'lock_unlock_all_students', to: 'adminlanding#lock_unlock_all_students', as: 'lock_unlock_all_students'
+
   # Defines the root path route ("/")
   # root "articles#index"
   get '/devtest', to: 'dev_test#index'
@@ -29,4 +33,13 @@ Rails.application.routes.draw do
   post 'changeweights/save_weights', to: 'changeweights#save_weights', as: 'save_weights'
   # get 'dev_test/classify', to: 'dev_test#classify'
   
+
+  resources :projects do
+    member do
+      get "projects", to:"projects#index"
+      delete "projects/:id", to:"projects#destroy"
+    end
+  end
+  
+
 end

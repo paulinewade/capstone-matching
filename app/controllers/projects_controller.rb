@@ -1,4 +1,6 @@
 class ProjectsController < ApplicationController
+  # ToDo Check with team
+  protect_from_forgery except: :destroy
   def index
     @semesters = Project.pluck(:Semester).uniq
     @selected_semester = params[:semester]
@@ -18,7 +20,6 @@ class ProjectsController < ApplicationController
   def create
     @semesters = generate_semesters
     @project = Project.new(project_params)
-    puts("Semester name" , @project.Semester)
     respond_to do |format|
       if @project.save
         flash[:notice] = "Project was successfully created"
@@ -30,6 +31,29 @@ class ProjectsController < ApplicationController
       end
     end
   end
+
+  def edit
+    @semesters = generate_semesters
+    @project = Project.find(params[:id])
+  end
+
+  def destroy
+    @project = Project.find(params[:id])
+    @project.destroy
+    flash[:notice] = "Project was successfully deleted"
+    redirect_to projects_path
+  end
+
+  def update
+    @project = Project.find(params[:id])
+    if @project.update(project_params)
+      flash[:notice] = "Project was successfully updated"
+      redirect_to projects_path
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
 
   private
     def project_params

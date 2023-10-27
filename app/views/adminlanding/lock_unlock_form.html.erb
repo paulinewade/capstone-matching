@@ -1,0 +1,66 @@
+<div class="container">
+  <h2 class="text-center my-4">Lock/Unlock Student Form</h2>
+
+  <% all_students_locked = Student.count > 0 && (Student.where(form_locked: true).count == Student.count) %>
+
+  <%= form_tag lock_unlock_all_students_path, method: :post, remote: true do %>
+    <div class="form-check form-switch">
+      <input type="checkbox" id="globalToggle" class="form-check-input" name="form_locked" <%= all_students_locked ? 'checked' : '' %>>
+      <label class="form-check-label" for="globalToggle" id="globalToggleLabel">Lock/Unlock Student Forms for all students</label>
+    </div>
+    <%= submit_tag 'Save', class: 'btn btn-primary' %>
+  <% end %>
+
+  <h3 class="text-center my-4">Individual Student Lock/Unlock</h3>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Student ID</th>
+        <th>UIN</th>
+        <th>Name</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @students.each do |student| %>
+        <tr>
+          <td><%= student.student_id %></td>
+          <td><%= student.uin %></td>
+          <td></td>
+          <td>
+            <%= form_for student, url: lock_unlock_path, method: :post do |f| %>
+              <%= hidden_field_tag :uin, student.uin %>
+              <div class="student-action">
+                <div class="form-check form-switch">
+                  <%= f.check_box :form_locked, class: "form-check-input", data: { lockedText: "Locked", unlockedText: "Unlocked" } %>
+                  <label class="form-check-label">
+                    <%= student.form_locked ? "Locked" : "Unlocked" %>
+                  </label>
+                </div>
+                <div class="save-button">
+                  <%= f.submit 'Save', class: "btn btn-primary" %>
+                </div>
+              </div>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const checkboxes = document.querySelectorAll(".form-check-input");
+    checkboxes.forEach(function(checkbox) {
+      checkbox.addEventListener("click", function() {
+        const parentDiv = this.closest(".student-action");
+        const saveButtonDiv = parentDiv.querySelector(".save-button");
+        const label = parentDiv.querySelector(".form-check-label");
+
+        label.innerText = this.checked ? this.getAttribute("data-lockedText") : this.getAttribute("data-unlockedText");
+      });
+    });
+  });
+</script>

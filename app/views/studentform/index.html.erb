@@ -356,9 +356,18 @@
 					<div class="form-group mb-3">
 						<input type="checkbox" name="cbox" id="cbox" onchange="onCbChange('cbox')"> I have read and agree to the terms and conditions.</input>
 					</div>	
-					<div class="text-center mt-4">
-						<button type="submit" class="btn btn-danger custom-maroon-button">Submit</button>
-					</div>          
+					
+					<% all_students_locked = Student.count > 0 && (Student.where(form_locked: true).count == Student.count) %>
+
+					<% if !all_students_locked %>
+						<div class="text-center mt-4">
+							<button type="submit" class="btn btn-danger custom-maroon-button">Submit</button>
+						</div>
+					<% else %>
+						<div class="text-center mt-4">
+							<p>The student form is locked.</p>
+						</div>
+					<% end %>
 				</form>
 				<hr>
 			</div>
