@@ -558,6 +558,27 @@
 					</tbody>
 					</table>
 
+					
+					<script>
+					    // JavaScript to disable selected options in project dropdowns
+					    const projectDropdowns = document.querySelectorAll('.project-dropdown');
+
+					    projectDropdowns.forEach((dropdown, index) => {
+					        dropdown.addEventListener('change', (event) => {
+					            const selectedValue = event.target.value;
+					            projectDropdowns.forEach((otherDropdown, otherIndex) => {
+					                if (otherIndex !== index) {
+					                    const optionToDisable = otherDropdown.querySelector(`option[value="${selectedValue}"]`);
+					                    if (optionToDisable) {
+					                        optionToDisable.disabled = true;
+					                    }
+					                }
+					            });
+					        });
+					    });
+					</script>
+
+
 
 
 
