@@ -9,7 +9,6 @@ RSpec.describe ProjectsController, type: :controller do
         project_params = { Name: 'New Project', Semester: '2024', Sponsor: 'Sponsor', Description: 'Description', Link: 'Link' }
 
         count = Project.count
-        print(count)
         expect {
           post "create", params: { project: project_params }
         }.to change(Project, :count).by(1)

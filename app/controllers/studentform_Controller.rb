@@ -8,10 +8,6 @@ class StudentformController < ApplicationController
       first_name = params[:first_name]
       last_name = params[:last_name]
       uin = params[:uin]
-      print("kabskahbsk")
-      print("Params ",params)
-      print(first_name)
-      print(last_name)
       if email.end_with?("tamu.edu")
         existing_student = StudentForm.find_by(email: email)
 
