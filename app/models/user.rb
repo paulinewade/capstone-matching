@@ -30,4 +30,6 @@ class User < ApplicationRecord
       return nil
     end
   end
+  has_many :professor_preferences, foreign_key: 'professor_id'
+  has_many :preferred_projects, through: :professor_preferences, source: :project
 end
