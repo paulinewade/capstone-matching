@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_13_230220) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_22_160635) do
   create_table "classes_new", force: :cascade do |t|
     t.integer "class_id"
     t.integer "professor_id"
@@ -104,6 +104,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_13_230220) do
     t.integer "uin"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "form_locked", default: false
   end
 
   create_table "users", force: :cascade do |t|
