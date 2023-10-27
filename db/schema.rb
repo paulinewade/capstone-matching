@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_27_030046) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_27_041511) do
   create_table "courses", force: :cascade do |t|
     t.integer "course_id"
     t.integer "professor_id"
@@ -22,7 +22,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_27_030046) do
   end
 
   create_table "professors", force: :cascade do |t|
-    t.integer "professor_id"
     t.boolean "admin"
     t.boolean "verified"
     t.datetime "created_at", null: false

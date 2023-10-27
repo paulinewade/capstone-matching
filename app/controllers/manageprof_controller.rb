@@ -1,6 +1,25 @@
 class ManageprofController < ApplicationController
     def index
-      @professors = Professor.all
+        @professors = User.where(role: 'professor')
+        @professor_data = []
+        
+        @professors.each do |professor|
+            prof_bools = Professor.find_by(id: professor.user_id)
+            admin = prof_bools.admin
+            verified = prof_bools.verified
+            prof_courses = Course.where(professor_id: professor.id)
+            courses = prof_courses.map { |course| "#{course.course_id}-#{course.section_number}-#{course.semester}" }.join(", ")
+            professor_info = {
+                id: professor.id,
+                email: professor.email,
+                first_name: professor.first_name,
+                last_name: professor.last_name,
+                courses: courses,
+                admin: admin,
+                admin_approved: verified
+            }
+            @professor_data << professor_info
+        end
     end
     
     def save_change
@@ -21,10 +40,15 @@ class ManageprofController < ApplicationController
       
         if emails.present?
           emails.each do |email|
-            professor = Professor.find_by(email: email)
-      
-            if professor
+            user = User.find_by(email: email)
+            professor = Professor.find_by(user_id: user.user_id)
+            if user && professor
+              courses = Course.where(professor_id: professor.user_id)
+              courses.each do |course|
+                course.update(professor_id: nil)
+              end
               professor.destroy
+              user.destroy
             end
           end
       
@@ -42,19 +66,25 @@ class ManageprofController < ApplicationController
         else
             admin = false
         end
-        professor = Professor.new( email: email,
-                                   first_name: first_name,
-                                   last_name: last_name,
-                                   admin_approved: true,
-                                   admin: admin )
         if email.end_with?("tamu.edu")
-            existing_prof = Professor.find_by(email: email)
+            existing_prof = User.find_by(email: email)
     
             if existing_prof
                 flash[:error] = "Professor already registered."
             else
-                if professor.save
-                    flash[:success] = "Professor added."
+                max_user_id = User.maximum(:user_id)
+                next_user_id = max_user_id.to_i + 1
+                prof_user = User.new(email: email, first_name: first_name, last_name: last_name, role: "professor", user_id: next_user_id)
+                if prof_user.save
+                    prof_user.update(id: prof_user.user_id)
+                    professor_info = Professor.new(admin: false, verified: true, user_id: prof_user.id)
+                    if professor_info.save 
+                        flash[:success] = "Professor added."
+                    else
+                        flash[:error] = "Issue with saving professor."
+                    end
+                else
+                    flash[:error] = "Could not save user."
                 end
             end
         else
@@ -65,15 +95,17 @@ class ManageprofController < ApplicationController
 
     def update_values
         params[:admin_approved].each do |email, value|
-            professor = Professor.find_by(email: email)
+            user = User.find_by(email: email)
+            professor = Professor.find_by(user_id: user.user_id)
       
             if professor
-              professor.update(admin_approved: value == 'Yes')
+              professor.update(verified: value == 'Yes')
             end
           end
       
         params[:admin].each do |email, value|
-            professor = Professor.find_by(email: email)
+            user = User.find_by(email: email)
+            professor = Professor.find_by(user_id: user.user_id)
       
             if professor
               professor.update(admin: value == 'Yes')

@@ -4,7 +4,6 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :validatable,
          :omniauthable, omniauth_providers: [:google_oauth2]
-  before_create :set_user_id
 
   def password_required?
     false
@@ -37,9 +36,6 @@ class User < ApplicationRecord
     end
   end
 
-  def set_user_id
-    self.user_id = self.id
-  end
     # Fields from the table
 
     validates :email, presence: true
