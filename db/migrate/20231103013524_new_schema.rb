@@ -31,8 +31,8 @@ class NewSchema < ActiveRecord::Migration[7.0]
     add_index :courses, [:course_number, :section, :semester], unique: true
     add_foreign_key :courses, :professors, column: :professor_id, primary_key: "professor_id"
     
-    create_table :students, id: false, primary_key: [:student_id, :course_id] do |t|
-      t.integer :student_id, null: false
+    create_table :students, id: false, primary_key: :student_id do |t|
+      t.integer :student_id, null: false, primary_key: true
       t.integer :course_id, null: false
       t.string :gender, null: false
       t.string :nationality, null: false
@@ -55,8 +55,8 @@ class NewSchema < ActiveRecord::Migration[7.0]
       t.string :ethnicity_name, null: false
     end
     add_index :ethnicity_values, [:student_id, :ethnicity_name], unique: true
-    add_foreign_key :ethnicity_values, :students, column: :student_id
-    add_foreign_key :ethnicity_values, :ethnicities, column: :ethnicity_name
+    add_foreign_key :ethnicity_values, :students, column: :student_id, primary_key: :student_id
+    add_foreign_key :ethnicity_values, :ethnicities, column: :ethnicity_name, primary_key: :ethnicity_name
 
     create_table :projects, id: false, primary_key: :project_id do |t|
       t.integer :project_id, null: false, unique: true, auto_increment: true, primary_key: true
@@ -68,18 +68,16 @@ class NewSchema < ActiveRecord::Migration[7.0]
       t.string :semester
       t.string :info_url
     end
-    add_foreign_key :projects, :courses, column: :course_id
-    add_foreign_key :projects, :courses, column: :section
-    add_foreign_key :projects, :courses, column: :semester
+    add_foreign_key :projects, :courses, column: :course_id, primary_key: :course_id
     
     create_table :professor_preferences,id: false, primary_key: [:professor_id, :project_id] do |t|
-      t.integer :professor_id, null: false, primary_key: true
-      t.integer :project_id, null: false, primary_key: true
+      t.integer :professor_id, null: false
+      t.integer :project_id, null: false
       t.integer :pref, null: false
     end
     add_index :professor_preferences, [:professor_id, :project_id], unique: true
-    add_foreign_key :professor_preferences, :professors, column: :professor_id
-    add_foreign_key :professor_preferences, :projects, column: :project_id
+    add_foreign_key :professor_preferences, :professors, column: :professor_id, primary_key: :professor_id
+    add_foreign_key :professor_preferences, :projects, column: :project_id, primary_key: :project_id
 
 
     create_table :scores_entities, id: false, primary_key: :scores_id do |t|
@@ -87,8 +85,8 @@ class NewSchema < ActiveRecord::Migration[7.0]
       t.integer :student_id, null:false
       t.integer :project_id, null:false
     end
-    add_foreign_key :scores_entities, :students, column: :student_id
-    add_foreign_key :scores_entities, :projects, column: :project_id
+    add_foreign_key :scores_entities, :students, column: :student_id, primary_key: :student_id
+    add_foreign_key :scores_entities, :projects, column: :project_id, primary_key: :project_id
     
     create_table :scores_attributes, id: false, primary_key: :attribute_id do |t|
       t.integer :attribute_id, null: false, unique: true, auto_increment: true, primary_key: true
@@ -102,8 +100,8 @@ class NewSchema < ActiveRecord::Migration[7.0]
       t.float :feature_score, null: false, default: 0.0
     end
     add_index :scores_values, [:scores_id, :attribute_id], unique: true
-    add_foreign_key :scores_values, :scores_attributes, column: :attribute_id
-    add_foreign_key :scores_values, :scores_entities, column: :scores_id
+    add_foreign_key :scores_values, :scores_attributes, column: :attribute_id, primary_key: :attribute_id
+    add_foreign_key :scores_values, :scores_entities, column: :scores_id, primary_key: :scores_id
 
     create_table :sponsor_restrictions, id: false, primary_key: :restriction_id do |t|
       t.integer :restriction_id, null: false, unique: true, auto_increment: true, primary_key: true
@@ -111,7 +109,7 @@ class NewSchema < ActiveRecord::Migration[7.0]
       t.string :restriction_val, null: false #select values that cannot appear, if student has one of these values then they will not be allowed on the project
       t.integer :project_id, null: false
     end
-    add_foreign_key :sponsor_restrictions, :projects, column: :project_id
+    add_foreign_key :sponsor_restrictions, :projects, column: :project_id, primary_key: :project_id
     
 
     create_table :sponsor_preferences, id: false, primary_key: :preference_id do |t|
@@ -120,6 +118,6 @@ class NewSchema < ActiveRecord::Migration[7.0]
       t.string :preference_val, null: false, unique: true #values that they prefer - ie US citizen for work authorization, all other types will not be allowed on project
       t.integer :project_id, null: false
     end
-    add_foreign_key :sponsor_preferences, :projects, column: :project_id
+    add_foreign_key :sponsor_preferences, :projects, column: :project_id, primary_key: :project_id
   end
 end
