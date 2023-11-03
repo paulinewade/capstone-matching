@@ -1,14 +1,16 @@
 class Professor < ApplicationRecord
-  serialize :semester, Array
-  serialize :section, Array
+  before_validation :set_defaults
 
-  validates :email, presence: true
-  validates :first_name, presence: true
-  validates :last_name, presence: true
+  self.primary_key = 'professor_id'
+  belongs_to :user, foreign_key: 'professor_id'
+  validates :verified, presence: true
+  validates :admin, presence: true
 
-  attribute :semester, default: []
-  attribute :section, default: []
-  attribute :admin_approved, default: false
-  attribute :admin, default: false
+  private
+
+  def set_defaults
+    self.verified = false
+    self.admin = false
+  end
 end
 

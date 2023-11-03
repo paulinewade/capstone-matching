@@ -1,8 +1,9 @@
 class NewSchema < ActiveRecord::Migration[7.0]
   def change
-    create_table :globals, id: false, primary_key: :global_id do |t|
-      t.integer :global_id, null: false, auto_increment: true, primary_key: true
+    create_table :configs, id: false, primary_key: :config_id do |t|
+      t.integer :config_id, null: false, auto_increment: true, primary_key: true
       t.integer :min_number, default: 0, null: false
+      t.integer :max_number, default: 1,  null: false
       t.boolean :lock, default: false, null: false
     end
 
@@ -37,6 +38,7 @@ class NewSchema < ActiveRecord::Migration[7.0]
       t.string :gender, null: false
       t.string :nationality, null: false
       t.string :work_auth, null: false
+      t.string :contract_sign, null: false
       t.string :resume
       t.timestamps
     end
@@ -116,6 +118,7 @@ class NewSchema < ActiveRecord::Migration[7.0]
       t.string :preference_type, null: false, unique: true #will be one of the columns on student table
       t.string :preference_val, null: false, unique: true #values that they prefer - ie US citizen for work authorization, all other types will not be allowed on project
       t.integer :project_id, null: false
+      t.float :bonus_amount, null: false, default: 0.0
     end
     add_foreign_key :sponsor_preferences, :projects, column: :project_id, primary_key: :project_id
   end
