@@ -40,7 +40,7 @@ class NewSchema < ActiveRecord::Migration[7.0]
       t.string :resume
       t.timestamps
     end
-    add_foreign_key :students, :users, column: :student_id
+    add_foreign_key :students, :users, column: :student_id, primary_key: :user_id
     add_foreign_key :students, :courses, column: :course_id
     add_foreign_key :students, :courses, column: :section
     add_foreign_key :students, :courses, column: :semester
@@ -119,4 +119,5 @@ class NewSchema < ActiveRecord::Migration[7.0]
       t.integer :project_id, null: false
     end
     add_foreign_key :sponsor_preferences, :projects, column: :project_id
+  end
 end
