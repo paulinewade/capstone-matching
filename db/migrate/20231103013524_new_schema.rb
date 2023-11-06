@@ -4,7 +4,8 @@ class NewSchema < ActiveRecord::Migration[7.0]
       t.integer :config_id, null: false, auto_increment: true, primary_key: true
       t.integer :min_number, default: 0, null: false
       t.integer :max_number, default: 1,  null: false
-      t.boolean :lock, default: false, null: false
+      t.datetime :form_open, null: false
+      t.datetime :form_close, null: false
     end
 
     create_table :users, id: false, primary_key: :user_id do |t|
@@ -40,7 +41,6 @@ class NewSchema < ActiveRecord::Migration[7.0]
       t.string :work_auth, null: false
       t.string :contract_sign, null: false
       t.string :resume
-      t.timestamps
     end
     add_foreign_key :students, :users, column: :student_id, primary_key: :user_id, on_delete: :cascade
     add_foreign_key :students, :courses, column: :course_id, primary_key: :course_id, on_delete: :cascade
@@ -67,6 +67,7 @@ class NewSchema < ActiveRecord::Migration[7.0]
       t.string :sponsor, null: false
       t.integer :course_id
       t.string :info_url
+      t.string :semester, null: false
     end
     add_foreign_key :projects, :courses, column: :course_id, primary_key: :course_id, on_delete: :nullify
     

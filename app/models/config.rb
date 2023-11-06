@@ -3,5 +3,6 @@ class Config < ApplicationRecord
 
     validates :min_number, presence: true
     validates :max_number, presence: true
-    validates :lock, inclusion: [true, false]
+    validates :form_open, presence: true
+    validates :form_close, presence: true
 end

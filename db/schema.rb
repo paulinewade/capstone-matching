@@ -14,7 +14,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_03_013524) do
   create_table "configs", primary_key: "config_id", force: :cascade do |t|
     t.integer "min_number", default: 0, null: false
     t.integer "max_number", default: 1, null: false
-    t.boolean "lock", default: false, null: false
+    t.datetime "form_open", null: false
+    t.datetime "form_close", null: false
   end
 
   create_table "courses", primary_key: "course_id", force: :cascade do |t|
@@ -52,6 +53,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_03_013524) do
     t.string "sponsor", null: false
     t.integer "course_id"
     t.string "info_url"
+    t.string "semester", null: false
   end
 
   create_table "scores_attributes", primary_key: "attribute_id", force: :cascade do |t|
@@ -94,8 +96,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_03_013524) do
     t.string "work_auth", null: false
     t.string "contract_sign", null: false
     t.string "resume"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "users", primary_key: "user_id", force: :cascade do |t|

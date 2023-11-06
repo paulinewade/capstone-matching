@@ -9,8 +9,9 @@
 # db/seeds/scores_attributes_seeds.rb
 
 # Seed data for the "scores_attributes" table
-
-config = Config.create(min_number: 5, max_number: 10, lock: false)
+form_open_datetime = DateTime.new(2023, 11, 6, 9, 0) # Example date and time
+form_close_datetime = DateTime.new(2023, 11, 6, 17, 0) # Example date and time
+config = Config.create(min_number: 5, max_number: 10, form_open: form_open_datetime , form_close:form_close_datetime )
 
 student_user = User.create(first_name: "student", last_name: "example", role: "student", email: "studentemail@tamu.edu")
 prof_user = User.create(first_name: "professor", last_name: "example", role: "professor", email: "profemail@tamu.edu")
@@ -42,8 +43,8 @@ student = Student.create(student_id: student_user.user_id, course_id: course.cou
 ethnicity_value1 = EthnicityValue.create(student_id: student.student_id, ethnicity_name: "White")
 ethnicity_value2 = EthnicityValue.create(student_id: student.student_id, ethnicity_name: "Black or African American")
 
-project = Project.create(name: "Example Project", description: "Example Description", sponsor: "Example Sponsor", course_id: course.course_id, info_url: "www.tamu.edu")
-project = Project.create(name: "Example Project2", description: "Example Description2", sponsor: "Example Sponsor2")
+project = Project.create(name: "Example Project", description: "Example Description", sponsor: "Example Sponsor", course_id: course.course_id, info_url: "www.tamu.edu", semester: "Fall 2023")
+project = Project.create(name: "Example Project2", description: "Example Description2", sponsor: "Example Sponsor2", semester: "Spring 2024")
 
 attribute1 = ScoresAttribute.create(feature: "Resume/Skills Match Score", feature_weight: 0.5)
 attribute2 = ScoresAttribute.create(feature: "Preference Match Score", feature_weight: 0.25)
