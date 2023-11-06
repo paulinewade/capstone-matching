@@ -66,7 +66,7 @@ html.dark-mode table {
   }
 
 .header {
-    background-color: #500000;
+    background-color: maroon;
     color: #ffffff;
     padding: 30px 0;
     text-align: center;
@@ -84,7 +84,7 @@ html.dark-mode table {
 }
 
 .btn-primary {
-    background-color: #500000;
+    background-color: maroon;
     border: none;
 }
 
