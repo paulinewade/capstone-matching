@@ -51,7 +51,8 @@ class NewSchema < ActiveRecord::Migration[7.0]
     end
 
     #EAV so students cant have multiple ethnicities listed
-    create_table :ethnicity_values, id: false, primary_key: [:student_id, :ethnicity_name] do |t|
+    create_table :ethnicity_values, id: false, primary_key: :ethnicity_value_id do |t|
+      t.integer :ethnicity_value_id, null: false, auto_increment: true, primary_key: true
       t.integer :student_id, null: false
       t.string :ethnicity_name, null: false
     end
@@ -69,7 +70,8 @@ class NewSchema < ActiveRecord::Migration[7.0]
     end
     add_foreign_key :projects, :courses, column: :course_id, primary_key: :course_id, on_delete: :nullify
     
-    create_table :professor_preferences,id: false, primary_key: [:professor_id, :project_id] do |t|
+    create_table :professor_preferences,id: false, primary_key: :professor_preference_id do |t|
+      t.integer :professor_preference_id, null: false, auto_increment: true, primary_key: true
       t.integer :professor_id, null: false
       t.integer :project_id, null: false
       t.integer :pref, null: false
@@ -96,7 +98,8 @@ class NewSchema < ActiveRecord::Migration[7.0]
     end
 
     #EAV between scores_entity and scores_attribute - each scores entity can have multiple scores attributes
-    create_table :scores_values, id: false, primary_key: [:scores_id, :attribute_id] do |t|
+    create_table :scores_values, id: false, primary_key: :scores_value_id do |t|
+      t.integer :scores_value_id, null: false, auto_increment: true, primary_key: true
       t.integer :scores_id, null: false
       t.integer :attribute_id, null: false
       t.float :feature_score, null: false, default: 0.0
