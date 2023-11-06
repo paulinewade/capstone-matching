@@ -1,4 +1,7 @@
 class ProfregistrationController < ApplicationController
+  def index
+  end
+  
   def create
     # Extract form parameters
     email = params[:email]
