@@ -5,11 +5,11 @@ class ChangeweightsController < ApplicationController
 
     def save_weights
         feature_weights = params[:feature_weights]
-        puts(feature_weights)
+      
         total = feature_weights.sum do |weight|
             weight.to_f
         end
-
+      
         if total != 100
             flash[:error] = "Weights do not add up to 100%, try again."
             redirect_to changeweights_path

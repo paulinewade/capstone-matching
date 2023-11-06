@@ -15,6 +15,14 @@ class DevTestController < ApplicationController
   end
 
   def upload_resume
+    
+    class_id = params[:class_id].to_i
+    # class_id = 1
+    
+    @descriptions = ProjectNew.where(class_id: class_id).pluck(:description)
+    puts "text: " + @descriptions.join(separator = ",")
+
+
     if params[:resume].present? && params[:resume].content_type == 'application/pdf'
       uploaded_resume = params[:resume].tempfile
       @resume_text = parse_pdf_resume(uploaded_resume)
@@ -23,7 +31,7 @@ class DevTestController < ApplicationController
       # puts "Extracted Resume Text:"
       # puts @resume_text
       flash[:resume_text] = @resume_text
-      classification = classify(@resume_text)
+      classification = classify(@resume_text, @descriptions)
       
       @most_similar_job_description = classification[0]
       @similarity_score = classification[1]
@@ -63,7 +71,13 @@ class DevTestController < ApplicationController
     return filtered_string
   end
   
-  def classify(resume_text)
+  # it's better to use the id of the project, but this is a hotfix
+  def store_score(most_similar_job_description, similarity_score)
+    # fill here
+  end
+
+  
+  def classify(resume_text, descriptions)
     
     stop_words = [
       "a", "about", "above", "after", "all", "also", "am", "an", "and", "any",
@@ -92,11 +106,13 @@ class DevTestController < ApplicationController
       simplified = remove_stop_words(job_descriptions[i], stop_words)
       corpus[i] = TfIdfSimilarity::Document.new(simplified)
     end
+    # puts "text: " + descriptions.join(separator = ",")
+    job_descriptions = descriptions
     
     resumeidx = corpus.length # last index of corpus
     
     # Process the resume and calculate TF-IDF scores
-    resume = resume_text
+    resume = "I am a software engineer with extensive experience in Ruby and Ruby on Rails."
     corpus[resumeidx] = TfIdfSimilarity::Document.new(remove_stop_words(resume.downcase.gsub(/[^a-z\s]/, ''), stop_words))
 
     model = TfIdfSimilarity::TfIdfModel.new(corpus)
@@ -124,6 +140,7 @@ class DevTestController < ApplicationController
       puts "No suitable job description found for the resume."
       return "No suitable job description found for the resume."
     end
+    return "done"
   end
 
   

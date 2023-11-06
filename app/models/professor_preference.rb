@@ -6,4 +6,3 @@ class ProfessorPreference < ApplicationRecord
 
     validates :pref, presence: true
   end
-  
