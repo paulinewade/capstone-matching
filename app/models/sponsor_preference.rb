@@ -3,8 +3,8 @@ class SponsorPreference < ApplicationRecord
   
     belongs_to :project, foreign_key: 'project_id', primary_key: 'project_id'
   
-    validates :preference_type, presence: true, uniqueness: true
-    validates :preference_val, presence: true, uniqueness: true
+    validates :preference_type, presence: true
+    validates :preference_val, presence: true
     validates :bonus_amount, presence: true
   end
   

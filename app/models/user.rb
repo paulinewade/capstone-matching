@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   #commenting out, re-add if needed
-  devise :registerable, :recoverable, :rememberable, :validatable,
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable,
          :omniauthable, omniauth_providers: [:google_oauth2]
 
   def self.from_omniauth(auth, user_type)
@@ -29,10 +30,10 @@ class User < ApplicationRecord
   end
   
   self.primary_key = 'user_id'
-  has_one :professor, foreign_key: 'professor_id', primary_key: 'user_id'
+  has_one :professor, foreign_key: 'professor_id'
   has_one :student, foreign_key: 'student_id', primary_key: 'user_id'
   validates :first_name, presence: true
   validates :last_name, presence: true
   validates :role, presence: true
-  validates :email, presence: true   
+  validates :email, presence: true, uniqueness: true   
 end
