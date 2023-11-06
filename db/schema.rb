@@ -63,7 +63,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_03_013524) do
     t.integer "student_id", null: false
     t.integer "project_id", null: false
     t.integer "pref", null: false
-    t.index ["student_id", "pref"], name: "index_scores_entities_on_student_id_and_pref", unique: true
+    t.index ["student_id", "project_id", "pref"], name: "index_scores_entities_on_student_id_and_project_id_and_pref", unique: true
   end
 
   create_table "scores_values", primary_key: "scores_value_id", force: :cascade do |t|

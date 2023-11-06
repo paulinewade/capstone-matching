@@ -87,7 +87,7 @@ class NewSchema < ActiveRecord::Migration[7.0]
       t.integer :project_id, null: false
       t.integer :pref, null: false #could keep null to demonstrate they didnt mark it??
     end
-    add_index :scores_entities, [:student_id, :pref], unique: true #students can only have 1 of each ranking?
+    add_index :scores_entities, [:student_id, :project_id, :pref], unique: true #students can only have 1 of each ranking?
     add_foreign_key :scores_entities, :students, column: :student_id, primary_key: :student_id, on_delete: :cascade
     add_foreign_key :scores_entities, :projects, column: :project_id, primary_key: :project_id, on_delete: :cascade
     
