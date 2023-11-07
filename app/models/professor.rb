@@ -1,17 +1,12 @@
 class Professor < ApplicationRecord
-  serialize :semester, Array
-  serialize :section, Array
+  self.primary_key = 'professor_id'
+  
+  belongs_to :user, foreign_key: 'professor_id', primary_key: 'user_id'
 
-  validates :email, presence: true
-  validates :first_name, presence: true
-  validates :last_name, presence: true
+  has_many :courses, foreign_key: 'professor_id', primary_key: 'professor_id'
+  has_many :professor_preferences, foreign_key: 'professor_id', primary_key: 'professor_id'
 
-  attribute :semester, default: []
-  attribute :section, default: []
-  attribute :admin_approved, default: false
-  attribute :admin, default: false
-
-  has_many :professor_preferences
-  has_many :preferred_projects, through: :professor_preferences, source: :project
+  validates :verified, inclusion: [true, false]
+  validates :admin, inclusion: [true, false]
 end
 

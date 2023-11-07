@@ -1,7 +1,6 @@
 <html>
 <head>
   <title>Professor Registration</title>
-  <%= csrf_meta_tags %>
 </head>
 <body>
   <div class="container mt-3">
@@ -32,24 +31,24 @@
       <div class="col-md-8 offset-md-2">
         <h1 class="text-center mb-4">Professor Registration</h1>
         <!-- Registration Form -->
-        <form action="/profregistration" method="post">
+        <%= form_with(url: "/profregistration", method: "post") do |form| %>
           <div class="form-group mb-3">
-              <label for="email">TAMU Email Address<span class="text-danger">*</span></label>
-              <input type="email" class="form-control" id="email" name="email" placeholder="Enter your TAMU email address" required>
-            </div>
-            <div class="form-group mb-3">
-              <label for="first-name">First Name<span class="text-danger">*</span></label>
-              <input type="text" class="form-control" id="first-name" name="first_name" placeholder="Enter your first name" required>
-            </div>
-            <div class="form-group mb-3">
-              <label for="last-name">Last Name<span class="text-danger">*</span></label>
-              <input type="text" class="form-control" id="last-name" name="last_name" placeholder="Enter your last name" required>
-            </div>
-            <div class="text-center mt-4">
-              <button type="submit" class="btn btn-danger custom-maroon-button">Register</button>
-              <p class="mt-2">Already registered as a professor? <a href="<%= new_user_session_path(user_type: "professor") %>" style="color: maroon;">Login here</a></p>
-            </div>          
-        </form>
+            <%= form.label :email, "TAMU Email Address<span class='text-danger'>*</span>".html_safe %>
+            <%= form.email_field :email, class: "form-control", placeholder: "Enter your TAMU email address", required: true %>
+          </div>
+          <div class="form-group mb-3">
+            <%= form.label :first_name, "First Name<span class='text-danger'>*</span>".html_safe %>
+            <%= form.text_field :first_name, class: "form-control", placeholder: "Enter your first name", required: true %>
+          </div>
+          <div class="form-group mb-3">
+            <%= form.label :last_name, "Last Name<span class='text-danger'>*</span>".html_safe %>
+            <%= form.text_field :last_name, class: "form-control", placeholder: "Enter your last name", required: true %>
+          </div>
+          <div class="text-center mt-4">
+            <%= form.submit "Register", class: "btn btn-danger custom-maroon-button" %>
+            <p class="mt-2">Already registered as a professor? <%= link_to "Login here", new_user_session_path(user_type: "professor"), style: "color: maroon;" %></p>
+          </div>
+        <% end %>
         <hr>
       </div>
     </div>

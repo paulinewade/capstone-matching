@@ -24,35 +24,35 @@
       <h1>Change Feature Weights</h1>
   </div>
   <div class="container mt-4">
-    <form method="post" action="<%= save_weights_path %>" id="change-weights-form">
-      <table class="table table-bordered">
-        <thead>
+  <%= form_with(url: save_weights_path, id: 'change-weights-form', method: 'post') do |form| %>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Feature Name</th>
+          <th>Current Weight</th>
+          <th>New Weight</th>
+        </tr>
+      </thead>
+      <tbody id="table-body">
+        <% @score_attributes.each do |score_attribute| %>
           <tr>
-            <th>Feature Name</th>
-            <th>Current Weight</th>
-            <th>New Weight</th>
-          </tr>
-        </thead>
-        <tbody id="table-body">
-          <% @score_attributes.each do |score_attribute| %>
-            <tr>
-              <td><%= score_attribute.feature_name %></td>
-              <td><%= number_with_precision(score_attribute.feature_weight * 100, precision: 2) %>%</td>
-              <td>
-                <div class="input-group">
-                <input type="text" class="form-control" name="feature_weights[]" value="<%= number_with_precision(score_attribute.feature_weight * 100, precision: 2) %>" />
-                  <div class="input-group-append">
-                    <span class="input-group-text">%</span>
-                  </div>
+            <td><%= score_attribute.feature %></td>
+            <td><%= number_with_precision(score_attribute.feature_weight * 100, precision: 2) %>%</td>
+            <td>
+              <div class="input-group">
+                <%= form.text_field "feature_weights[]", value: number_with_precision(score_attribute.feature_weight * 100, precision: 2), class: 'form-control' %>
+                <div class="input-group-append">
+                  <span class="input-group-text">%</span>
                 </div>
-              </td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-      <div class="d-flex justify-content-center align-items-center">
-        <button class="btn btn-danger custom-maroon-button ml-3" id="save-button" type="submit">Save Changes</button>
-      </div>
-    </form>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <div class="d-flex justify-content-center align-items-center">
+      <%= form.submit 'Save Changes', class: 'btn btn-danger custom-maroon-button ml-3', id: 'save-button' %>
+    </div>
+  <% end %>  
   </div>
 </body>
