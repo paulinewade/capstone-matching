@@ -28,6 +28,10 @@
             <%= form.label :last_name, "Last Name<span class='text-danger'>*</span>".html_safe %>
             <%= form.text_field :last_name, class: "form-control", placeholder: "Enter your last name", required: true %>
           </div>
+          <div class="form-group mb-3">
+            <%= form.label :course_id, "Select a Course".html_safe %>
+            <%= form.collection_select :course_id, @courses, :id, lambda { |course| "CSCE #{course.course_number}-#{course.section}-(#{course.semester})" }, prompt: "Select a course", class: "form-control" %>
+          </div>
           <div class="text-center mt-4">
             <%= form.submit "Register", class: "btn btn-danger custom-maroon-button" %>
             <p class="mt-2">Already registered as a professor? <%= link_to "Login here", new_user_session_path(user_type: "professor"), style: "color: maroon;" %></p>

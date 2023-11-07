@@ -1,5 +1,6 @@
 class ProfregistrationController < ApplicationController
   def index
+    @courses = Course.where(professor_id: nil)
   end
   
   def create
