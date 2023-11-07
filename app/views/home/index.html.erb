@@ -34,8 +34,8 @@
                 <h2>Get Started</h2>
                 <p>Join our community of students and educators to discover or propose capstone projects.</p>
                 <button class="btn btn-primary custom-button">
-                    <a id="student-path" href="<%= current_user.present? && current_user.role == 'student' ? '/StudentForm' : new_user_session_path(user_type: "student") %>">
-                        Student
+                <a id="student-path" href="<%= current_user.present? && current_user.role == 'student' ? '/StudentForm' : new_user_session_path %>">
+                        Login
                     </a>
                 </button>
                 <button class="btn btn-primary custom-button">

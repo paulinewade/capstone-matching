@@ -10,139 +10,114 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_27_163209) do
-  create_table "classes_new", force: :cascade do |t|
-    t.integer "class_id"
-    t.integer "professor_id"
-    t.string "semester"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+ActiveRecord::Schema[7.0].define(version: 2023_11_03_013524) do
+  create_table "configs", primary_key: "config_id", force: :cascade do |t|
+    t.integer "min_number", default: 0, null: false
+    t.integer "max_number", default: 1, null: false
+    t.datetime "form_open", null: false
+    t.datetime "form_close", null: false
   end
 
-  create_table "professor_preferences", force: :cascade do |t|
+  create_table "courses", primary_key: "course_id", force: :cascade do |t|
+    t.integer "course_number", null: false
+    t.integer "section", null: false
+    t.string "semester", null: false
+    t.integer "professor_id"
+    t.index ["course_number", "section", "semester"], name: "index_courses_on_course_number_and_section_and_semester", unique: true
+  end
+
+  create_table "ethnicities", primary_key: "ethnicity_name", id: :string, force: :cascade do |t|
+  end
+
+  create_table "ethnicity_values", primary_key: "ethnicity_value_id", force: :cascade do |t|
+    t.integer "student_id", null: false
+    t.string "ethnicity_name", null: false
+    t.index ["student_id", "ethnicity_name"], name: "index_ethnicity_values_on_student_id_and_ethnicity_name", unique: true
+  end
+
+  create_table "professor_preferences", primary_key: "professor_preference_id", force: :cascade do |t|
     t.integer "professor_id", null: false
     t.integer "project_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["professor_id"], name: "index_professor_preferences_on_professor_id"
-    t.index ["project_id"], name: "index_professor_preferences_on_project_id"
+    t.integer "pref", null: false
+    t.index ["professor_id", "project_id"], name: "index_professor_preferences_on_professor_id_and_project_id", unique: true
   end
 
-  create_table "professors", force: :cascade do |t|
-    t.string "email"
-    t.string "semester", default: "{}"
-    t.string "section", default: "{}"
-    t.string "first_name"
-    t.string "last_name"
-    t.boolean "admin_approved", default: false
-    t.boolean "admin", default: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+  create_table "professors", primary_key: "professor_id", force: :cascade do |t|
+    t.boolean "verified", default: false, null: false
+    t.boolean "admin", default: false, null: false
   end
 
-  create_table "professors_new", force: :cascade do |t|
-    t.integer "professor_id"
-    t.boolean "admin"
-    t.boolean "verified"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "projects", force: :cascade do |t|
-    t.string "Semester"
-    t.string "Name"
-    t.string "Sponsor"
-    t.text "Description"
-    t.string "Link"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "projects_new", force: :cascade do |t|
-    t.integer "project_id"
-    t.string "project_name"
-    t.string "description"
-    t.string "sponsor"
-    t.integer "class_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "scores_attributes", force: :cascade do |t|
-    t.integer "attribute_id"
-    t.string "feature_name"
-    t.float "feature_weight"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "scores_entities_new", force: :cascade do |t|
-    t.integer "scores_id"
-    t.integer "student_id"
-    t.integer "project_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "scores_values_new", force: :cascade do |t|
-    t.integer "scores_id"
-    t.integer "attribute_id"
-    t.float "feature_score"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "sections", force: :cascade do |t|
+  create_table "projects", primary_key: "project_id", force: :cascade do |t|
     t.string "name", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string "description", null: false
+    t.string "sponsor", null: false
+    t.integer "course_id"
+    t.string "info_url"
+    t.string "semester", null: false
   end
 
-  create_table "student_forms", force: :cascade do |t|
-    t.string "email"
-    t.string "last_name"
-    t.string "first_name"
-    t.integer "uin"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+  create_table "scores_attributes", primary_key: "attribute_id", force: :cascade do |t|
+    t.string "feature", null: false
+    t.float "feature_weight", default: 0.0, null: false
   end
 
-  create_table "students_new", force: :cascade do |t|
-    t.integer "student_id"
-    t.integer "class_id"
-    t.integer "uin"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.boolean "form_locked", default: false
+  create_table "scores_entities", primary_key: "scores_id", force: :cascade do |t|
+    t.integer "student_id", null: false
+    t.integer "project_id", null: false
+    t.integer "pref", null: false
+    t.index ["student_id", "pref"], name: "index_scores_entities_on_student_id_and_pref", unique: true
+    t.index ["student_id", "project_id"], name: "index_scores_entities_on_student_id_and_project_id", unique: true
   end
 
-  create_table "users", force: :cascade do |t|
-    t.string "full_name"
-    t.string "uid"
-    t.string "avatar_url"
-    t.string "provider"
-    t.string "email", default: "", null: false
-    t.string "encrypted_password", default: "", null: false
-    t.string "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "role"
-    t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  create_table "scores_values", primary_key: "scores_value_id", force: :cascade do |t|
+    t.integer "scores_id", null: false
+    t.integer "attribute_id", null: false
+    t.float "feature_score", default: 0.0, null: false
+    t.index ["scores_id", "attribute_id"], name: "index_scores_values_on_scores_id_and_attribute_id", unique: true
   end
 
-  create_table "users_new", force: :cascade do |t|
-    t.integer "user_id"
-    t.string "email"
-    t.string "first_name"
-    t.string "last_name"
-    t.string "role"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+  create_table "sponsor_preferences", primary_key: "preference_id", force: :cascade do |t|
+    t.string "preference_type", null: false
+    t.string "preference_val", null: false
+    t.integer "project_id", null: false
+    t.float "bonus_amount", default: 0.0, null: false
   end
 
-  add_foreign_key "professor_preferences", "professors"
-  add_foreign_key "professor_preferences", "projects"
+  create_table "sponsor_restrictions", primary_key: "restriction_id", force: :cascade do |t|
+    t.string "restriction_type", null: false
+    t.string "restriction_val", null: false
+    t.integer "project_id", null: false
+  end
+
+  create_table "students", primary_key: "student_id", force: :cascade do |t|
+    t.integer "course_id", null: false
+    t.string "gender", null: false
+    t.string "nationality", null: false
+    t.string "work_auth", null: false
+    t.string "contract_sign", null: false
+    t.string "resume"
+  end
+
+  create_table "users", primary_key: "user_id", force: :cascade do |t|
+    t.string "first_name", null: false
+    t.string "last_name", null: false
+    t.string "role", null: false
+    t.string "email", null: false
+  end
+
+  add_foreign_key "courses", "professors", primary_key: "professor_id", on_delete: :nullify
+  add_foreign_key "ethnicity_values", "ethnicities", column: "ethnicity_name", primary_key: "ethnicity_name", on_delete: :cascade
+  add_foreign_key "ethnicity_values", "students", primary_key: "student_id", on_delete: :cascade
+  add_foreign_key "professor_preferences", "professors", primary_key: "professor_id", on_delete: :cascade
+  add_foreign_key "professor_preferences", "projects", primary_key: "project_id", on_delete: :cascade
+  add_foreign_key "professors", "users", column: "professor_id", primary_key: "user_id", on_delete: :cascade
+  add_foreign_key "projects", "courses", primary_key: "course_id", on_delete: :nullify
+  add_foreign_key "scores_entities", "projects", primary_key: "project_id", on_delete: :cascade
+  add_foreign_key "scores_entities", "students", primary_key: "student_id", on_delete: :cascade
+  add_foreign_key "scores_values", "scores_attributes", column: "attribute_id", primary_key: "attribute_id", on_delete: :cascade
+  add_foreign_key "scores_values", "scores_entities", column: "scores_id", primary_key: "scores_id", on_delete: :cascade
+  add_foreign_key "sponsor_preferences", "projects", primary_key: "project_id", on_delete: :cascade
+  add_foreign_key "sponsor_restrictions", "projects", primary_key: "project_id", on_delete: :cascade
+  add_foreign_key "students", "courses", primary_key: "course_id", on_delete: :cascade
+  add_foreign_key "students", "users", column: "student_id", primary_key: "user_id", on_delete: :cascade
 end
