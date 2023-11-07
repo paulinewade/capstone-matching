@@ -30,6 +30,7 @@ Rails.application.routes.draw do
   post 'lock_unlock_all_students', to: 'adminlanding#lock_unlock_all_students', as: 'lock_unlock_all_students'
 
   get "managestudents", to: "managestudents#index"
+  get "/managestudents/filter_students", to: "managestudents#filter_students", as: "filter_students"
   post '/managestudents/delete_students', to: 'managestudents#delete_students', as: 'delete_students'
 
   # Defines the root path route ("/")

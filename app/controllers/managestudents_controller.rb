@@ -1,6 +1,7 @@
 class ManagestudentsController < ApplicationController
     def index
       @students = User.includes(:student).where.not(students: { student_id: nil })
+      @courses = Course.all
     end
 
     def delete_students
@@ -26,4 +27,19 @@ class ManagestudentsController < ApplicationController
       @students = User.includes(:student).where.not(students: { student_id: nil })
       render :index
   end
+
+  def filter_students
+    course_details = params[:course_details]
+  
+    if course_details.present?
+      @students = User.includes(student: :course).where(courses: { course_id: course_details})
+    else
+      @students = User.includes(:student).where.not(students: { student_id: nil })
+    end
+  
+    @courses = Course.all # Fetch all courses for populating the dropdown
+    flash[:success] = "Filtered Successfully"
+    render :index
+  end
+  
 end
