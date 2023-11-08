@@ -20,9 +20,9 @@ Rails.application.routes.draw do
   get "manageprof", to: "manageprof#index"
   post '/manageprof/save_change', to: 'manageprof#save_change', as: 'save_change'
   post '/manageprof/add_professor', to: 'manageprof#add_professor', as: 'add_professor'
-  get "lock_unlock_form", to: "adminlanding#lock_unlock_form"
-  post "lock_unlock", to: "adminlanding#lock_unlock", as: :lock_unlock
-  post 'lock_unlock_all_students', to: 'adminlanding#lock_unlock_all_students', as: 'lock_unlock_all_students'
+
+  get "open_close_student_form", to: "adminlanding#open_close_student_form"
+  post "open_close_student_form", to: "adminlanding#update_open_close_student_form"
 
   # Defines the root path route ("/")
   # root "articles#index"
@@ -38,7 +38,7 @@ Rails.application.routes.draw do
       delete "projects/:id", to:"projects#destroy"
     end
   end
-  
+
 
   resources :projects do
     member do
@@ -47,6 +47,6 @@ Rails.application.routes.draw do
       post 'add_preferred', to: 'professor_preferences#add_preferred'
     end
   end
-  
+
 
 end
