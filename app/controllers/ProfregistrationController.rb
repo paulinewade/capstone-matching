@@ -22,6 +22,12 @@ class ProfregistrationController < ApplicationController
           user_id = new_user.user_id
           new_professor = Professor.new(professor_id: user_id, verified: false, admin: false)
           if new_professor.save
+            params[:course_ids].each do |course|
+              if course.present?
+                course = Course.find(course)
+                course.update(professor_id: new_professor.professor_id)
+              end
+            end
             flash[:success] = "Registration Successful! Please wait for admin approval."
           else
             new_user.destroy
@@ -34,6 +40,7 @@ class ProfregistrationController < ApplicationController
     else
       flash[:error] = "Not a valid tamu.edu email address."
     end
+    @courses = Course.where(professor_id: nil)
     render :index
   end
 end
