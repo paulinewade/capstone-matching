@@ -86,6 +86,12 @@ class ManageprofController < ApplicationController
             professor = user&.professor
 
             if professor
+                if value == 'Yes'
+                    user_role = 'admin'
+                else
+                    user_role = 'professor'
+                end
+                user.update(role: user_role)
                 professor.update(admin: value == "Yes")
             end
         end
