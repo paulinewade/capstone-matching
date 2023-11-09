@@ -1,0 +1,15 @@
+
+<h1>Rank Projects</h1>
+
+<%= form_tag  method: :post do %>
+  <% @projects.each do |project| %>
+    <div class="form-group">
+      <%= label_tag "preferences[#{project.id}]", "Rank #{project.name}" %>
+      <%= select_tag "preferences[#{project.id}]", options_for_select((1..@projects.length).to_a,
+                                                                       selected: @preferences.find_by(project_id: project.id)&.pref),
+                      prompt: 'Select a Rank' %>
+    </div>
+  <% end %>
+
+  <%= submit_tag 'Submit' %>
+<% end %>
