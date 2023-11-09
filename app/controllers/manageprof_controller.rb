@@ -11,6 +11,7 @@ class ManageprofController < ApplicationController
         if params[:delete_professor_emails]
             delete_professor
         end
+
         flash[:success] = "Changes Saved."
         @professors = User.includes(:professor => :courses).where.not(professors: { professor_id: nil })
         render :index

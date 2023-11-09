@@ -2,6 +2,7 @@
 <% if flash[:notice].present?%>
 <div id="notification" class="alert alert-success fixed-top w-50 mx-auto" >
   <%= flash[:notice] %>
+  <%= a = flash.clear; a = '' %>
 </div>
 
 <script>
@@ -15,6 +16,7 @@
 <% if flash[:error].present?%>
   <div id="notification_error" class="alert alert-danger fixed-top w-50 mx-auto" >
     <%= flash[:error] %>
+    <%= a = flash.clear; a = '' %>
   </div>
 
   <script>
@@ -28,6 +30,7 @@
 <% if flash[:success].present?%>
 <div id="notification" class="alert alert-success fixed-top w-50 mx-auto" >
   <%= flash[:success] %>
+  <%= a = flash.clear; a = '' %>
 </div>
 
 <script>
