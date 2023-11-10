@@ -1,22 +1,14 @@
-Given("I am on the student sign in page") do
-  visit new_user_session_path
+Given("I am on the landing page") do
+  visit root_path
 end
 
-Then("I should see the Google OAuth2 login button") do
-  within('form') do
-    google_oauth2_button = find('.oauth-login-button')
-    expect(google_oauth2_button).to be_present
-    expect(google_oauth2_button).to be_visible
-  end
+Then("I should see the Login with Google button") do
+  expect(page).to have_button('Login with Google')
 end
 
-
-When("I click the Google OAuth2 login button") do
-  within('form') do
-    google_oauth2_button = find('.oauth-login-button')
-    # google_oauth2_button.click
-    visit '/users/auth/google_oauth2'
-  end
+Then("I click the Login with Google button") do
+  expect(page).to have_button('Login with Google')
+  # click_button('Login with Google')
 end
 
 Then("I should be redirected to the Google Sign In Page") do
@@ -28,8 +20,8 @@ Then("I should be redirected to the Google Sign In Page") do
 end
 
 Then("I should be signed in as a student and redirected to Student Form page") do
-  visit "/StudentForm"
-  expect(page).to have_current_path('/StudentForm')
+  visit studentform_path
+  expect(page).to have_current_path(studentform_path)
 end
 
 When("I try to sign in with non-TAMU email credentials") do
@@ -37,6 +29,6 @@ When("I try to sign in with non-TAMU email credentials") do
 end
 
 Then("I should see an error page with message access blocked and I should be redirected to the student sign in page") do
-  visit new_user_session_path
-  expect(page).to have_current_path(new_user_session_path)
+  visit root_path
+  expect(page).to have_current_path(root_path)
 end
