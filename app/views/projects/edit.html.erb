@@ -42,15 +42,15 @@
         <br>
 
         <!-- Sponsor Restrictions -->
-          <div class="card mb-4">
+          <div class="card mb-4" id="sponsor_restrictions_div">
             <div class="card-header">
               <div class="row">
                 <div class="col text-left">
                   <h5 class="card-title">Sponsor Restriction</h5>
                 </div>
                 <div class="col">
-                    <%= link_to new_project_sponsor_restriction_path(@project), class: "btn btn-primary float-end" do %>
-                      <i class="fas fa-plus text-right"></i>
+                    <%= link_to new_project_sponsor_restriction_path(@project), class: "btn btn-primary float-end", id: "Add_Sponsor_Restriction" do %>
+                      <i id = "Add_Sponsor_Restriction" class="fas fa-plus text-right"></i>
                     <% end %>
                 </div>
               </div>
@@ -79,14 +79,14 @@
           </div>
 
         <!-- Sponsor Preferences -->
-          <div class="card mb-4">
+          <div class="card mb-4" id = "sponsor_preferences_div">
             <div class="card-header">
               <div class="row">
                 <div class="col text-left">
                   <h5 class="card-title">Sponsor Preference</h5>
                 </div>
                 <div class="col text-right">
-                  <%= link_to new_project_sponsor_preference_path(@project), class: "btn btn-primary float-end" do %>
+                  <%= link_to new_project_sponsor_preference_path(@project), class: "btn btn-primary float-end", id: "Add_Sponsor_Preference" do %>
                     <i class="fas fa-plus text-right"></i>
                   <% end %>
                 </div>

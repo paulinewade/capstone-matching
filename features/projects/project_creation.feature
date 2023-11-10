@@ -11,10 +11,16 @@ Feature: Project Creation
     And I fill in "Name" with "My Project"
     And I fill in "Sponsor" with "Sponsor Name"
     And I fill in "Description" with "This is a test project"
-    And I fill in "Link" with "https://example.com"
+    And I fill in "Info url" with "https://example.com"
+    And I fill in "Restriction type" with "Gender"
+    And I fill in "Restriction val" with "Male"
+    And I fill in "Preference type" with "Gender"
+    And I fill in "Preference val" with "Female"
+    And I fill in "Bonus amount" with "30.0"
     And I press "Create Project"
     Then I should see "Project was successfully created"
     And I should be on the home page
+    And I check the database for "My Project"
 
   Scenario: Creating a new project with an empty field
     Given I am on the new project page
@@ -22,6 +28,6 @@ Feature: Project Creation
     And I fill in "Name" with ""
     And I fill in "Sponsor" with "Sponsor Name"
     And I fill in "Description" with "This is a test project"
-    And I fill in "Link" with "https://example.com"
+    And I fill in "Info url" with "https://example.com"
     And I press "Create Project"
     Then I should see "Name can't be blank"

@@ -3,7 +3,7 @@ Given("I am on the new project page") do
 end
 
 When("I fill in {string} with {string}") do |field, value|
-  fill_in field, with: value
+  first(:field, field).set(value)
 end
 
 And("I press {string}") do |button|
@@ -16,4 +16,15 @@ end
 
 Then("I should be on the home page") do
   expect(current_path).to eq("/projects")
+end
+
+And(/^I check the database for "([^"]*)"$/) do |arg|
+  project = Project.find_by(name: arg)
+  expect(project).to be_present
+
+  restriction = SponsorRestriction.find_by(project_id: project.id)
+  expect(restriction).to be_present
+
+  preference = SponsorPreference.find_by(project_id: project.id)
+  expect(preference).to be_present
 end
