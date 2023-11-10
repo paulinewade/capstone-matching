@@ -37,12 +37,17 @@
               </div>
             <% end %>
           </div>
-          <div class="text-center mt-4">
+          <div class="text-center m-4">
             <%= form.submit "Register", class: "btn btn-danger custom-maroon-button" %>
-            <p class="mt-2">Already registered as a professor? <%= link_to "Login here", new_user_session_path(user_type: "professor"), style: "color: maroon;" %></p>
           </div>
         <% end %>
         <hr>
+        <div class="row text-center">
+          <div class="col">
+            <p class="mt-2 ">Already registered as a professor?</p>
+            <%= button_to "Login here", google_login_path, class: "btn btn-danger custom-maroon-button" %>
+          </div>
+        </div>
       </div>
     </div>
   </div>

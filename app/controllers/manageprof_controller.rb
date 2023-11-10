@@ -1,6 +1,14 @@
 class ManageprofController < ApplicationController
     def index
       @professors = User.includes(:professor => :courses).where.not(professors: { professor_id: nil })
+      user_id = session[:user_id]
+      
+      if user_id
+        user = User.find_by(user_id: user_id)
+        puts(user.first_name)
+      else
+        puts("not logged in")
+      end
     end
     
     def save_change
