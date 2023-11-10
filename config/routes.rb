@@ -1,11 +1,9 @@
 Rails.application.routes.draw do
   root 'home#index'
 
-  devise_for :users, controllers: {
-    omniauth_callbacks: 'users/omniauth_callbacks',
-    sessions: 'users/sessions',
-    registrations: 'users/registrations'
-  }
+  get '/auth/google_oauth2', as: 'google_login'
+  get '/auth/google_oauth2/callback', to: 'sessions#google_auth'
+  get '/logout', to: 'sessions#destroy'
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   get "profregistration", to: "profregistration#index"
@@ -16,8 +14,8 @@ Rails.application.routes.draw do
 
   get "/profLanding", to: "prof_landing#index"
 
-  get "StudentForm", to:"studentform#index"
-  post "StudentForm", to: "studentform#create"
+  get "studentform", to:"studentform#index"
+  post "studentform", to: "studentform#create"
 
   get "adminlanding", to: "adminlanding#index"
 

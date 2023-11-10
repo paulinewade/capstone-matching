@@ -22,7 +22,7 @@ course = Course.create(course_number: 606, section: 600, semester: "Fall 2023", 
 course2 = Course.create(course_number: 606, section: 601, semester: "Fall 2023", professor_id: admin.professor_id)
 course3 = Course.create(course_number: 606, section: 602, semester: "Fall 2023")
 course4 = Course.create(course_number: 606, section: 602, semester: "Spring 2024")
-course4 = Course.create(course_id: 101, course_number: 606, section: 603, semester: "Fall 2023")
+course5 = Course.create(course_id: 101, course_number: 606, section: 603, semester: "Fall 2023")
 
 
 ethnicities = [
