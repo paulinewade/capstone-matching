@@ -6,76 +6,60 @@
 </style>
 <head>
   <title>Admin Landing Page</title>
-  <%= csrf_meta_tags %>
 </head>
 <body>
-  <div class="d-flex justify-content-between align-items-center">
-    <%= link_to "Back to Admin Home Page", adminlanding_path, class: "btn btn-danger custom-maroon-button m-3", id: "back-button" %>
-    <button class="btn btn-danger custom-maroon-button m-3" id="dark-mode-toggle">Toggle Dark Mode</button>
-  </div>
-  <% if flash[:success].present? %>
-    <div class="alert alert-success alert-dismissible fade show m-4" role="alert">
-      <%= flash[:success] %>
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-      </button>
-    </div>
-  <% end %>
-
-  <% if flash[:error].present? %>
-    <div class="alert alert-danger alert-dismissible fade show m-1" role="alert">
-      <%= flash[:error] %>
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-  <% end %>
+  <%= render 'shared/admin_page_header' %>
+  <%= render 'shared/notification' %>
   <div class="d-flex justify-content-center align-items-center">
       <h1>Manage Professors and Admins</h1>
   </div>
   <div class="container table-responsive">
-    <form method="post" action="<%= save_change_path %>" id="change-professors-form">
+    <%= form_with(url: save_change_path, method: "post", id: "change-professors-form") do |form| %>
       <table class="table table-bordered">
         <thead class="thead-dark">
           <tr>
             <th>Email</th>
             <th>First Name</th>
             <th>Last Name</th>
-            <th>Semester</th>
-            <th>Section</th>
+            <th>Courses</th>
             <th>Admin Approved</th>
             <th>Admin</th>
             <th>Delete?</th>
           </tr>
         </thead>
         <tbody>
-        <% @professors.each do |professor| %>
-          <tr>
-            <td><%= professor.email %></td>
-            <td><%= professor.first_name %></td>
-            <td><%= professor.last_name %></td>
-            <td><%= professor.semester.present? ? professor.semester.join(', ') : 'N/A' %></td>
-            <td><%= professor.section.present? ? professor.section.join(', ') : 'N/A' %></td>
-            <td>
-              <select name="admin_approved[<%= professor.email %>]" >
-                <option value="Yes" <%= professor.admin_approved ? 'selected' : '' %> >Yes</option>
-                <option value="No" <%= professor.admin_approved ? '' : 'selected' %> >No</option>
-              </select>
-            </td>
-            <td>
-              <select name="admin[<%= professor.email %>]" >
-                <option value="Yes" <%= professor.admin ? 'selected' : '' %> >Yes</option>
-                <option value="No" <%= professor.admin ? '' : 'selected' %> >No</option>
-              </select>
-            </td>
-            <td>
-              <input type="checkbox" name="delete_professor_emails[]" value="<%= professor.email %>" class="delete-checkbox">
-            </td>
-          </tr>
-        <% end %>
-      </tbody>
+          <% @professors.each do |user| %>
+            <% professor = user.professor %>
+            <tr>
+              <td><%= user.email %></td>
+              <td><%= user.first_name %></td>
+              <td><%= user.last_name %></td>
+              <td>
+                <ul>
+                  <% professor.courses.each do |course| %>
+                    <li>
+                      CSCE <%= course.course_number %> - <%= course.section %> - <%= course.semester %>
+                    </li>
+                  <% end %>
+                </ul>
+              </td>
+              <td>
+                <%= form.select "verified[#{user.email}]", options_for_select([["Yes", "Yes"], ["No", "No"]], professor.verified ? "Yes" : "No") %>
+              </td>
+              <td>
+                <%= form.select "admin[#{user.email}]", options_for_select([["Yes", "Yes"], ["No", "No"]], professor.admin ? "Yes" : "No") %>
+              </td>
+              <td>
+                <%= form.check_box "delete_professor_emails[]", { value: user.email }, user.email, nil %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
       </table>
       <div class="d-flex justify-content-center align-items-center">
-        <button class="btn btn-danger m-2" id="save-button">Save Changes</button>
+        <%= form.button "Save Changes", class: "btn btn-danger m-2", id: "save-button" %>
       </div>
-    </form>
+    <% end %>  
   </div>
   <div class="d-flex justify-content-center align-items-center">
     <button class="btn btn-success m-2" id="add-button" data-toggle="collapse" data-target="#add-professor-form">Add Professor</button>
@@ -83,27 +67,27 @@
   <div class="container">
     <div class="row">
       <div class="add-professor-form hidden" id="add-professor-form">
-        <form  method="post" action="<%= add_professor_path %>" id="add-professor-form">
-          <div class="form-group mb-3">
-            <label for="email">TAMU Email Address<span class="text-danger">*</span></label>
-              <input type="email" class="form-control" id="email" name="email" placeholder="Enter your TAMU email address" required>
-            </div>
-            <div class="form-group mb-3">
-              <label for="first-name">First Name<span class="text-danger">*</span></label>
-              <input type="text" class="form-control" id="first-name" name="first_name" placeholder="Enter your first name" required>
-            </div>
-            <div class="form-group mb-3">
-              <label for="last-name">Last Name<span class="text-danger">*</span></label>
-              <input type="text" class="form-control" id="last-name" name="last_name" placeholder="Enter your last name" required>
-            </div>
-            <div class="form-check">
-              <input type="checkbox" class="form-check-input" id="admin" name="admin">
-              <label class="form-check-label" for="admin">Admin</label>
-            </div>
-            <div class="text-center mt-4">
-              <button type="submit" class="btn btn-success">Submit</button>
-            </div>    
-        </form>
+      <%= form_with(model: @professor, url: add_professor_path, id: "add-professor-form") do |form| %>
+        <div class="form-group mb-3">
+          <%= form.label :email, "TAMU Email Address<span class='text-danger'>*</span>".html_safe %>
+          <%= form.email_field :email, class: "form-control", placeholder: "Enter your TAMU email address", required: true %>
+        </div>
+        <div class="form-group mb-3">
+          <%= form.label :first_name, "First Name<span class='text-danger'>*</span>".html_safe %>
+          <%= form.text_field :first_name, class: "form-control", placeholder: "Enter your first name", required: true %>
+        </div>
+        <div class="form-group mb-3">
+          <%= form.label :last_name, "Last Name<span class='text-danger'>*</span>".html_safe %>
+          <%= form.text_field :last_name, class: "form-control", placeholder: "Enter your last name", required: true %>
+        </div>
+        <div class="form-check">
+          <%= form.check_box :admin, class: "form-check-input", id: "admin" %>
+          <%= form.label :admin, "Admin", class: "form-check-label", for: "admin" %>
+        </div>
+        <div class="text-center mt-4">
+          <%= form.submit "Submit", class: "btn btn-success" %>
+        </div>
+      <% end %>      
       </div>
     </div>
   </div>

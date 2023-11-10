@@ -5,7 +5,7 @@ Feature: Change Weights Page
 
   Background:
    Given the following score attributes exist:
-    | feature_name | feature_weight | attribute_id |
+    | feature | feature_weight | attribute_id |
     | Test1        | 0.5            | 1           |
     | Test2        | 0.25           | 2           |
     | Test3        | 0.25           | 3           |
@@ -28,14 +28,14 @@ Feature: Change Weights Page
 
   Scenario: Verify Feature Weight Change
     When I visit the change weights page
-    And I fill in "50" for "Test1" at index 0
-    And I fill in "20" for "Test2" at index 1
-    And I fill in "30" for "Test3" at index 2
+    And I fill in "35" for "Test1" at index 0
+    And I fill in "25" for "Test2" at index 1
+    And I fill in "40" for "Test3" at index 2
     And I press "Save Changes"
     Then I should see "Feature weights updated successfully."
-    Then I should see "50"
-    And I should see "20"
-    And I should see "30"
+    And I should see "35"
+    And I should see "25"
+    And I should see "40"
 
     Scenario: Verify Feature Weight Change Bad Path
     When I visit the change weights page

@@ -9,23 +9,7 @@
       <button class="btn btn-danger custom-maroon-button" id="dark-mode-toggle">Toggle Dark Mode</button>
     </div>
   </div>
-
-  <!-- Showing Alerts after reigster is pressed -->
-  <% if flash[:success].present? %>
-    <div class="alert alert-success alert-dismissible fade show m-4" role="alert">
-      <%= flash[:success] %>
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-      </button>
-    </div>
-  <% end %>
-
-  <% if flash[:error].present? %>
-    <div class="alert alert-danger alert-dismissible fade show m-1" role="alert">
-      <%= flash[:error] %>
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-  <% end %>
-
+  <%= render 'shared/notification' %>
   <div class="container">
     <div class="row">
       <div class="col-md-8 offset-md-2">
@@ -43,6 +27,15 @@
           <div class="form-group mb-3">
             <%= form.label :last_name, "Last Name<span class='text-danger'>*</span>".html_safe %>
             <%= form.text_field :last_name, class: "form-control", placeholder: "Enter your last name", required: true %>
+          </div>
+          <div class="form-group mb-3">
+            <%= form.label :course_ids, "Select Courses".html_safe %>
+            <%= form.collection_check_boxes :course_ids, @courses, :id, lambda { |course| "CSCE #{course.course_number}-#{course.section}-#{course.semester}" }, {}, multiple: true, class: "form-check-input" do |b| %>
+              <div class="form-check">
+                <%= b.check_box(class: "form-check-input") %>
+                <%= b.label(class: "form-check-label") %>
+              </div>
+            <% end %>
           </div>
           <div class="text-center mt-4">
             <%= form.submit "Register", class: "btn btn-danger custom-maroon-button" %>
