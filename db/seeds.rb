@@ -22,6 +22,7 @@ course = Course.create(course_number: 606, section: 600, semester: "Fall 2023", 
 course2 = Course.create(course_number: 606, section: 601, semester: "Fall 2023", professor_id: admin.professor_id)
 course3 = Course.create(course_number: 606, section: 602, semester: "Fall 2023")
 course4 = Course.create(course_number: 606, section: 602, semester: "Spring 2024")
+course4 = Course.create(course_id: 101, course_number: 606, section: 603, semester: "Fall 2023")
 
 
 ethnicities = [
@@ -59,4 +60,9 @@ professor_pref = ProfessorPreference.create(project_id: project.project_id, prof
 
 restriction = SponsorRestriction.create(restriction_type: "gender", restriction_val: "Male", project_id: project.project_id)
 preference = SponsorPreference.create(project_id: project.project_id, preference_type: "gender", preference_val: "Non-Binary", bonus_amount: 10)
+
+# project3 = Project.create(name: "Example Project 3", description: "Example Description 3", sponsor: "Example Sponsor 3", course_id: course3.course_id, info_url: "www.tamu.edu", semester: "Fall 2023")
+project4 = Project.create(name: "Example Project 4", description: "Example Description4", sponsor: "Example Sponsor 4", course_id: course4.course_id, info_url: "www.tamu.edu", semester: "Fall 2023")
+project4 = Project.create(name: "Example Project 5", description: "Example Description5", sponsor: "Example Sponsor 5", course_id: course4.course_id, info_url: "www.tamu.edu", semester: "Fall 2023")
+
 
