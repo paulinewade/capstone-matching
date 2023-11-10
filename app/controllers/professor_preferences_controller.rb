@@ -17,16 +17,18 @@ class ProfessorPreferencesController < ApplicationController
     #   current_professor.preferred_projects.destroy(project)
     #   redirect_to professor_preferences_path
     # end
-    #TODO: Check if it works with OAuth and when current_user is set
     def index
         # puts "Curr user inspect: #{current_user.inspect}"
         # if current_user && current_user.role == "professor"
         # puts params
         @projects = Project.all
+        user_id = session[:user_id]
+        # puts "session inspect is #{session.inspect}"
+        # puts "current user_id is #{user_id}"
         # puts "current user is #{current_user}"
         # puts current_user.inspect
-        # @curr_professor = User.find_by(email: current_user.email)
-        @curr_professor = User.find_by(email: "profemail@tamu.edu")
+        @curr_professor = User.find_by(user_id: user_id)
+        # @curr_professor = User.find_by(email: "profemail@tamu.edu")
         # puts "curr professor #{@curr_professor.inspect}"
 
         # @curr_prof_id = @curr_professor.user_id
@@ -63,7 +65,9 @@ class ProfessorPreferencesController < ApplicationController
     end
 
     def save_rankings
-        @curr_professor = User.find_by(email: "profemail@tamu.edu")
+        # @curr_professor = User.find_by(email: "profemail@tamu.edu")
+        user_id = session[:user_id]
+        @curr_professor = User.find_by(user_id: user_id)
         # puts "curr professor #{@curr_professor.inspect}"
 
         @professor = @curr_professor.professor  # Get the associated Professor instance
