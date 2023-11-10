@@ -25,9 +25,8 @@ Rails.application.routes.draw do
   post '/manageprof/save_change', to: 'manageprof#save_change', as: 'save_change'
   post '/manageprof/add_professor', to: 'manageprof#add_professor', as: 'add_professor'
 
-  get "lock_unlock_form", to: "adminlanding#lock_unlock_form"
-  post "lock_unlock", to: "adminlanding#lock_unlock", as: :lock_unlock
-  post 'lock_unlock_all_students', to: 'adminlanding#lock_unlock_all_students', as: 'lock_unlock_all_students'
+  get "open_close_student_form", to: "adminlanding#open_close_student_form"
+  post "open_close_student_form", to: "adminlanding#update_open_close_student_form"
 
   get "managestudents", to: "managestudents#index"
   get "/managestudents/filter_students", to: "managestudents#filter_students", as: "filter_students"
@@ -51,7 +50,7 @@ Rails.application.routes.draw do
     resources :sponsor_restrictions
     resources :sponsor_preferences
   end
-  
+
 
   resources :projects do
     member do

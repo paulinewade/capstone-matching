@@ -2,43 +2,21 @@ class AdminlandingController < ApplicationController
     def index
     end
 
-    def lock_unlock_form
-      @students = Student.all
+    def open_close_student_form
     end
 
-    def lock_unlock
-        @student = Student.find_by(uin: params[:uin])
+    def update_open_close_student_form
+        @config = Config.first_or_initialize
 
-        if @student.update(student_params)
-            flash[:notice] = "Student lock state updated successfully"
+        params[:form_open] = params[:form_open].in_time_zone('Central Time (US & Canada)').utc
+        params[:form_close] = params[:form_close].in_time_zone('Central Time (US & Canada)').utc
+
+        if @config.update(form_open: params[:form_open], form_close: params[:form_close])
+            flash[:notice] = "Changes made successfully"
         else
-            flash[:alert] = "Error updating student lock state"
+            flash[:alert] = "Error updating the fields"
         end
 
-        redirect_to lock_unlock_form_path
-    end
-
-    before_action :check_form_locked_param, only: :lock_unlock_all_students
-
-    def lock_unlock_all_students
-        if Student.update_all(form_locked: params[:form_locked])
-            flash[:notice] = "All students lock state updated successfully"
-        else
-            flash[:alert] = "Error updating all students lock state"
-        end
-
-        redirect_to lock_unlock_form_path
-    end
-
-    private
-
-    def check_form_locked_param
-        params[:form_locked] = params[:form_locked] == "on"
-    end
-
-    private
-
-    def student_params
-        params.require(:student).permit(:form_locked)
+        redirect_to open_close_student_form_path, status: :found
     end
 end
