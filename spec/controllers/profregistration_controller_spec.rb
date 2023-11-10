@@ -17,19 +17,11 @@ RSpec.describe ProfregistrationController, type: :controller do
   end
 
   describe 'POST #create' do
-    let(:valid_params) do
-      course = Course.create(course_number: 1, section: 1, semester: "Fall 2023")
-      {
-        email: 'professor@tamu.edu',
-        first_name: 'John',
-        last_name: 'Doe',
-        course_ids: [course.course_id]
-      }
-    end
-
     context 'with valid parameters' do
       it 'creates a new professor registration' do
-        post :create, params: { **valid_params }
+        course = Course.create(course_number: 123, section: 456, semester: 'Fall 2023')
+        valid_params = {email: 'professor123@tamu.edu', first_name: 'John', last_name: 'Doe', course_ids: [course.course_id]}
+        post :create, params: valid_params
 
         expect(response).to render_template(:index)
 
@@ -48,7 +40,7 @@ RSpec.describe ProfregistrationController, type: :controller do
     context 'with invalid parameters' do
       it 'does not create a new professor registration' do
         # Modify params to make it invalid, for example, by using an invalid email
-        invalid_params = valid_params.merge(email: 'invalid_email')
+        invalid_params =  {email: 'professor123@gmail.com', first_name: 'John', last_name: 'Doe', course_ids: []}
 
         post :create, params: { **invalid_params }
 
