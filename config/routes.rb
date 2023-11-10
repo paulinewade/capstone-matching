@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'sponsor_restrictions/edit'
+  get 'sponsor_restrictions/new'
   root 'home#index'
 
   devise_for :users, controllers: {
@@ -37,6 +39,8 @@ Rails.application.routes.draw do
       get "projects", to:"projects#index"
       delete "projects/:id", to:"projects#destroy"
     end
+    resources :sponsor_restrictions
+    resources :sponsor_preferences
   end
   
 
