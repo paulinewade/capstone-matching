@@ -17,6 +17,6 @@ class AdminlandingController < ApplicationController
             flash[:alert] = "Error updating the fields"
         end
 
-        redirect_to lock_unlock_student_form_path, status: :found
+        redirect_to open_close_student_form_path, status: :found
     end
 end
