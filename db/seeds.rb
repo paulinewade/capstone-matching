@@ -21,8 +21,7 @@ admin = Professor.create(professor_id: admin_user.user_id, verified: true, admin
 course = Course.create(course_number: 606, section: 600, semester: "Fall 2023", professor_id: prof.professor_id)
 course2 = Course.create(course_number: 606, section: 601, semester: "Fall 2023", professor_id: admin.professor_id)
 course3 = Course.create(course_number: 606, section: 602, semester: "Fall 2023")
-course4 = Course.create(course_number: 606, section: 602, semester: "Spring 2024")
-course5 = Course.create(course_id: 101, course_number: 606, section: 603, semester: "Fall 2023")
+course4 = Course.create(course_id: 101, course_number: 606, section: 603, semester: "Fall 2023")
 
 
 ethnicities = [
@@ -62,7 +61,8 @@ restriction = SponsorRestriction.create(restriction_type: "gender", restriction_
 preference = SponsorPreference.create(project_id: project.project_id, preference_type: "gender", preference_val: "Non-Binary", bonus_amount: 10)
 
 # project3 = Project.create(name: "Example Project 3", description: "Example Description 3", sponsor: "Example Sponsor 3", course_id: course3.course_id, info_url: "www.tamu.edu", semester: "Fall 2023")
-project4 = Project.create(name: "Example Project 4", description: "Example Description4", sponsor: "Example Sponsor 4", course_id: course4.course_id, info_url: "www.tamu.edu", semester: "Fall 2023")
-project4 = Project.create(name: "Example Project 5", description: "Example Description5", sponsor: "Example Sponsor 5", course_id: course4.course_id, info_url: "www.tamu.edu", semester: "Fall 2023")
+project4 = Project.create(name: "Example Project 4", description: "We are looking for a software engineer with expertise in Ruby and Ruby on Rails.", sponsor: "Example Sponsor 4", course_id: course4.course_id, info_url: "www.tamu.edu", semester: "Fall 2023")
+project5 = Project.create(name: "Example Project 5", description: "Seeking a front-end developer experienced in JavaScript and React.", sponsor: "Example Sponsor 5", course_id: course4.course_id, info_url: "www.tamu.edu", semester: "Fall 2023")
+project6 = Project.create(name: "Example Project6", description: "We need a data scientist skilled in Python and machine learning.", sponsor: "Example Sponsor6", course_id: course4.course_id, info_url: "www.tamu.edu", semester: "Fall 2023")
 
 
