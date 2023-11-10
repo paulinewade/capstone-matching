@@ -1,0 +1,24 @@
+<div class="field form-group mb-3" id="sponsorPreferences">
+  <%= form_with(model: [@project, @sponsor_preference], url: project_sponsor_preferences_path(@project)) do |preference_fields| %>
+    <div class="col-md-8 offset-md-2">
+      <div class="row">
+        <h3 class="col-8">Sponsor Preference</h3>
+      </div>
+      <div class="form-group mb-3">
+        <%= preference_fields.label :preference_type %><span class="text-danger">*</span>
+        <%= preference_fields.text_field :preference_type, class: "form-control", required: true %>
+      </div>
+      <div class="form-group mb-3">
+        <%= preference_fields.label :preference_val %><span class="text-danger">*</span>
+        <%= preference_fields.text_field :preference_val, class: "form-control", required: true %>
+      </div>
+      <div class="form-group mb-3">
+        <%= preference_fields.label :bonus_amount %>
+        <%= preference_fields.text_field :bonus_amount, class: "form-control" %>
+      </div>
+      <div class="text-center mt-4">
+        <%= preference_fields.submit 'Save Sponsor Preference', class: "btn btn-primary" %>
+      </div>
+    </div>
+  <% end %>
+</div>

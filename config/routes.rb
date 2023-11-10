@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'sponsor_restrictions/edit'
+  get 'sponsor_restrictions/new'
   root 'home#index'
 
   get '/auth/google_oauth2', as: 'google_login'
@@ -46,6 +48,8 @@ Rails.application.routes.draw do
       get "projects", to:"projects#index"
       delete "projects/:id", to:"projects#destroy"
     end
+    resources :sponsor_restrictions
+    resources :sponsor_preferences
   end
   
 
