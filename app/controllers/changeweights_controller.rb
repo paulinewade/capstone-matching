@@ -20,26 +20,23 @@ class ChangeweightsController < ApplicationController
             return
         end
 
-        if feature_weights.present?
-            feature_weights.each_with_index do |weight, index|
-                parsed_weight = weight.to_f / 100.0
+        
+        feature_weights.each_with_index do |weight, index|
+            parsed_weight = weight.to_f / 100.0
 
-                attribute_id = index + 1
-                score_attribute = ScoresAttribute.find_by(attribute_id: attribute_id)
+            attribute_id = index + 1
+            score_attribute = ScoresAttribute.find_by(attribute_id: attribute_id)
 
-                if score_attribute
-                    score_attribute.update(feature_weight: parsed_weight)
-                else
-                    # Handle the case where no record with the given attribute_id is found.
-                    flash[:error] = "No record found for attribute_id: #{attribute_id}."
-                    redirect_to changeweights_path
-                    return
-                end
+            if score_attribute
+                score_attribute.update(feature_weight: parsed_weight)
+            else
+                # Handle the case where no record with the given attribute_id is found.
+                flash[:error] = "No record found for attribute_id: #{attribute_id}."
+                redirect_to changeweights_path
+                return
             end
-            flash[:success] = "Feature weights updated successfully."
-        else
-            flash[:error] = "No feature weights provided for update."
         end
+        flash[:success] = "Feature weights updated successfully."
         redirect_to changeweights_path
     end
 end

@@ -49,6 +49,14 @@ RSpec.describe ChangeweightsController, type: :controller do
         expect(flash[:error]).to eq("No feature weights to save.")
       end
     end
+
+    context 'with invalid attribute_id' do
+      it 'redirects to changeweights_path with error message' do
+        post :save_weights, params: {feature_weights: [100]}
+        expect(response).to redirect_to(changeweights_path)
+        expect(flash[:error]).to include("No record found for attribute_id:")
+      end
+    end
   end
 end
 
