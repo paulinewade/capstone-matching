@@ -5,7 +5,7 @@ Feature: Project Index Page
 
   Background:
     Given the following projects exist:
-      | Name       | Sponsor        | Description                 | Link                       | Semester |
+      | name       | sponsor        | description                 | info_url                       | semester |
       | Project 1  | Sponsor 1      | Description of Project 1    | https://project1.com       | Fall 2022 |
 
   Scenario: Editing a Project
