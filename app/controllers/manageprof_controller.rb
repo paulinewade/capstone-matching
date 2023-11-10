@@ -1,6 +1,14 @@
 class ManageprofController < ApplicationController
     def index
-      @professors = Professor.all
+      @professors = User.includes(:professor => :courses).where.not(professors: { professor_id: nil })
+      user_id = session[:user_id]
+      
+      if user_id
+        user = User.find_by(user_id: user_id)
+        puts(user.first_name)
+      else
+        puts("not logged in")
+      end
     end
     
     def save_change
@@ -11,9 +19,9 @@ class ManageprofController < ApplicationController
         if params[:delete_professor_emails]
             delete_professor
         end
-        
-        flash[:success] = "Changes saved."
-        @professors = Professor.all
+
+        flash[:success] = "Changes Saved."
+        @professors = User.includes(:professor => :courses).where.not(professors: { professor_id: nil })
         render :index
     end
 
@@ -22,14 +30,12 @@ class ManageprofController < ApplicationController
       
         if emails.present?
           emails.each do |email|
-            professor = Professor.find_by(email: email)
+            professor = User.find_by(email: email)
       
             if professor
               professor.destroy
             end
           end
-      
-          flash[:success] = "Successfully deleted selected professors."
         end
     end
       
@@ -38,51 +44,70 @@ class ManageprofController < ApplicationController
         email = params[:email]
         first_name = params[:first_name]
         last_name = params[:last_name]
+
         if params[:admin] == 'on'
             admin = true
         else
             admin = false
         end
-        professor = Professor.new( email: email,
-                                   first_name: first_name,
-                                   last_name: last_name,
-                                   admin_approved: true,
-                                   admin: admin )
+
+        if admin == true
+            user = User.new( email: email, first_name: first_name, last_name: last_name, role: 'admin')
+        else
+            user = User.new( email: email, first_name: first_name, last_name: last_name, role: 'professor')
+        end
+
         if email.end_with?("tamu.edu")
-            existing_prof = Professor.find_by(email: email)
-    
+            existing_prof = User.find_by(email: email)
             if existing_prof
                 flash[:error] = "Professor already registered."
             else
-                if professor.save
+                if user.save
+                    professor = Professor.create(professor_id: user.user_id, verified: true, admin: admin)
                     flash[:success] = "Professor added."
                 end
             end
         else
             flash[:error] = "Not a valid tamu.edu email address."
         end
-        @professors = Professor.all
+        @professors = User.includes(:professor => :courses).where.not(professors: { professor_id: nil })
         render :index
     end
 
     def update_values
-        params[:admin_approved].each do |email, value|
-            professor = Professor.find_by(email: email)
-      
-            if professor
-              professor.update(admin_approved: value == 'Yes')
+        verified_params = params[:verified]
+        admin_params = params[:admin]
+        delete_professor_emails = params[:delete_professor_emails]
+
+        # Iterate through verified parameters
+        if !verified_params.nil?
+            verified_params.each do |email, value|
+                user = User.find_by(email: email)
+                professor = user&.professor
+
+                if professor
+                    professor.update(verified: value == "Yes")
+                end
             end
-          end
-      
-        params[:admin].each do |email, value|
-            professor = Professor.find_by(email: email)
-      
-            if professor
-              professor.update(admin: value == 'Yes')
+        end
+
+        if !admin_params.nil?
+            admin_params.each do |email, value|
+                user = User.find_by(email: email)
+                professor = user&.professor
+
+                if professor
+                    if value == 'Yes'
+                        user_role = 'admin'
+                    else
+                        user_role = 'professor'
+                    end
+                    user.update(role: user_role)
+                    professor.update(admin: value == "Yes")
+                end
             end
         end
     end
-
 end
   
   

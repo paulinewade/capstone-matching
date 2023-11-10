@@ -95,6 +95,11 @@ html.dark-mode table {
     border: none;
 }
 
+.btn-secondary {
+    background-color: #600000;
+    border: none;
+}
+
 .btn-primary:hover {
     background-color: #300000;
 }

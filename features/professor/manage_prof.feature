@@ -7,10 +7,10 @@ Feature: Manage Professors and Admins Page
 
   Background:
     Given the following professors exist:
-        | email               | first_name | last_name | semester       | section    | admin_approved | admin |
-        | professor1@tamu.edu | John       | Doe      | Spring 2023    | Section A  | Yes            | Yes   |
-        | professor2@tamu.edu | Jane       | Smith    | Fall 2022      | Section B  | No             | No    |
-        | professor3@tamu.edu | Alice      | Johnson  | N/A            | N/A        | Yes            | No    |
+        | email               | first_name | last_name| semester      |course_number | section | semester   | admin_approved | admin |
+        | professor1@tamu.edu | John       | Doe      | Spring 2023    | 600          | 601     | Fall 2023  | Yes            | Yes   |
+        | professor2@tamu.edu | Jane       | Smith    | Fall 2022      | 629          | 602     | Spring 2023| No             | No    |
+        | professor3@tamu.edu | Alice      | Johnson  | N/A            | 642          | 603     | Fall 2023  | No             | No    |
 
   Scenario: View the Manage Professors and Admins page
     When I visit the Manage Professors page
@@ -20,14 +20,14 @@ Feature: Manage Professors and Admins Page
     When I visit the Manage Professors page
     And I update "professor1@tamu.edu" admin status to "No"
     And I press "Save Changes"
-    Then I should see "Changes saved."
+    Then I should see "Changes Saved."
     And I should see "professor1@tamu.edu" with admin status "No"
 
   Scenario: Delete a professor
     When I visit the Manage Professors page
     And I check the "Delete?" checkbox for "professor2@tamu.edu"
     And I click the "Save Changes" button
-    Then I should see "Changes saved."
+    Then I should see "Changes Saved."
     And I should not see "professor2@tamu.edu"
 
   Scenario: Add a professor
