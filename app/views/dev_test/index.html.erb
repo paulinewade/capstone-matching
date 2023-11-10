@@ -154,6 +154,14 @@ function extractText(file) {
 
     </form>
 
+    <%= form_with(url: '/devtest/upload_resume', multipart: true) do |form| %>
+      <p><%= form.label :course_id, 'course_id' %></p>
+      <p><%= form.number_field :course_id %></p>
+
+      <p><%= form.label :resume, 'Upload Resume (PDF)' %></p>
+      <p><%= form.file_field :resume %></p>
+      <p><%= form.submit 'Upload' %></p>
+    <% end %>
 
     <% if flash[:resume_text].present? %>
       <h2>Resume Text</h2>
