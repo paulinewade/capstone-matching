@@ -7,7 +7,7 @@ Feature: Project Index Page
 
   Background:
     Given the following projects exist:
-    | Name       | Sponsor        | Description                 | Link                       | Semester |
+    | name       | sponsor        | description                 | info_url                       | semester |
     | Project 1  | Sponsor 1      | Description of Project 1    | https://project1.com       | Fall 2022 |
     | Project 2  | Sponsor 2      | Description of Project 2    | https://project2.com       | Spring 2023 |
     | Project 3  | Sponsor 1      | Description of Project 3    | https://project3.com       | Summer 2022 |
