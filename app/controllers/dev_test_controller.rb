@@ -10,6 +10,8 @@ require 'matrix'
 
 
 class DevTestController < ApplicationController
+  skip_before_action :verify_authenticity_token  # bypass csrf: fix this
+
   def index
     # ...
   end
@@ -19,30 +21,24 @@ class DevTestController < ApplicationController
     course_id = params[:course_id].to_i
     # course_id = 101
     puts "course_id: " + course_id.to_s
-
+    
+    resume = params[:resume].to_s
+    puts "resume: " + resume 
     
     @descriptions = Project.where(course_id: course_id).pluck(:description)
     puts "course description: " + @descriptions.join(separator = ",")
+    @resume_text = resume
 
-
-    if params[:resume].present? && params[:resume].content_type == 'application/pdf'
-      uploaded_resume = params[:resume].tempfile
-      @resume_text = parse_pdf_resume(uploaded_resume)
-
-      # You can print the extracted text or use it for further processing
-      # puts "Extracted Resume Text:"
-      # puts @resume_text
-      flash[:resume_text] = @resume_text
-      classification = classify(@resume_text, @descriptions)
-      
-      @most_similar_job_description = classification[0]
-      @similarity_score = classification[1]
-      flash[:most_similar_job_description] = @most_similar_job_description
-      flash[:similarity_score] = @similarity_score
-
-    else
-      flash[:error] = "Please upload a valid PDF resume."
-    end
+    # You can print the extracted text or use it for further processing
+    # puts "Extracted Resume Text:"
+    # puts @resume_text
+    flash[:resume_text] = @resume_text
+    classification = classify(@resume_text, @descriptions)
+    
+    @most_similar_job_description = classification[0]
+    @similarity_score = classification[1]
+    flash[:most_similar_job_description] = @most_similar_job_description
+    flash[:similarity_score] = @similarity_score
     
     
 
@@ -93,15 +89,17 @@ class DevTestController < ApplicationController
     ]
 
     
-    # Sample job descriptions and a resume
-    job_descriptions = [
-      "We are looking for a software engineer with expertise in Ruby and Ruby on Rails.",
-      "Seeking a front-end developer experienced in JavaScript and React.",
-      "We need a data scientist skilled in Python and machine learning.", 
-      "Seeking a back-end engineer equipped with knowledge in JavaScript and React."
-    ]
+    # # Sample job descriptions and a resume
+    # job_descriptions = [
+    #   "We are looking for a software engineer with expertise in Ruby and Ruby on Rails.",
+    #   "Seeking a front-end developer experienced in JavaScript and React.",
+    #   "We need a data scientist skilled in Python and machine learning.", 
+    #   "Seeking a back-end engineer equipped with knowledge in JavaScript and React."
+    # ]
     
     corpus = []
+    job_descriptions = descriptions
+
     
     job_descriptions.length.times do |i|
       cleaned = job_descriptions[i].downcase.gsub(/[^a-z\s]/, '')
@@ -109,12 +107,12 @@ class DevTestController < ApplicationController
       corpus[i] = TfIdfSimilarity::Document.new(simplified)
     end
     # puts "text: " + descriptions.join(separator = ",")
-    job_descriptions = descriptions
+    # job_descriptions = descriptions
     
     resumeidx = corpus.length # last index of corpus
     
     # Process the resume and calculate TF-IDF scores
-    resume = "I am a software engineer with extensive experience in Ruby and Ruby on Rails."
+    resume = resume_text
     corpus[resumeidx] = TfIdfSimilarity::Document.new(remove_stop_words(resume.downcase.gsub(/[^a-z\s]/, ''), stop_words))
 
     model = TfIdfSimilarity::TfIdfModel.new(corpus)
@@ -129,7 +127,7 @@ class DevTestController < ApplicationController
     end 
     
     # Set a threshold for similarity to classify as a match
-    threshold = 0.3
+    threshold = 0.0
     
     # Find the best match
     best_match_index = similarity_scores.each_with_index.max[1]
@@ -140,7 +138,7 @@ class DevTestController < ApplicationController
       return[ job_descriptions[best_match_index], similarity_scores[best_match_index] ]
     else
       puts "No suitable job description found for the resume."
-      return "No suitable job description found for the resume."
+      return ["No suitable job description found for the resume.", similarity_scores[best_match_index]]
     end
     return "done"
   end
