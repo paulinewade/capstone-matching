@@ -1,4 +1,6 @@
 class ProfregistrationController < ApplicationController
+  skip_before_action :verify_authenticity_token, only: [:create]
+  
   def index
     @courses = Course.where(professor_id: nil)
   end
