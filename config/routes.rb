@@ -57,9 +57,10 @@ Rails.application.routes.draw do
     member do
       get "projects", to:"projects#index"
       delete "projects/:id", to:"projects#destroy"
-      post 'add_preferred', to: 'professor_preferences#add_preferred'
     end
   end
   
+  get 'prof_projects_ranking', to: 'professor_preferences#index'
+  post 'prof_projects_ranking', to: 'professor_preferences#save_rankings'
 
 end

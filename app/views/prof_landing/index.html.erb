@@ -2,6 +2,13 @@
 <html>
   <head>
     <title>Professor Landing Page</title>
+    <div class="container">
+      <%= render 'shared/notification' %>
+    </div>
+    <style>
+        /* Light Mode Styles */
+    </style>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
   <body>
   <%= render 'shared/notification' %>
@@ -20,7 +27,7 @@
       <%= link_to "View Projects", projects_path, class: "btn btn-danger custom-maroon-button mb-4", id: "button-1" %>
     </div>
     <div class="d-flex justify-content-center align-items-center">
-      <%= link_to "Submit Project Preferences", profLanding_path, class: "btn btn-danger custom-maroon-button mb-4", id: "button-1" %>
+      <%= link_to "Submit Project Preferences", prof_projects_ranking_path, class: "btn btn-danger custom-maroon-button mb-4", id: "button-1" %>
     </div>
   </div>
 </body>
