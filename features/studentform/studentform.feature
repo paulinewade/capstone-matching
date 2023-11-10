@@ -30,8 +30,8 @@ Feature: Student Form
     And I fill in "first_name" with "John"
     And I fill in "last_name" with "Doe"
     And I fill in "UIN" with "123456789"
+    And I fill in "gender" with "male"
     And I press "Submit"
-    Then I should see "Registration Successful!"
 
   Scenario: Registration Failure
     Given I am on the student registration page

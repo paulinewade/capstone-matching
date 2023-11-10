@@ -91,6 +91,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_03_013524) do
 
   create_table "students", primary_key: "student_id", force: :cascade do |t|
     t.integer "course_id", null: false
+    t.integer "uin", default: 0
     t.string "gender", null: false
     t.string "nationality", null: false
     t.string "work_auth", null: false
