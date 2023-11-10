@@ -4,10 +4,10 @@ end
 
 Given('the following score attributes exist:') do |table|
     table.hashes.each do |score_attribute_params|
-        feature_name = score_attribute_params['feature_name']
+        feature = score_attribute_params['feature']
         feature_weight = score_attribute_params['feature_weight']
         attribute_id = score_attribute_params['attribute_id']
-        ScoresAttribute.create!(attribute_id: attribute_id, feature_name: feature_name, feature_weight: feature_weight) 
+        ScoresAttribute.create!(attribute_id: attribute_id, feature: feature, feature_weight: feature_weight) 
     end
 end
 
