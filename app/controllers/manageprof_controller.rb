@@ -72,27 +72,31 @@ class ManageprofController < ApplicationController
         delete_professor_emails = params[:delete_professor_emails]
 
         # Iterate through verified parameters
-        verified_params.each do |email, value|
-            user = User.find_by(email: email)
-            professor = user&.professor
+        if !verified_params.nil?
+            verified_params.each do |email, value|
+                user = User.find_by(email: email)
+                professor = user&.professor
 
-            if professor
-                professor.update(verified: value == "Yes")
+                if professor
+                    professor.update(verified: value == "Yes")
+                end
             end
         end
 
-        admin_params.each do |email, value|
-            user = User.find_by(email: email)
-            professor = user&.professor
+        if !admin_params.nil?
+            admin_params.each do |email, value|
+                user = User.find_by(email: email)
+                professor = user&.professor
 
-            if professor
-                if value == 'Yes'
-                    user_role = 'admin'
-                else
-                    user_role = 'professor'
+                if professor
+                    if value == 'Yes'
+                        user_role = 'admin'
+                    else
+                        user_role = 'professor'
+                    end
+                    user.update(role: user_role)
+                    professor.update(admin: value == "Yes")
                 end
-                user.update(role: user_role)
-                professor.update(admin: value == "Yes")
             end
         end
     end

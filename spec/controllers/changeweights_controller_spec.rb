@@ -15,21 +15,21 @@ RSpec.describe ChangeweightsController, type: :controller do
 
   describe 'POST #save_weights' do
     context 'with valid feature_weights that sum to 100%' do
-        it 'updates feature weights and redirects to changeweights_path with success message' do
-            ScoresAttribute.create(
-                attribute_id: 1,
-                feature_name: 'Feature 1',
-                feature_weight: 0.1
-              )
-              ScoresAttribute.create(
-                attribute_id: 2,
-                feature_name: 'Feature 2',
-                feature_weight: 0.2
-              )
-            post :save_weights, params: { feature_weights: ['50', '50'] }
-            expect(response).to redirect_to(changeweights_path)
-            expect(flash[:success]).to eq("Feature weights updated successfully.")
-        end
+      it 'updates feature weights and redirects to changeweights_path with success message' do
+        ScoresAttribute.create(
+          attribute_id: 1,
+          feature: 'Feature 1',
+          feature_weight: 0.1
+        )
+        ScoresAttribute.create(
+          attribute_id: 2,
+          feature: 'Feature 2',
+          feature_weight: 0.2
+        )
+        post :save_weights, params: { feature_weights: ['50', '50'] }
+        expect(response).to redirect_to(changeweights_path)
+        expect(flash[:success]).to eq("Feature weights updated successfully.")
+      end
     end
 
     context 'with invalid feature_weights' do
@@ -51,3 +51,4 @@ RSpec.describe ChangeweightsController, type: :controller do
     end
   end
 end
+
