@@ -1,0 +1,72 @@
+<div class="d-flex justify-content-between align-items-center">
+  <%= link_to "Back to Admin Home Page", adminlanding_path, class: "btn btn-danger custom-maroon-button m-3", id: "back-button" %>
+  <button class="btn btn-danger custom-maroon-button m-3" id="dark-mode-toggle">Toggle Dark Mode</button>
+</div>
+
+<div class="d-flex justify-content-center align-items-center">
+  <div>
+    <div class="d-flex justify-content-center align-items-center">
+      <h1>Open and Close Student Form</h1>
+    </div>
+
+    <% if flash[:notice].present? %>
+      <div class="alert alert-success alert-dismissible fade show m-4" role="alert">
+        <%= flash[:notice] %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    <% end %>
+
+    <% if flash[:alert].present? %>
+      <div class="alert alert-danger alert-dismissible fade show m-1" role="alert">
+        <%= flash[:alert] %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    <% end %>
+
+    <% config = Config.first %>
+    <% if config.present? %>
+      <p>Current Student Form Opening Date And Time: <%= config.form_open.in_time_zone("Central Time (US & Canada)").strftime("%H:%M %Y-%m-%d") %></p>
+      <p>Current Student Form Closing Date And Time: <%= config.form_close.in_time_zone("Central Time (US & Canada)").strftime("%H:%M %Y-%m-%d") %></p>
+    <% end %>
+
+    <%= form_tag({controller: "adminlanding", action: "update_open_close_student_form"}, method: "post") do %>
+      <div class="form-group">
+        <%= label_tag(:form_open, "Form Open:") %>
+        <%= datetime_local_field_tag(:form_open, nil, class: "form-control", required: true, value: Time.current.in_time_zone("Central Time (US & Canada)").strftime("%Y-%m-%dT%H:%M")) %>
+      </div>
+
+      <div class="form-group">
+        <%= label_tag(:form_close, "Form Close:") %>
+        <%= datetime_local_field_tag(:form_close, nil, class: "form-control", required: true, value: Time.current.in_time_zone("Central Time (US & Canada)").strftime("%Y-%m-%dT%H:%M")) %>
+      </div>
+
+      <br>
+      <div class="d-flex justify-content-center align-items-center">
+        <%= submit_tag("Save", class: "btn btn-primary") %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const formOpen = document.querySelector("#form_open");
+    const formClose = document.querySelector("#form_close");
+
+    formOpen.addEventListener("change", function() {
+      if (formOpen.value >= formClose.value) {
+        formOpen.setCustomValidity("Form open date must be before form close date.");
+      } else {
+        formOpen.setCustomValidity("");
+      }
+    });
+
+    formClose.addEventListener("change", function() {
+      if (formOpen.value >= formClose.value) {
+        formOpen.setCustomValidity("Form open date must be before form close date.");
+      } else {
+        formOpen.setCustomValidity("");
+      }
+    });
+  });
+</script>
