@@ -16,11 +16,13 @@ class DevTestController < ApplicationController
 
   def upload_resume
     
-    class_id = params[:class_id].to_i
-    # class_id = 1
+    course_id = params[:course_id].to_i
+    # course_id = 101
+    puts "course_id: " + course_id.to_s
+
     
-    @descriptions = ProjectNew.where(class_id: class_id).pluck(:description)
-    puts "text: " + @descriptions.join(separator = ",")
+    @descriptions = Project.where(course_id: course_id).pluck(:description)
+    puts "course description: " + @descriptions.join(separator = ",")
 
 
     if params[:resume].present? && params[:resume].content_type == 'application/pdf'

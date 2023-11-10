@@ -15,6 +15,8 @@ class ProjectsController < ApplicationController
   def new
     @semesters = generate_semesters
     @project = Project.new
+    2.times {@project.sponsor_preferences.build}
+    2.times {@project.sponsor_restrictions.build}
   end
 
   def create
@@ -57,7 +59,9 @@ class ProjectsController < ApplicationController
 
   private
     def project_params
-      params.require(:project).permit(:Name, :Semester, :Sponsor, :Description, :Link)
+      params.require(:project).permit(:name, :semester, :sponsor, :description, :info_url,
+                                      sponsor_restrictions_attributes: [:restriction_type, :restriction_val, :_destroy],
+                                      sponsor_preferences_attributes: [:preference_type, :preference_val, :bonus_amount, :_destroy])
     end
 
     def generate_semesters

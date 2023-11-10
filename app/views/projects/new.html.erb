@@ -21,27 +21,76 @@
 
       <%= form_with(model: @project, url: "/addProjects", local: true) do |form| %>
         <div class="form-group mb-3">
-          <%= form.label :Name %><span class="text-danger">*</span>
-          <%= form.text_field :Name, placeholder: 'Enter name of the project', :class => "form-control", :required => true%>
+          <%= form.label :name %><span class="text-danger">*</span>
+          <%= form.text_field :name, placeholder: 'Enter name of the project', :class => "form-control", :required => true%>
         </div>
         <div class="form-group mb-3 mr-2">
-          <%= form.label :Semester %><span class="text-danger">*</span>
-          <%= form.select :Semester, options_for_select(@semesters), prompt: 'Select a Semester', :class => "form-control", required: true %>
+          <%= form.label :semester %><span class="text-danger">*</span>
+          <%= form.select :semester, options_for_select(@semesters), prompt: 'Select a Semester', :class => "form-control", required: true %>
         </div>
 
         <div class="form-group mb-3">
-          <%= form.label :Sponsor %><span class="text-danger">*</span>
-          <%= form.text_field :Sponsor, placeholder: 'Enter Name of the sponsor', :class => "form-control", :required => true%>
+          <%= form.label :sponsor %><span class="text-danger">*</span>
+          <%= form.text_field :sponsor, placeholder: 'Enter Name of the sponsor', :class => "form-control", :required => true%>
         </div>
 
         <div class="form-group mb-3">
-          <%= form.label :Description %><span class="text-danger">*</span>
-          <%= form.text_area :Description, placeholder: 'Give a brief description about the project', :class => "form-control", :required => true%>
+          <%= form.label :description %><span class="text-danger">*</span>
+          <%= form.text_area :description, placeholder: 'Give a brief description about the project', :class => "form-control", :required => true%>
         </div>
 
         <div class="form-group mb-3">
-          <%= form.label :Link %>
-          <%= form.text_field :Link , placeholder: 'Enter additional links' , :class => "form-control"%>
+          <%= form.label :info_url %>
+          <%= form.text_field :info_url , placeholder: 'Enter additional links' , :class => "form-control"%>
+        </div>
+
+
+        <!-- Sponsor Restrictions -->
+        <div class="row">
+          <h3 class="col-8">Sponsor Restrictions</h3>
+          <%#= link_to 'Add Sponsor Restriction', 'javascript:void(0)', onclick: "addFields('sponsor_restrictions', '#{j(render partial: 'sponsor_restriction_fields', locals: { f: form })}')" %>
+
+<!--          <button type="button" class="col-4 btn-primary" onclick="addField('sponsorRestriction')">Add Sponsor Restriction</button>-->
+        </div>
+
+        <div class="field form-group mb-3" id="sponsorRestrictions">
+
+            <%= form.fields_for :sponsor_restrictions do |restriction_fields| %>
+            <div id = "sponsorRestriction">
+              <fieldset>
+              <%= restriction_fields.label :restriction_type %>
+              <%= restriction_fields.text_field :restriction_type, :class => "form-control" %>
+
+              <%= restriction_fields.label :restriction_val %>
+              <%= restriction_fields.text_field :restriction_val, :class => "form-control" %>
+              </fieldset>
+            </div>
+            <% end %>
+        </div>
+
+        <!-- Sponsor Preferences -->
+        <div class="row">
+          <h3 class="col-8">Sponsor Preferences</h3>
+<!--          <button type="button"  class="col-4 btn-primary" onclick="addField('sponsorPreference')">Add Sponsor Preference</button>-->
+        </div>
+        <div class="field form-group mb-3" id="sponsorPreferences">
+
+            <%= form.fields_for :sponsor_preferences do |preference_fields| %>
+            <div id="sponsorPreference">
+              <fieldset>
+
+              <%= preference_fields.label :preference_type %>
+              <%= preference_fields.text_field :preference_type, :class => "form-control" %>
+
+              <%= preference_fields.label :preference_val %>
+              <%= preference_fields.text_field :preference_val , :class => "form-control"%>
+
+              <%= preference_fields.label :bonus_amount %>
+              <%= preference_fields.text_field :bonus_amount, :class => "form-control", :value =>'30.0' %>
+              </fieldset>
+            </div>
+            <% end %>
+
         </div>
 
         <div class="text-center mt-4">
@@ -61,6 +110,38 @@
     darkModeToggle.addEventListener('click', () => {
         htmlElement.classList.toggle('dark-mode');
     });
+
+    // function addField(containerId, fieldId) {
+    //     var container = document.getElementById(containerId);
+    //     var field = document.getElementById(fieldId).cloneNode(true);
+    //     const lastId = document.querySelector('#fieldsetContainer').lastElementChild.id;
+    //
+    //     const newId = parseInt(lastId, 10) + 1;
+    //
+    //     const newFieldset = document.querySelector('[id=”0"]').outerHTML.replace(/0/g,newId);
+    //
+    //     field.removeAttribute("id");
+    //     container.appendChild(field);
+    // const newFieldset = document.querySelector('[id=”0"]').outerHTML.replace(/0/g,newId);
+    //
+    // document.querySelector(“#fieldsetContainer”).insertAdjacentHTML(
+    //     “beforeend”, newFieldset
+    // );
+    // }
+
+    function addField(containerId)
+    {
+        var container = document.getElementById(containerId);
+        const lastId = container.lastElementChild.id;
+        const newId = parseInt(lastId, 10) + 1;
+        console.log(newId, lastId)
+        console.log(container.lastElementChild.innerHTML)
+        var newElement = container.lastElementChild.outerHTML.replace(/0/g,newId)
+        console.log(newElement)
+        container.innerHTML += newElement;
+    }
+
+
 </script>
 </body>
 </html>

@@ -87,6 +87,18 @@ html.dark-mode table {
     background-color: maroon;
     border: none;
 }
+.custom-button {
+    width: 300px; /* Adjust the width as needed */
+}
+.btn-secondary {
+    background-color: #600000;
+    border: none;
+}
+
+.btn-secondary {
+    background-color: #600000;
+    border: none;
+}
 
 .btn-primary:hover {
     background-color: #300000;

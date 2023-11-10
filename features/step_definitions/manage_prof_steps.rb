@@ -1,13 +1,28 @@
 Given('the following professors exist:') do |professors_table|
     professors_table.hashes.each do |professor_params|
-      professor_params['semester'] = parse_array_value(professor_params['semester'])
-      professor_params['section'] = parse_array_value(professor_params['section'])
-  
-      professor = Professor.find_by(email: professor_params['email'])
-      if professor
-        professor.update(professor_params)
+      email = professor_params['email']
+      first_name = professor_params['first_name']
+      last_name = professor_params['last_name']
+      semester = professor_params['semester']
+      course_number = professor_params['course_number']
+      section = professor_params['section']
+      admin_approved = professor_params['admin_approved']
+      admin = professor_params['admin']
+
+      if admin_approved == "Yes"
+        verified = true
       else
-        Professor.create!(professor_params)
+        verified = false
+      end
+
+      if admin == "Yes"
+        user = User.create(first_name: first_name, last_name: last_name, role: 'admin', email: email )
+        professor = Professor.create(professor_id: user.user_id, verified: verified, admin: true)
+        course = Course.create(course_number: course_number, section: section, semester: semester, professor_id: professor.professor_id)
+      else
+        user = User.create(first_name: first_name, last_name: last_name, role: 'professor', email: email )
+        professor = Professor.create(professor_id: user.user_id, verified: verified, admin: false)
+        course = Course.create(course_number: course_number, section: section, semester: semester, professor_id: professor.professor_id)
       end
     end
   end

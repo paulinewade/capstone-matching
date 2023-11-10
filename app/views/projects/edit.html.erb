@@ -9,36 +9,113 @@
 
       <%= form_for @project do |f| %>
         <div class="form-group">
-          <%= f.label :Name %>
-          <%= f.text_field :Name, class: 'form-control' %>
+          <%= f.label :name %>
+          <%= f.text_field :name, class: 'form-control' %>
         </div>
 
         <div class="form-group">
-          <%= f.label :Sponsor %>
-          <%= f.text_field :Sponsor, class: 'form-control' %>
+          <%= f.label :sponsor %>
+          <%= f.text_field :sponsor, class: 'form-control' %>
         </div>
 
         <div class="form-group">
-          <%= f.label :Description %>
-          <%= f.text_area :Description, class: 'form-control', rows: 5 %>
+          <%= f.label :description %>
+          <%= f.text_area :description, class: 'form-control', rows: 5 %>
         </div>
 
         <div class="form-group">
-          <%= f.label :Link %>
-          <%= f.text_field :Link, class: 'form-control' %>
+          <%= f.label :info_url %>
+          <%= f.text_field :info_url, class: 'form-control' %>
         </div>
 
         <div class="form-group">
-          <%= f.label :Semester %>
-          <%= f.select :Semester, options_for_select(@semesters, @project.Semester), {}, class: 'form-control' %>
+          <%= f.label :semester %>
+          <%= f.select :semester, options_for_select(@semesters, @project.semester), {}, class: 'form-control' %>
         </div>
-
         <div class="form-actions text-center mb-4">
           <br/>
           <%= f.submit "Update", class: 'btn btn-primary' %>
           <%= link_to "Back", projects_path, class: 'btn btn-secondary' %>
         </div>
       <% end %>
+
+        <br>
+
+        <!-- Sponsor Restrictions -->
+          <div class="card mb-4" id="sponsor_restrictions_div">
+            <div class="card-header">
+              <div class="row">
+                <div class="col text-left">
+                  <h5 class="card-title">Sponsor Restriction</h5>
+                </div>
+                <div class="col">
+                    <%= link_to new_project_sponsor_restriction_path(@project), class: "btn btn-primary float-end", id: "Add_Sponsor_Restriction" do %>
+                      <i id = "Add_Sponsor_Restriction" class="fas fa-plus text-right"></i>
+                    <% end %>
+                </div>
+              </div>
+            </div>
+          <!-- app/views/sponsor_restrictions/_sponsor_restriction.html.erb -->
+          <% @project.sponsor_restrictions.each do |sponsor_restriction| %>
+
+            <div class="card-body">
+              <p class="card-text">Type: <%= sponsor_restriction.restriction_type %></p>
+              <p class="card-text">Value: <%= sponsor_restriction.restriction_val %></p>
+              <div class="row">
+                <div class="col text-right">
+                  <%= link_to(edit_project_sponsor_restriction_path(@project, sponsor_restriction), class: 'btn btn-primary') do %>
+                    <i class="fas fa-pencil-alt"></i> Edit
+                  <% end %>
+                </div>
+                <div class = "col text-center">
+                  <%= button_to project_sponsor_restriction_path(@project, sponsor_restriction), method: :delete, 'data-method' => 'delete', data: { confirm: "Are you sure you want to delete this sponsor restriction?" }, class: 'btn btn-secondary', onclick: "return confirm('Are you sure you want to delete this sponsor restriction?')" do %>
+                    <i class="fas fa-trash-alt"></i> Delete
+                  <% end %>
+                </div>
+              </div>
+              <hr/>
+            </div>
+            <% end %>
+          </div>
+
+        <!-- Sponsor Preferences -->
+          <div class="card mb-4" id = "sponsor_preferences_div">
+            <div class="card-header">
+              <div class="row">
+                <div class="col text-left">
+                  <h5 class="card-title">Sponsor Preference</h5>
+                </div>
+                <div class="col text-right">
+                  <%= link_to new_project_sponsor_preference_path(@project), class: "btn btn-primary float-end", id: "Add_Sponsor_Preference" do %>
+                    <i class="fas fa-plus text-right"></i>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          <% @project.sponsor_preferences.each do |sponsor_preference|%>
+              <div class="card-body">
+                <p class="card-text">Type: <%= sponsor_preference.preference_type %></p>
+                <p class="card-text">Value: <%= sponsor_preference.preference_val %></p>
+                <p class="card-text">Bonus Amount: <%= sponsor_preference.bonus_amount %></p>
+                <div class="row">
+                  <div class="col text-right">
+                    <%= link_to(edit_project_sponsor_preference_path(@project, sponsor_preference), class: 'btn btn-primary') do %>
+                      <i class="fas fa-pencil-alt"></i> Edit
+                    <% end %>
+                  </div>
+
+                  <div class = "col text-center">
+                    <%= button_to project_sponsor_preference_path(@project, sponsor_preference), method: :delete, 'data-method' => 'delete', data: { confirm: "Are you sure you want to delete this sponsor preference?" }, class: 'btn btn-secondary', onclick: "return confirm('Are you sure you want to delete this sponsor preference?')" do %>
+                      <i class="fas fa-trash-alt"></i> Delete
+                    <% end %>
+                  </div>
+                </div>
+                <hr/>
+
+              </div>
+            <% end %>
+          </div>
+
     </div>
   </div>
 </div>
