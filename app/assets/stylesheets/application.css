@@ -87,7 +87,9 @@ html.dark-mode table {
     background-color: maroon;
     border: none;
 }
-
+.custom-button {
+    width: 300px; /* Adjust the width as needed */
+}
 .btn-secondary {
     background-color: #600000;
     border: none;
