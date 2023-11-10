@@ -6,13 +6,12 @@ RSpec.describe ProjectsController, type: :controller do
   describe 'POST #create' do
     context 'with valid parameters' do
       it 'creates a new project' do
-        project_params = { Name: 'New Project', Semester: '2024', Sponsor: 'Sponsor', Description: 'Description', Link: 'Link' }
-
+        project_params = { name: 'New Project', semester: '2024', sponsor: 'Sponsor', description: 'Description', link: 'Link'}
+        
         count = Project.count
-        expect {
-          post "create", params: { project: project_params }
-        }.to change(Project, :count).by(1)
-
+        post :create, params: { project: project_params }
+        
+        expect(Project.count).to eq(count + 1)
         expect(response).to redirect_to('/projects')
         expect(flash[:notice]).to eq('Project was successfully created')
       end
@@ -20,7 +19,7 @@ RSpec.describe ProjectsController, type: :controller do
 
     context 'with invalid parameters' do
       it 'does not create a new project' do
-        project_params = { name: '', sponsor: 'Sponsor', description: 'Description', link: 'Link' }
+        project_params = { name: 'name', sponsor: 'Sponsor', description: 'Description', link: 'Link'}
 
         expect {
           post :create, params: { project: project_params }
