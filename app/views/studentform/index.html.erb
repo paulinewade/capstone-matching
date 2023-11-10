@@ -56,7 +56,7 @@
 				<!-- Registration Form -->
 				<h4>Student Information</h4>
 				<br/>
-				<form action="/StudentForm" method="post">
+				<form action="/studentform" method="post">
 					<div class="form-group mb-3">
 						<label for="email">TAMU Email Address: </label>
 						<input type="email" class="form-control" id="email" name="email" placeholder="Enter your TAMU email address">
@@ -74,22 +74,44 @@
 						<input type="text" class="form-control" id="uin" name="uin" placeholder="UIN">
 					</div>
 					<div class="form-group mb-3">
-						<label for="gender">Gender: </label>
+						<label name="gender">Gender: </label>
 						<br/>
-						<input type="radio" name="gender" value="male" form="myForm"> Male
-						<input type="radio" name="gender" value="female" form="myForm"> Female
-						<input type="radio" name="gender" value="unknown" form="myForm"> Other		
+						<input type="radio" name="gender" value="male"> Male
+						<input type="radio" name="gender" value="female"> Female
+						<input type="radio" name="gender" value="unknown"> Other		
+					</div>
+					<div class="form-group mb-3">
+					  <label for="course_id">Course: </label>
+					  <br/>
+					  <% @courses.each do |course| %>
+					    <input type="radio" name="course_id" value="<%= course.course_id %>">
+					    <%= "#{course.course_number} - #{course.section} - #{course.semester}" %><br/>
+					  <% end %>
 					</div>
 					<div class="form-group mb-3">
 						<label for="date_of_birth">Date of Birth: </label>
 						<br/>
 						<input type="date" name="Startdate">
 					</div>
+
+					<div class="form-group mb-3">
+					  <label for="work_authorization">Work Authorization Required: </label>
+					  <br/>
+					  <select name="work_authorization">
+					  	<option value="" selected disabled>None</option>
+					    <option value="citizen">Citizen</option>
+					    <option value="permanent_resident">Permanent Resident</option>
+					    <option value="work_visa">Work Visa</option>
+					    <option value="student_visa">Student Visa</option>
+					  </select>
+					</div>
+
+
 					<div class="form-group mb-3">
 						<label for="nationality">Nationality: </label>
 						<br/>
 						<select name="nationality">
-						  <option value="">-- select one --</option>
+						  <option value="" selected disabled>-- select one --</option>
 						  <option value="afghan">Afghan</option>
 						  <option value="albanian">Albanian</option>
 						  <option value="algerian">Algerian</option>
@@ -284,22 +306,35 @@
 						  <option value="zimbabwean">Zimbabwean</option>
 						</select>
 					</div>
-
-					<div class="form-group mb-3">
-						<label for="ethnicity">Ethnicity: </label>
-						  <select class="form-control dropdown" id="ethnicity" name="ethnicity">
-						    <option value="" selected="selected" disabled="disabled">-- select one --</option>
-								<option value="White">White</option>
-								<option value="Black or African American">Black or African American</option>
-								<option value="Asian">Asian</option>
-								<option value="Hispanic or Latino">Hispanic or Latino</option>
-								<option value="Two or more">Two or more</option>
-								<option value="Native Hawaiian or Pacific Islander">Native Hawaiian or Pacific Islander</option>
-								<option value="Native American or Alaskan Native">Native American or Alaskan Native</option>
-								<option value="Other">Other</option>
-						    </optgroup>
-						  </select>
+				  	<div class="form-group mb-3">
+				  	  <label for="ethnicity">Ethnicity: </label>
+				  	  <select class="form-control dropdown" id="ethnicity" name="ethnicity[]" multiple>
+				  	    <option value="" selected="selected" disabled="disabled">-- select one or more --</option>
+				  	    <option value="White">White</option>
+				  	    <option value="Black or African American">Black or African American</option>
+				  	    <option value="Asian">Asian</option>
+				  	    <option value="Hispanic or Latino">Hispanic or Latino</option>
+				  	    <option value="Two or more">Two or more</option>
+				  	    <option value="Native Hawaiian or Pacific Islander">Native Hawaiian or Pacific Islander</option>
+				  	    <option value="Native American or Alaskan Native">Native American or Alaskan Native</option>
+				  	    <option value="Other">Other</option>
+				  	  </select>
 				  	</div>
+
+				  	<div id="selectedOptions">Selected:</div>
+
+				  	<script>
+				  	  // JavaScript code to display selected options
+				  	  const selectElement = document.getElementById('ethnicity');
+				  	  const selectedOptionsDiv = document.getElementById('selectedOptions');
+
+				  	  selectElement.addEventListener('change', function () {
+				  	    const selectedOptions = Array.from(this.selectedOptions).map(option => option.text);
+				  	    selectedOptionsDiv.textContent = 'Selected Options: ' + (selectedOptions.length > 0 ? selectedOptions.join(', ') : 'None');
+				  	  });
+				  	</script>
+
+
 
 					<!-- <div class="form-group mb-3">
 						<%= form_with(url: '/devtest/upload_resume', multipart: true) do |form| %>
@@ -589,17 +624,10 @@
 						<input type="checkbox" name="cbox" id="cbox" onchange="onCbChange('cbox')"> I have read and agree to the terms and conditions.</input>
 					</div>	
 					
-					<% all_students_locked = Student.count > 0 && (Student.where(form_locked: true).count == Student.count) %>
 
-					<% if !all_students_locked %>
 						<div class="text-center mt-4">
 							<button type="submit" class="btn btn-danger custom-maroon-button">Submit</button>
 						</div>
-					<% else %>
-						<div class="text-center mt-4">
-							<p>The student form is locked.</p>
-						</div>
-					<% end %>
 				</form>
 				<hr>
 			</div>

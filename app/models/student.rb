@@ -10,4 +10,5 @@ class Student < ApplicationRecord
   validates :nationality, presence: true
   validates :work_auth, presence: true
   validates :contract_sign, presence: true
+  validates :uin, presence: true
 end
