@@ -21,7 +21,6 @@ class DevTestController < ApplicationController
     course_id = params[:course_id].to_i
     # course_id = 101
     puts "course_id: " + course_id.to_s
-    
     resume = params[:resume].to_s
     puts "resume: " + resume 
     
