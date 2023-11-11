@@ -157,7 +157,7 @@ function extractText(file) {
 
     <% if flash[:resume_text].present? %>
       <h2>Resume Text</h2>
-      <pre><%= flash[:resume_text] %></pre>
+      <pre flash[:resume_text] %></pre>
     <% end %>
 
     <% if flash[:error].present? %>

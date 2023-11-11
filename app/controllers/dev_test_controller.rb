@@ -48,17 +48,17 @@ class DevTestController < ApplicationController
 
   private
 
-  def parse_pdf_resume(file)
-    resume_text = ""
+  # def parse_pdf_resume(file)
+  #   resume_text = ""
 
-    PDF::Reader.open(file) do |reader|
-      reader.pages.each do |page|
-        resume_text << page.text
-      end
-    end
+  #   PDF::Reader.open(file) do |reader|
+  #     reader.pages.each do |page|
+  #       resume_text << page.text
+  #     end
+  #   end
 
-    return resume_text
-  end
+  #   return resume_text
+  # end
   
   # Function to remove stop words from a string
   def remove_stop_words(input_string, stop_words)
@@ -68,10 +68,10 @@ class DevTestController < ApplicationController
     return filtered_string
   end
   
-  # it's better to use the id of the project, but this is a hotfix
-  def store_score(most_similar_job_description, similarity_score)
-    # fill here
-  end
+  # # it's better to use the id of the project, but this is a hotfix
+  # def store_score(most_similar_job_description, similarity_score)
+  #   # fill here
+  # end
 
   
   def classify(resume_text, descriptions)
@@ -97,7 +97,13 @@ class DevTestController < ApplicationController
     # ]
     
     corpus = []
-    job_descriptions = descriptions
+    
+    if descriptions.nil? || descriptions.empty?
+      puts 'no job descriptions detected for course_id'
+      return ['no job descriptions detected for course_id', 0]
+    else
+      job_descriptions = descriptions
+    end
 
     
     job_descriptions.length.times do |i|
