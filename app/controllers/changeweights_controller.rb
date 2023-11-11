@@ -5,7 +5,11 @@ class ChangeweightsController < ApplicationController
 
     def save_weights
         feature_weights = params[:feature_weights]
-      
+        if feature_weights.nil?
+            flash[:error] = "No feature weights to save."
+            redirect_to changeweights_path
+            return
+        end
         total = feature_weights.sum do |weight|
             weight.to_f
         end
