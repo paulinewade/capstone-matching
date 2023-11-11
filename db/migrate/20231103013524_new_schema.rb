@@ -36,6 +36,7 @@ class NewSchema < ActiveRecord::Migration[7.0]
     create_table :students, id: false, primary_key: :student_id do |t|
       t.integer :student_id, null: false, primary_key: true
       t.integer :course_id, null: false
+      t.integer :uin, null: false, unique: true
       t.string :gender, null: false
       t.string :nationality, null: false
       t.string :work_auth, null: false
