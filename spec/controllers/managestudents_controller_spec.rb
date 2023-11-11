@@ -45,8 +45,8 @@ RSpec.describe ManagestudentsController, type: :controller do
       course2 = Course.create(course_number: 123, section: 456, semester: 'Fall 2024')
       student_user1 = User.create(email: 'studentemail@tamu.edu', first_name: 'ex', last_name: 'ex', role: 'student')
       student_user2 = User.create(email: 'studentemail2@tamu.edu', first_name: 'ex', last_name: 'ex', role: 'student')
-      student1 = Student.create( student_id: student_user1.user_id ,course_id: course1.course_id, gender: 'Male', nationality: 'American', work_auth: 'Citizen', contract_sign: 'all')
-      student2 = Student.create( student_id: student_user2.user_id , course_id: course2.course_id, gender: 'Male', nationality: 'American', work_auth: 'Citizen', contract_sign: 'all')
+      student1 = Student.create( student_id: student_user1.user_id ,course_id: course1.course_id, gender: 'Male', nationality: 'American', work_auth: 'Citizen', contract_sign: 'all', uin: 12)
+      student2 = Student.create( student_id: student_user2.user_id , course_id: course2.course_id, gender: 'Male', nationality: 'American', work_auth: 'Citizen', contract_sign: 'all', uin: 123)
 
       post :filter_students, params: { course_details: course1.course_id }
 
