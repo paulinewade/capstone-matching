@@ -2,7 +2,7 @@ class StudentformController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def index
-    @courses = Course.select(:id, :course_number, :section, :semester).distinct
+    @courses = Course.all
   end
 
   def create
@@ -12,6 +12,8 @@ class StudentformController < ApplicationController
     last_name = params[:last_name]
     uin = params[:uin]
     gender = params[:gender]
+    course_id = params[:course_id]
+    ethnicities = params[:ethnicity]
 
     if email.end_with?("tamu.edu")
       existing_student = User.find_by(email: email)
@@ -28,8 +30,9 @@ class StudentformController < ApplicationController
           id = new_student.user_id
           student = Student.new(
             student_id: id,
-            course_id: 1, # you need to extract course_id from the form parameters
+            course_id: course_id, # you need to extract course_id from the form parameters
             gender: gender,
+            uin: uin,
             nationality: params[:nationality], # extract other parameters as needed
             work_auth: params[:work_authorization],
             contract_sign: "No",
@@ -37,6 +40,10 @@ class StudentformController < ApplicationController
           )
 
           if student.save
+            student_id = student.student_id
+            ethnicities.each do |ethnicity|
+              EthnicityValue.create(student_id: student_id, ethnicity_name: ethnicity)
+            end
             flash[:success] = "Registration Successful!"
           else
             flash[:error] = "Failed to save student information."

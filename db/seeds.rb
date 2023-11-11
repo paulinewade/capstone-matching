@@ -39,7 +39,7 @@ ethnicities.each do |ethnicity|
 end
 
 
-student = Student.create(student_id: student_user.user_id, course_id: course.course_id, gender: "Male", nationality: "American", work_auth: "Citizen", contract_sign: "All", resume: "Nodejs, Javascript, Java, Python")
+student = Student.create(student_id: student_user.user_id, course_id: course.course_id, gender: "Male", nationality: "American", work_auth: "Citizen", contract_sign: "All", uin: 123, resume: "Nodejs, Javascript, Java, Python")
 ethnicity_value1 = EthnicityValue.create(student_id: student.student_id, ethnicity_name: "White")
 ethnicity_value2 = EthnicityValue.create(student_id: student.student_id, ethnicity_name: "Black or African American")
 
