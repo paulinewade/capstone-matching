@@ -3,19 +3,13 @@ Feature: Capstone Matching System
     When the user goes to the homepage
     Then they should see "Welcome to the Capstone Matching System"
     And they should see "Find the perfect capstone project or team for your academic journey."
-    And they should see a "Student" button
-    And they should see a "Professor" button
+    And they should see a "Login" button
+    And they should see a "Professor Registration" button
 
-  Scenario: User visits the homepage and clicks on the "Student" button
+  Scenario: User visits the homepage and clicks on the "Professor Registration" button
     When the user goes to the homepage
-    Then they should see a "Student" button
-    When the user clicks the "Student" button
-    Then they should be redirected to the student sign in page
-
-  Scenario: User visits the homepage and clicks on the "Professor" button
-    When the user goes to the homepage
-    Then they should see a "Professor" button
-    When the user clicks the "Professor" button
+    Then they should see a "Professor Registration" button
+    When the user clicks the "Professor Registration" button
     Then they should be redirected to the professor registration page
 
   Scenario: User visits the footer

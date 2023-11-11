@@ -10,13 +10,17 @@ Then("they should see a {string} button") do |button_text|
   expect(page).to have_button(button_text)
 end
 
-When("the user clicks the {string} button") do |button_text|
-  click_button(button_text)
+When("the user clicks the Login with Google button") do
+  click_button('Login with Google')
 end
 
-Then("they should be redirected to the student sign in page") do
-  visit new_user_session_path
-  expect(page).to have_current_path(new_user_session_path)
+When("the user clicks the {string} button") do |button_text|
+  click_button (button_text)
+end
+
+Then("they should be redirected to the sign in page") do
+  visit google_login_path
+  expect(page).to have_current_path(google_login_path)
 end
 
 Then("they should be redirected to the professor registration page") do
