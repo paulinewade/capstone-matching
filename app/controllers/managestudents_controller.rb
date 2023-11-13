@@ -29,10 +29,10 @@ class ManagestudentsController < ApplicationController
   end
 
   def filter_students
-    course_details = params[:course_details]
+    course_id = params[:course_id]
   
-    if course_details.present?
-      @students = User.includes(student: :course).where(courses: { course_id: course_details})
+    if course_id.present?
+      @students = User.includes(student: :course).where(courses: { course_id: course_id})
     else
       @students = User.includes(:student).where.not(students: { student_id: nil })
     end

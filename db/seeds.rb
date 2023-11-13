@@ -44,8 +44,9 @@ student = Student.create(student_id: student_user.user_id, course_id: course.cou
 ethnicity_value1 = EthnicityValue.create(student_id: student.student_id, ethnicity_name: "White")
 ethnicity_value2 = EthnicityValue.create(student_id: student.student_id, ethnicity_name: "Black or African American")
 
-project = Project.create(name: "Example Project", description: "Example Description", sponsor: "Example Sponsor", course_id: course.course_id, info_url: "www.tamu.edu", semester: "Fall 2023")
+project = Project.create(name: "Example Project", description: "Example Description", sponsor: "Example Sponsor", course_id: course.course_id, info_url: "https://www.tamu.edu", semester: "Fall 2023")
 project = Project.create(name: "Example Project2", description: "Example Description2", sponsor: "Example Sponsor2", semester: "Spring 2024")
+project = Project.create(name: "Example Project3", description: "Example Description3", sponsor: "Example Sponsor3", semester: "Fall 2023")
 
 attribute1 = ScoresAttribute.create(feature: "Resume/Skills Match Score", feature_weight: 0.5)
 attribute2 = ScoresAttribute.create(feature: "Preference Match Score", feature_weight: 0.25)
@@ -63,8 +64,8 @@ restriction = SponsorRestriction.create(restriction_type: "gender", restriction_
 preference = SponsorPreference.create(project_id: project.project_id, preference_type: "gender", preference_val: "Non-Binary", bonus_amount: 10)
 
 # project3 = Project.create(name: "Example Project 3", description: "Example Description 3", sponsor: "Example Sponsor 3", course_id: course3.course_id, info_url: "www.tamu.edu", semester: "Fall 2023")
-project4 = Project.create(name: "Example Project 4", description: "We are looking for a software engineer with expertise in Ruby and Ruby on Rails.", sponsor: "Example Sponsor 4", course_id: course5.course_id, info_url: "www.tamu.edu", semester: "Fall 2023")
-project5 = Project.create(name: "Example Project 5", description: "Seeking a front-end developer experienced in JavaScript and React.", sponsor: "Example Sponsor 5", course_id: course5.course_id, info_url: "www.tamu.edu", semester: "Fall 2023")
-project6 = Project.create(name: "Example Project 6", description: "We need a data scientist skilled in Python and machine learning.", sponsor: "Example Sponsor6", course_id: course5.course_id, info_url: "www.tamu.edu", semester: "Fall 2023")
-
+project4 = Project.create(name: "Example Project 4", description: "We are looking for a software engineer with expertise in Ruby and Ruby on Rails.", sponsor: "Example Sponsor 4", course_id: course5.course_id, info_url: "https://www.tamu.edu", semester: "Fall 2023")
+project5 = Project.create(name: "Example Project 5", description: "Seeking a front-end developer experienced in JavaScript and React.", sponsor: "Example Sponsor 5", course_id: course5.course_id, info_url: "https://www.tamu.edu", semester: "Fall 2023")
+project6 = Project.create(name: "Example Project 6", description: "We need a data scientist skilled in Python and machine learning.", sponsor: "Example Sponsor6", course_id: course5.course_id, info_url: "https://www.tamu.edu", semester: "Fall 2023")
+project7 = Project.create(name: "Example Project 7", description: "We need a data scientist skilled in Python and machine learning.", sponsor: "Example Sponsor7", course_id: course5.course_id, semester: "Fall 2023")
 

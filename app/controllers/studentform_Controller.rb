@@ -2,12 +2,30 @@ class StudentformController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def index
-    @courses = Course.all
+    today = Date.today
+    current_year = today.year
+    semester = ""
+    if today.month >= 8 || today.month < 1
+      semester = "Fall #{current_year}"
+    elsif today.month >= 1 && today.month <= 5
+      semester = "Spring #{current_year}"
+    else
+      semester = "Summer #{current_year}"
+    end
+
+    @courses = Course.where(semester: semester)
+    @projects = Project.where(semester: semester)
     @ethnicity = Ethnicity.all
-    @gender = Rails.application.config.student_status_constants['gender']
+    @genders = Rails.application.config.student_status_constants['gender']
     @work_auth = Rails.application.config.student_status_constants['work_auth']
-    @constract_sign = Rails.application.config.student_status_constants['contract_sign']
+    @contract_sign = Rails.application.config.student_status_constants['contract_sign']
     @nationality = Rails.application.config.student_status_constants['nationality']
+    config = Config.first
+    @min_number = config.min_number
+    @max_number = config.max_number
+    @form_open = config.form_open
+    @form_close = config.form_close
+    @project_ranks = {}
   end
 
   def create
@@ -18,7 +36,50 @@ class StudentformController < ApplicationController
     uin = params[:uin]
     gender = params[:gender]
     course_id = params[:course_id]
+    work_auth = params[:work_auth]
+    contract_sign = params[:contract_sign]
+    nationality = params[:nationality]
     ethnicities = params[:ethnicity]
+    project_ranks = params[:project_rank]
+
+    config = Config.first
+    @min_number = config.min_number
+    @max_number = config.max_number
+    @form_open = config.form_open
+    @form_close = config.form_close
+
+    # #form isn't open
+    # if DateTime.now < @form_open || DateTime.now > @form_close
+    #   flash[:error] = "Form is not currently open, please submit during the specified window."
+    #   redirect_to studentform_path
+    #   return
+    # end
+
+    #if any fields are left blank (some are required, but don't have it set as required on their entry field)
+    if gender.blank? ||course_id.blank? || work_auth.blank? || contract_sign.blank? || nationality.blank? || ethnicities.empty?
+      flash[:error] = "Please fill in all fields in 'Student Information' before submitting."
+      redirect_to studentform_path
+      return
+    end
+
+    non_blank_ranks = project_ranks.to_unsafe_h.reject { |_, value| value.blank? }
+    unless non_blank_ranks.size.between?(@min_number, @max_number)
+      flash[:error] = "Must rank between #{@min_number} and #{@max_number} (inclusive) projects."
+      redirect_to studentform_path
+      return
+    end
+
+    if non_blank_ranks.values.group_by { |rank| rank.to_i }.any? { |_, ranks| ranks.length > 1 }
+      flash[:error] = "Duplicate ranks found for different projects. Please ensure each project has a unique rank."
+      redirect_to studentform_path
+      return
+    end
+
+    if (1..non_blank_ranks.size).to_a != non_blank_ranks.values.map(&:to_i).sort
+      flash[:error] = "Invalid rank sequence. Please ensure ranks are consecutive without skipping any numbers."
+      redirect_to studentform_path
+      return
+    end
 
     if email.end_with?("tamu.edu")
       existing_student = User.find_by(email: email)
@@ -38,9 +99,9 @@ class StudentformController < ApplicationController
             course_id: course_id, # you need to extract course_id from the form parameters
             gender: gender,
             uin: uin,
-            nationality: params[:nationality], # extract other parameters as needed
-            work_auth: params[:work_authorization],
-            contract_sign: "No",
+            nationality: nationality, # extract other parameters as needed
+            work_auth: work_auth,
+            contract_sign: contract_sign,
             resume: "After resume parsing"
           )
 
@@ -61,6 +122,6 @@ class StudentformController < ApplicationController
       flash[:error] = "Not a valid tamu.edu email address."
     end
 
-    redirect_to "/studentform"
+    redirect_to studentform_path
   end
 end

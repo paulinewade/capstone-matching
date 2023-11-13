@@ -1,0 +1,7 @@
+<div class="form-group mb-3">
+  <label name="gender_label">Gender<span class="text-danger">*</span></label>
+  <br/>
+  <% @genders.each do |gender_val| %>
+    <input type="radio" name="gender" value="<%= gender_val %>"> <%= gender_val %>
+  <% end %>
+</div>

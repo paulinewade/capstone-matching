@@ -1,0 +1,4 @@
+<div class="form-group mb-3">
+  <label for="course_id">Select Course<span class="text-danger">*</span></label>
+  <%= select_tag "course_id", options_for_select(@courses.map { |course| ["CSCE #{course.course_number}-#{course.section}-#{course.semester}", course.course_id] }), include_blank: true, class: "form-control"%>
+</div>

@@ -25,105 +25,51 @@
 	<div class="container mt-3">
       <div class="d-flex justify-content-between align-items-center">
         <button class="btn btn-danger custom-maroon-button" id="dark-mode-toggle">Toggle Dark Mode</button>
-        <%= button_to "Logout", logout_path, { class: "btn btn-danger custom-maroon-button", data: { turbo: "false" }, method: :delete } %>
+        <%= button_to "Logout", logout_path, { class: "btn btn-danger custom-maroon-button", data: { turbo: "false" }, method: :get } %>
       </div>
     </div>
 	<%= render 'shared/notification' %>
 	<div class="container">
 		<div class="row">
 			<div class="col-md-8 offset-md-2">
-				<h1 class="text-center mb-4">CSCE# Project Interests</h1>
+				<h1 class="text-center mb-4">CSCE Capstone Project Preference Form</h1>
 
 				<br/>
-				<p>Howdy! Let us know which student-proposed projects you are interested in.</p>
+				<p>Howdy! Let us know which company sponsored projects you are interested in.</p>
+				<p>This form is open from <%= @form_open.strftime("%B %d, %Y %I:%M %p") %> to <%= @form_close.strftime("%B %d, %Y %I:%M %p") %></p>
 				<br/>
 
 				<h4>Student Information</h4>
 				<br/>
 				<form action="/studentform" method="post">
 					<div class="form-group mb-3">
-						<label for="email">TAMU Email Address: </label>
-						<input type="email" class="form-control" id="email" name="email" placeholder="Enter your TAMU email address">
+						<label for="email">TAMU Email Address<span class="text-danger">*</span></label>
+						<input type="email" class="form-control" id="email" name="email" placeholder="Enter your TAMU email address" required>
 					</div>
 					<div class="form-group mb-3">
-						<label for="last-name">Last Name: </label>
-						<input type="text" class="form-control" id="last_name" name="last_name" placeholder="Enter your last name">
+						<label for="last-name">Last Name<span class="text-danger">*</span></label>
+						<input type="text" class="form-control" id="last_name" name="last_name" placeholder="Enter your last name" required>
 					</div>
 					<div class="form-group mb-3">
-						<label for="first-name">First Name: </label>
-						<input type="text" class="form-control" id="first_name" name="first_name" placeholder="Enter your first name">
+						<label for="first-name">First Name<span class="text-danger">*</span></label>
+						<input type="text" class="form-control" id="first_name" name="first_name" placeholder="Enter your first name" required>
 					</div>
 					<div class="form-group mb-3">
-						<label for="UIN">UIN: </label>
+						<label for="UIN">UIN<span class="text-danger">*</span></label>
 						<input type="text" class="form-control" id="uin" name="uin" placeholder="UIN">
 					</div>
-					<div class="form-group mb-3">
-						<label name="gender">Gender: </label>
-						<br/>
-						<input type="radio" name="gender" value="Male"> Male
-						<input type="radio" name="gender" value="Female"> Female
-						<input type="radio" name="gender" value="Non-Binary"> Non-Binary
-						<input type="radio" name="gender" value="Other"> Other		
-					</div>
-					<div class="form-group mb-3">
-						<label name="course">Course: </label>
-						<br/>
-						<label for="course_id">Select Course:</label>
-						<%= select_tag "course_id", options_for_select(@courses.map { |course| ["CSCE #{course.course_number}-#{course.section}-#{course.semester}", course.course_id] }), include_blank: true, class: "form-control" %>
-					</div>
+
+					<%= render 'shared/gender_selector'%>
+
+					<%= render 'shared/course_selector'%>
 					
-					<%= render 'shared/work_auth_selector' %>
+					<%= render 'shared/work_auth_selector'%>
 
-					<div class="form-group mb-3">
-				  	  <label for="Willingness to Sign Agreements">Willingness to Sign Agreements: </label>
-				  	  <select class="form-control dropdown" name="ethnicity" multiple>
-				  	    <option value="" selected="selected" disabled="disabled">-- select one or more --</option>
-				  	    <option value="White">White</option>
-				  	    <option value="Black or African American">Black or African American</option>
-				  	    <option value="Asian">Asian</option>
-				  	    <option value="Hispanic or Latino">Hispanic or Latino</option>
-				  	    <option value="Native Hawaiian or Other Pacific Islander">Native Hawaiian or Other Pacific Islander</option>
-				  	    <option value="Native American or Alaskan Native">Native American or Alaskan Native</option>
-				  	    <option value="Other">Other</option>
-				  	  </select>
-				  	</div>
+					<%= render 'shared/contract_sign_selector'%>
 					
-					<%= render 'shared/nationality_selector' %>
-				  	<div class="form-group mb-3">
-				  	  <label for="ethnicity">Ethnicity: </label>
-				  	  <select class="form-control dropdown" id="ethnicity" name="ethnicity[]" multiple>
-				  	    <option value="" selected="selected" disabled="disabled">-- select one or more --</option>
-				  	    <option value="White">White</option>
-				  	    <option value="Black or African American">Black or African American</option>
-				  	    <option value="Asian">Asian</option>
-				  	    <option value="Hispanic or Latino">Hispanic or Latino</option>
-				  	    <option value="Native Hawaiian or Other Pacific Islander">Native Hawaiian or Other Pacific Islander</option>
-				  	    <option value="Native American or Alaskan Native">Native American or Alaskan Native</option>
-				  	    <option value="Other">Other</option>
-				  	  </select>
-				  	</div>
-
-
-					  WILLINGNESS TO SIGN AGREEMENTS 
-					  NOT WILLING AT ALL
-					  NDA ONLY
-					  IP ONLY 
-					  OK WITH ANY AGREEMENTS
-
-				  	<div id="selectedOptions">Selected:</div>
-
-				  	<script>
-				  	  // JavaScript code to display selected options
-				  	  const selectElement = document.getElementById('ethnicity');
-				  	  const selectedOptionsDiv = document.getElementById('selectedOptions');
-
-				  	  selectElement.addEventListener('change', function () {
-				  	    const selectedOptions = Array.from(this.selectedOptions).map(option => option.text);
-				  	    selectedOptionsDiv.textContent = 'Selected Options: ' + (selectedOptions.length > 0 ? selectedOptions.join(', ') : 'None');
-				  	  });
-				  	</script>
-
-
+					<%= render 'shared/nationality_selector'%>
+				  	
+					<%= render 'shared/ethnicity_selector'%>
 
 					<!-- <div class="form-group mb-3">
 						<%= form_with(url: '/devtest/upload_resume', multipart: true) do |form| %>
@@ -142,244 +88,13 @@
 						<% end %>
 				  	</div> -->
 
-
-
 					<br/><hr/>
-					<h4>Project Preference</h4>
+					<h4>Project Preferences</h4>
+					<p>Please rank a minimum of <%= @min_number %> projects and a maximum of <%= @max_number %> projects. You can only have 1 project for each rank. Leave the field blank if you do not want the project at all.</p>
 					<br/>
 
-
-					<table class="table table-bordered">
-						<thead>
-							<tr>
-								<th>Project Title</th>
-								<th>Description</th>
-								<th>Rank</th>
-							</tr>
-						</thead>
-					<tbody>
-						<tr>
-							<td>
-								<select class="project-dropdown" name="project_1">
-								<option value="">-- Select a Project --</option>
-								<option value="Project1">Project 1</option>
-								<option value="Project2">Project 2</option>
-								<option value="Project3">Project 3</option>
-								<option value="Project4">Project 4</option>
-								<option value="Project5">Project 5</option>
-								<option value="Project6">Project 6</option>
-								<option value="Project7">Project 7</option>
-								<option value="Project8">Project 8</option>
-								<option value="Project9">Project 9</option>
-								<option value="Project10">Project 10</option>
-								<option value="Project11">Project 11</option>
-								<option value="Project12">Project 12</option>
-								<option value="Project13">Project 13</option>
-								</select>
-							</td>
-							<td>This is the description of Project 1.</td>
-							<td><input type="number" name="rank_project_1" min="1" max="10"></td>
-						</tr>
-						<tr>
-							<td>
-								<select class="project-dropdown" name="project_2">
-								<option value="">-- Select a Project --</option>
-								<option value="Project1">Project 1</option>
-								<option value="Project2">Project 2</option>
-								<option value="Project3">Project 3</option>
-								<option value="Project4">Project 4</option>
-								<option value="Project5">Project 5</option>
-								<option value="Project6">Project 6</option>
-								<option value="Project7">Project 7</option>
-								<option value="Project8">Project 8</option>
-								<option value="Project9">Project 9</option>
-								<option value="Project10">Project 10</option>
-								<option value="Project11">Project 11</option>
-								<option value="Project12">Project 12</option>
-								<option value="Project13">Project 13</option>
-								</select>
-							</td>
-							<td>This is the description of Project 2.</td>
-							<td><input type="number" name="rank_project_2" min="1" max="10"></td>
-						</tr>
-						<tr>
-							<td>
-								<select class="project-dropdown" name="project_3">
-								<option value="">-- Select a Project --</option>
-								<option value="Project1">Project 1</option>
-								<option value="Project2">Project 2</option>
-								<option value="Project3">Project 3</option>
-								<option value="Project4">Project 4</option>
-								<option value="Project5">Project 5</option>
-								<option value="Project6">Project 6</option>
-								<option value="Project7">Project 7</option>
-								<option value="Project8">Project 8</option>
-								<option value="Project9">Project 9</option>
-								<option value="Project10">Project 10</option>
-								<option value="Project11">Project 11</option>
-								<option value="Project12">Project 12</option>
-								<option value="Project13">Project 13</option>
-								</select>
-							</td>
-							<td>This is the description of Project 3.</td>
-							<td><input type="number" name="rank_project_3" min="1" max="10"></td>
-						</tr>
-						<tr>
-							<td>
-								<select class="project-dropdown" name="project_4">
-								<option value="">-- Select a Project --</option>
-								<option value="Project1">Project 1</option>
-								<option value="Project2">Project 2</option>
-								<option value="Project3">Project 3</option>
-								<option value="Project4">Project 4</option>
-								<option value="Project5">Project 5</option>
-								<option value="Project6">Project 6</option>
-								<option value="Project7">Project 7</option>
-								<option value="Project8">Project 8</option>
-								<option value="Project9">Project 9</option>
-								<option value="Project10">Project 10</option>
-								<option value="Project11">Project 11</option>
-								<option value="Project12">Project 12</option>
-								<option value="Project13">Project 13</option>
-								</select>
-							</td>
-							<td>This is the description of Project 4.</td>
-							<td><input type="number" name="rank_project_4" min="1" max="10"></td>
-						</tr>
-						<tr>
-							<td>
-								<select class="project-dropdown" name="project_5">
-								<option value="">-- Select a Project --</option>
-								<option value="Project1">Project 1</option>
-								<option value="Project2">Project 2</option>
-								<option value="Project3">Project 3</option>
-								<option value="Project4">Project 4</option>
-								<option value="Project5">Project 5</option>
-								<option value="Project6">Project 6</option>
-								<option value="Project7">Project 7</option>
-								<option value="Project8">Project 8</option>
-								<option value="Project9">Project 9</option>
-								<option value="Project10">Project 10</option>
-								<option value="Project11">Project 11</option>
-								<option value="Project12">Project 12</option>
-								<option value="Project13">Project 13</option>
-								</select>
-							</td>
-							<td>This is the description of Project 5.</td>
-							<td><input type="number" name="rank_project_5" min="1" max="10"></td>
-						</tr>
-						<tr>
-							<td>
-								<select class="project-dropdown" name="project_6">
-								<option value="">-- Select a Project --</option>
-								<option value="Project1">Project 1</option>
-								<option value="Project2">Project 2</option>
-								<option value="Project3">Project 3</option>
-								<option value="Project4">Project 4</option>
-								<option value="Project5">Project 5</option>
-								<option value="Project6">Project 6</option>
-								<option value="Project7">Project 7</option>
-								<option value="Project8">Project 8</option>
-								<option value="Project9">Project 9</option>
-								<option value="Project10">Project 10</option>
-								<option value="Project11">Project 11</option>
-								<option value="Project12">Project 12</option>
-								<option value="Project13">Project 13</option>
-								</select>
-							</td>
-							<td>This is the description of Project 6.</td>
-							<td><input type="number" name="rank_project_6" min="1" max="10"></td>
-						</tr>
-						<tr>
-							<td>
-								<select class="project-dropdown" name="project_7">
-								<option value="">-- Select a Project --</option>
-								<option value="Project1">Project 1</option>
-								<option value="Project2">Project 2</option>
-								<option value="Project3">Project 3</option>
-								<option value="Project4">Project 4</option>
-								<option value="Project5">Project 5</option>
-								<option value="Project6">Project 6</option>
-								<option value="Project7">Project 7</option>
-								<option value="Project8">Project 8</option>
-								<option value="Project9">Project 9</option>
-								<option value="Project10">Project 10</option>
-								<option value="Project11">Project 11</option>
-								<option value="Project12">Project 12</option>
-								<option value="Project13">Project 13</option>
-								</select>
-							</td>
-							<td>This is the description of Project 7.</td>
-							<td><input type="number" name="rank_project_7" min="1" max="10"></td>
-						</tr>
-						<tr>
-							<td>
-								<select class="project-dropdown" name="project_8">
-								<option value="">-- Select a Project --</option>
-								<option value="Project1">Project 1</option>
-								<option value="Project2">Project 2</option>
-								<option value="Project3">Project 3</option>
-								<option value="Project4">Project 4</option>
-								<option value="Project5">Project 5</option>
-								<option value="Project6">Project 6</option>
-								<option value="Project7">Project 7</option>
-								<option value="Project8">Project 8</option>
-								<option value="Project9">Project 9</option>
-								<option value="Project10">Project 10</option>
-								<option value="Project11">Project 11</option>
-								<option value="Project12">Project 12</option>
-								<option value="Project13">Project 13</option>
-								</select>
-							</td>
-							<td>This is the description of Project 8.</td>
-							<td><input type="number" name="rank_project_8" min="1" max="10"></td>
-						</tr>
-						<tr>
-							<td>
-								<select class="project-dropdown" name="project_9">
-								<option value="">-- Select a Project --</option>
-								<option value="Project1">Project 1</option>
-								<option value="Project2">Project 2</option>
-								<option value="Project3">Project 3</option>
-								<option value="Project4">Project 4</option>
-								<option value="Project5">Project 5</option>
-								<option value="Project6">Project 6</option>
-								<option value="Project7">Project 7</option>
-								<option value="Project8">Project 8</option>
-								<option value="Project9">Project 9</option>
-								<option value="Project10">Project 10</option>
-								<option value="Project11">Project 11</option>
-								<option value="Project12">Project 12</option>
-								<option value="Project13">Project 13</option>
-								</select>
-							</td>
-							<td>This is the description of Project 9.</td>
-							<td><input type="number" name="rank_project_9" min="1" max="10"></td>
-						</tr>
-						<tr>
-							<td>
-								<select class="project-dropdown" name="project_10">
-								<option value="">-- Select a Project --</option>
-								<option value="Project1">Project 1</option>
-								<option value="Project2">Project 2</option>
-								<option value="Project3">Project 3</option>
-								<option value="Project4">Project 4</option>
-								<option value="Project5">Project 5</option>
-								<option value="Project6">Project 6</option>
-								<option value="Project7">Project 7</option>
-								<option value="Project8">Project 8</option>
-								<option value="Project9">Project 9</option>
-								<option value="Project10">Project 10</option>
-								<option value="Project11">Project 11</option>
-								<option value="Project12">Project 12</option>
-								<option value="Project13">Project 13</option>
-								</select>
-							</td>
-							<td>This is the description of Project 10.</td>
-							<td><input type="number" name="rank_project_10" min="1" max="10"></td>
-						</tr>
-					</tbody>
-					</table>
+					<%= render 'shared/project_ranking_table'%>
+					
 
 
 					<script>
@@ -400,23 +115,14 @@
 					        });
 					    });
 					</script>
-
-
-
-
-
-
-					<p>Please indicate your interest in selected student-proposed projects, with a more detailed description accessible via the link below.</p>
-
-
+					<br/>
+					<hr>
 					<div class="form-group mb-3">
-						<input type="checkbox" name="cbox" id="cbox" onchange="onCbChange('cbox')"> I have read and agree to the terms and conditions.</input>
+						<input type="checkbox" name="cbox" id="cbox" onchange="onCbChange('cbox')"> I agree that my information can be stored and used by a professor for project matching.</input>
 					</div>	
-					
-
-						<div class="text-center mt-4">
-							<button type="submit" class="btn btn-danger custom-maroon-button">Submit</button>
-						</div>
+					<div class="text-center mt-4">
+						<button type="submit" class="btn btn-danger custom-maroon-button">Submit</button>
+					</div>
 				</form>
 				<hr>
 			</div>

@@ -1,12 +1,10 @@
 <div class="form-group mb-3">
-    <label for="work_authorization">Work Authorization</label>
-    <br/>
-    <select name="work_authorization">
+<label name="work_auth">Work Authorization<span class="text-danger">*</span></label>
+  <br/>
+  <select name="work_auth" class="form-control" required>
     <option value="" selected disabled></option>
-    <option value="US Citizen">US Citizen</option>
-    <option value="Permanent Resident">Permanent Resident</option>
-    <option value="Work Visa">Work Visa</option>
-    <option value="Student Visa">Student Visa</option>
-    <option value="Not Authorized to Work">Not Authorized to Work</option>
-    </select>
+    <% @work_auth.each do |auth_value| %>
+      <option value="<%= auth_value %>"><%= auth_value %></option>
+    <% end %>
+  </select>
 </div>
