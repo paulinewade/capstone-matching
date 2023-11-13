@@ -3,6 +3,11 @@ class StudentformController < ApplicationController
 
   def index
     @courses = Course.all
+    @ethnicity = Ethnicity.all
+    @gender = Rails.application.config.student_status_constants['gender']
+    @work_auth = Rails.application.config.student_status_constants['work_auth']
+    @constract_sign = Rails.application.config.student_status_constants['contract_sign']
+    @nationality = Rails.application.config.student_status_constants['nationality']
   end
 
   def create

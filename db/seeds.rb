@@ -30,6 +30,7 @@ ethnicities = [
   "Black or African American",
   "Native American or Alaska Native",
   "Asian",
+  "Hispanic or Latino",
   "Native Hawaiian or Other Pacific Islander",
   "Other"
 ]
