@@ -4,7 +4,8 @@
   <select name="contract_sign" class="form-control" required>
     <option value="" selected disabled></option>
     <% @contract_sign.each do |sign_value| %>
-      <option value="<%= sign_value %>"><%= sign_value %></option>
+      <% selected_attribute = 'selected' if sign_value == @sign %>
+      <option value="<%= sign_value %>" <%= selected_attribute %>><%= sign_value %></option>
     <% end %>
   </select>
 </div>

@@ -2,6 +2,27 @@ class StudentformController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def index
+    user_id = session[:user_id]
+    user = User.find_by(user_id: user_id)
+    if user
+      @first_name = user.first_name
+      @last_name = user.last_name
+      @email = user.email
+    end
+
+    student = Student.find_by(student_id: user_id)
+    if student
+      @cid = student.course_id
+      @uin = student.uin
+      @gender = student.gender
+      @nation = student.nationality
+      @auth = student.work_auth
+      @sign = student.contract_sign
+      @ethn = EthnicityValue.where(student_id: student.student_id)
+    else
+      @ethn = []
+    end
+
     today = Date.today
     current_year = today.year
     semester = ""
@@ -55,6 +76,12 @@ class StudentformController < ApplicationController
     #   return
     # end
 
+    if uin.to_s.length != 9
+      flash[:error] = "Invalid UIN, make sure your UIN is 9 digits."
+      redirect_to studentform_path
+      return
+    end
+
     #if any fields are left blank (some are required, but don't have it set as required on their entry field)
     if gender.blank? ||course_id.blank? || work_auth.blank? || contract_sign.blank? || nationality.blank? || ethnicities.empty?
       flash[:error] = "Please fill in all fields in 'Student Information' before submitting."
@@ -85,41 +112,47 @@ class StudentformController < ApplicationController
       existing_student = User.find_by(email: email)
 
       if existing_student
-        flash[:error] = "You are already registered using this email."
+        new_student = existing_student
       else
         # Create a new student
         new_student = User.new(email: email, first_name: first_name, last_name: last_name, role: "student")
-
-        # Save the student to get an ID and use that ID for the student record
-        if new_student.save
-          # Create a student record associated with the user
-          id = new_student.user_id
-          student = Student.new(
-            student_id: id,
-            course_id: course_id, # you need to extract course_id from the form parameters
-            gender: gender,
-            uin: uin,
-            nationality: nationality, # extract other parameters as needed
-            work_auth: work_auth,
-            contract_sign: contract_sign,
-            resume: "After resume parsing"
-          )
-
-          if student.save
-            student_id = student.student_id
-            ethnicities.each do |ethnicity|
-              EthnicityValue.create(student_id: student_id, ethnicity_name: ethnicity)
-            end
-            flash[:success] = "Registration Successful!"
-          else
-            flash[:error] = "Failed to save student information."
-          end
-        else
-          flash[:error] = "Failed to save user information."
+        if !new_student.save
+          flash[:error] = "Cannot register this user, try signing in using your tamu Google account."
         end
       end
     else
       flash[:error] = "Not a valid tamu.edu email address."
+    end
+
+    
+    # Create a student record associated with the user
+    id = new_student.user_id
+    
+    #remove all old associated data since we are overriding everything anyways
+    existing_student = Student.find_by(student_id: id)
+    if existing_student
+      existing_student.destroy
+    end
+
+    student = Student.new(
+      student_id: id,
+      course_id: course_id, # you need to extract course_id from the form parameters
+      gender: gender,
+      uin: uin,
+      nationality: nationality, # extract other parameters as needed
+      work_auth: work_auth,
+      contract_sign: contract_sign,
+      resume: "After resume parsing"
+    )
+
+    if student.save
+      student_id = student.student_id
+      ethnicities.each do |ethnicity|
+        EthnicityValue.create(student_id: student_id, ethnicity_name: ethnicity)
+      end
+      flash[:success] = "Registration Successful!"
+    else
+      flash[:error] = "Failed to save student information."
     end
 
     redirect_to studentform_path

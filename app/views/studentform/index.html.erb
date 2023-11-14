@@ -5,7 +5,7 @@
 		function onCbChange(cb) {
 		    var b = document.getElementById(cb).checked;
 
-		    var confirmBox = confirm("You have agreed to Terms and Conditions.");
+		    var confirmBox = confirm("You have agreed to the terms of this form.");
 
 		    if (confirmBox == true) {
 		        if (b) {
@@ -17,6 +17,15 @@
 		        
 		        document.getElementById(cb).checked = !b;
 		    };
+		}
+
+		function validateForm() {
+			var checkbox = document.getElementById('cbox');
+			if (!checkbox.checked) {
+				alert('Please agree to the terms before submitting the form.');
+				return false;
+			}
+			return true;
 		}
 	</script>
 </head>
@@ -35,29 +44,30 @@
 				<h1 class="text-center mb-4">CSCE Capstone Project Preference Form</h1>
 
 				<br/>
-				<p>Howdy! Let us know which company sponsored projects you are interested in.</p>
+				<p>Howdy! Let us know which industry projects you are interested in.</p>
 				<p>This form is open from <%= @form_open.strftime("%B %d, %Y %I:%M %p") %> to <%= @form_close.strftime("%B %d, %Y %I:%M %p") %></p>
 				<br/>
 
 				<h4>Student Information</h4>
 				<br/>
-				<form action="/studentform" method="post">
+				<form action="/studentform" method="post" onsubmit="return validateForm()">
 					<div class="form-group mb-3">
 						<label for="email">TAMU Email Address<span class="text-danger">*</span></label>
-						<input type="email" class="form-control" id="email" name="email" placeholder="Enter your TAMU email address" required>
+						<input type="email" class="form-control" id="email" name="email" placeholder="Enter your TAMU email address" value="<%= @email %>" required>
 					</div>
 					<div class="form-group mb-3">
 						<label for="last-name">Last Name<span class="text-danger">*</span></label>
-						<input type="text" class="form-control" id="last_name" name="last_name" placeholder="Enter your last name" required>
+						<input type="text" class="form-control" id="last_name" name="last_name" placeholder="Enter your last name" value="<%= @last_name %>"required>
 					</div>
 					<div class="form-group mb-3">
 						<label for="first-name">First Name<span class="text-danger">*</span></label>
-						<input type="text" class="form-control" id="first_name" name="first_name" placeholder="Enter your first name" required>
+						<input type="text" class="form-control" id="first_name" name="first_name" placeholder="Enter your first name" value="<%= @first_name %>"required>
 					</div>
 					<div class="form-group mb-3">
 						<label for="UIN">UIN<span class="text-danger">*</span></label>
-						<input type="text" class="form-control" id="uin" name="uin" placeholder="UIN">
+						<input type="text" class="form-control" id="uin" name="uin" value="<%= @uin %>" placeholder="UIN">
 					</div>
+
 
 					<%= render 'shared/gender_selector'%>
 
@@ -71,7 +81,7 @@
 				  	
 					<%= render 'shared/ethnicity_selector'%>
 
-					<!-- <div class="form-group mb-3">
+					<!--<div class="form-group mb-3">
 						<%= form_with(url: '/devtest/upload_resume', multipart: true) do |form| %>
 						  <%= form.label :resume, 'Upload Resume (PDF): ' %>
 						  <br/>
@@ -86,7 +96,7 @@
 						<% if flash[:error].present? %>
 						  <p class="error"><%= flash[:error] %></p>
 						<% end %>
-				  	</div> -->
+				  	</div>-->
 
 					<br/><hr/>
 					<h4>Project Preferences</h4>

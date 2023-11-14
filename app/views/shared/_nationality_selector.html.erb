@@ -4,7 +4,8 @@
   <select name="nationality" class="form-control" required>
     <option value="" selected disabled></option>
     <% @nationality.each do |nationality| %>
-      <option value="<%= nationality %>"><%= nationality %></option>
+      <% selected_attribute = 'selected' if nationality == @nation %>
+      <option value="<%= nationality %>" <%= selected_attribute %>><%= nationality %></option>
     <% end %>
   </select>
 </div>

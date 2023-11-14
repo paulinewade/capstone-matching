@@ -1,12 +1,13 @@
 <div class="form-group mb-3">
-  <%= label_tag :ethnicity, 'Ethnicity' %>
+  <%= label_tag :ethnicity, 'Ethnicity<span class="text-danger">*</span> (Select One or More)'.html_safe %>
   <br/>
   <select name="ethnicity[]" multiple class="form-control" required>
-    <option value="" selected disabled></option>
     <% @ethnicity.each do |eth| %>
-      <option value="<%= eth.ethnicity_name %>"><%= eth.ethnicity_name %></option>
+      <% selected_attribute = 'selected' if @ethn.any? { |e| e.ethnicity_name == eth.ethnicity_name } %>
+      <option value="<%= eth.ethnicity_name %>" <%= selected_attribute %>><%= eth.ethnicity_name %></option>
     <% end %>
   </select>
 </div>
+
 
 
