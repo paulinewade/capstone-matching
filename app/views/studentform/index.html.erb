@@ -45,7 +45,7 @@
 
 				<br/>
 				<p>Howdy! Let us know which industry projects you are interested in.</p>
-				<p>This form is open from <%= @form_open.strftime("%B %d, %Y %I:%M %p") %> to <%= @form_close.strftime("%B %d, %Y %I:%M %p") %></p>
+				<p>This form is open from <%= @form_open.in_time_zone("Central Time (US & Canada)").strftime("%B %d, %Y %I:%M %p %Z") %> to <%= @form_close.in_time_zone("Central Time (US & Canada)").strftime("%B %d, %Y %I:%M %p %Z") %></p>
 				<br/>
 
 				<h4>Student Information</h4>
@@ -105,26 +105,6 @@
 
 					<%= render 'shared/project_ranking_table'%>
 					
-
-
-					<script>
-					    // JavaScript to disable selected options in project dropdowns
-					    const projectDropdowns = document.querySelectorAll('.project-dropdown');
-
-					    projectDropdowns.forEach((dropdown, index) => {
-					        dropdown.addEventListener('change', (event) => {
-					            const selectedValue = event.target.value;
-					            projectDropdowns.forEach((otherDropdown, otherIndex) => {
-					                if (otherIndex !== index) {
-					                    const optionToDisable = otherDropdown.querySelector(`option[value="${selectedValue}"]`);
-					                    if (optionToDisable) {
-					                        optionToDisable.disabled = true;
-					                    }
-					                }
-					            });
-					        });
-					    });
-					</script>
 					<br/>
 					<hr>
 					<div class="form-group mb-3">
