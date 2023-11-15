@@ -387,6 +387,7 @@ DEPENDENCIES
   importmap-rails
   jbuilder
   jquery-rails
+  matrix
   omniauth
   omniauth-google-oauth2
   omniauth-rails_csrf_protection (~> 1.0)

@@ -95,3 +95,5 @@ gem "omniauth-rails_csrf_protection", "~> 1.0"
 
 # Environment Files
 gem 'dotenv-rails', groups: [:development, :test]
+
+gem 'matrix'
