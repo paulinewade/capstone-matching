@@ -26,9 +26,11 @@
             <th>Email</th>
             <th>First Name</th>
             <th>Last Name</th>
+            <th>UIN</th>
             <th>Course</th>
             <th>Gender</th>
             <th>Nationality</th>
+            <th>Ethnicities</th>
             <th>Work Authorization</th>
             <th>Willingness to Sign Contracts</th>
             <th>Delete?</th>
@@ -42,9 +44,21 @@
                 <td><%= user.email %></td>
                 <td><%= user.first_name %></td>
                 <td><%= user.last_name %></td>
+                <td><%= student.uin%></td>
                 <td><%= "CSCE " + student.course.course_number.to_s + "-" + student.course.section.to_s + "-" + student.course.semester %></td>
                 <td><%= student.gender %></td>
                 <td><%= student.nationality %></td>
+                <td>
+                  <% if @ethnicity_names_by_student[user.user_id].present? %>
+                    <ul>
+                      <% @ethnicity_names_by_student[user.user_id].each do |ethnicity_name| %>
+                        <li><%= ethnicity_name %></li>
+                      <% end %>
+                    </ul>
+                  <% else %>
+                    No ethnicity information available
+                  <% end %>
+                </td>
                 <td><%= student.work_auth %></td>
                 <td><%= student.contract_sign %></td>
                 <td>
