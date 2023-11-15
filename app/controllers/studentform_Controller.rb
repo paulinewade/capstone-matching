@@ -1,6 +1,4 @@
 class StudentformController < ApplicationController
-  skip_before_action :verify_authenticity_token
-
   def index
     user_id = session[:user_id]
     user = User.find_by(user_id: user_id)
@@ -8,6 +6,9 @@ class StudentformController < ApplicationController
       @first_name = user.first_name
       @last_name = user.last_name
       @email = user.email
+    else
+      flash[:error] = "Please login with Google account to fill out the form."
+      redirect_to root_path
     end
 
     student = Student.find_by(student_id: user_id)
@@ -116,24 +117,17 @@ class StudentformController < ApplicationController
     end
 
     if email.end_with?("tamu.edu")
-      existing_student = User.find_by(email: email)
-
-      if existing_student
-        new_student = existing_student
-      else
-        # Create a new student
-        new_student = User.new(email: email, first_name: first_name, last_name: last_name, role: "student")
-        if !new_student.save
-          flash[:error] = "Cannot register this user, try signing in using your tamu Google account."
-        end
-      end
+      existing_user = User.find_by(email: email)
+      #update in case user wants to change first/last name
+      existing_user.update(first_name: first_name, last_name: last_name, role: "student")
     else
-      flash[:error] = "Not a valid tamu.edu email address."
+      flash[:error] = "Not a valid tamu.edu email address. Please Google login with a tamu email."
+      redirect_to root_path
+      return
     end
 
-    
     # Create a student record associated with the user
-    id = new_student.user_id
+    id = existing_user.user_id
     
     #remove all old associated data since we are overriding everything anyways
     existing_student = Student.find_by(student_id: id)
@@ -191,7 +185,6 @@ class StudentformController < ApplicationController
         ScoresValue.create(scores_id: scores_id, attribute_id: pref_attribute_id, feature_score: pref_score)
         ScoresValue.create(scores_id: scores_id, attribute_id: resume_attribute_id, feature_score: resume_score)
       end
-
       flash[:success] = "Registration Successful!"
     else
       flash[:error] = "Failed to save student information."
