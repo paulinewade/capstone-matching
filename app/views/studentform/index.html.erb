@@ -1,33 +1,6 @@
 <html>
 <head>
 	<title>Student Form</title>
-	<script type="text/javascript">
-		function onCbChange(cb) {
-		    var b = document.getElementById(cb).checked;
-
-		    var confirmBox = confirm("You have agreed to the terms of this form.");
-
-		    if (confirmBox == true) {
-		        if (b) {
-		            document.getElementById(cb).checked = true;
-		        } else {
-		            document.getElementById(cb).checked = false;
-		        }
-		    } else {
-		        
-		        document.getElementById(cb).checked = !b;
-		    };
-		}
-
-		function validateForm() {
-			var checkbox = document.getElementById('cbox');
-			if (!checkbox.checked) {
-				alert('Please agree to the terms before submitting the form.');
-				return false;
-			}
-			return true;
-		}
-	</script>
 </head>
 
 <body>
@@ -42,62 +15,42 @@
 		<div class="row">
 			<div class="col-md-8 offset-md-2">
 				<h1 class="text-center mb-4">CSCE Capstone Project Preference Form</h1>
-
 				<br/>
 				<p>Howdy! Let us know which industry projects you are interested in.</p>
 				<p>This form is open from <%= @form_open.in_time_zone("Central Time (US & Canada)").strftime("%B %d, %Y %I:%M %p %Z") %> to <%= @form_close.in_time_zone("Central Time (US & Canada)").strftime("%B %d, %Y %I:%M %p %Z") %></p>
-				<br/>
-
 				<h4>Student Information</h4>
-				<br/>
-				<form action="/studentform" method="post" onsubmit="return validateForm()">
+				<p> All information on this form is required.</p>
+				<%= form_with(url: '/studentform', method: 'post') do |form| %>
 					<div class="form-group mb-3">
-						<label for="email">TAMU Email Address<span class="text-danger">*</span></label>
-						<input type="email" class="form-control" id="email" name="email" placeholder="Enter your TAMU email address" value="<%= @email %>" required readonly>
+					  <%= form.label :email, 'TAMU Email Address<span class="text-danger">*</span>'.html_safe %>
+					  <%= form.email_field :email, class: 'form-control', placeholder: 'Enter your TAMU email address', value: @email, required: true, readonly: true %>
 					</div>
+				  
 					<div class="form-group mb-3">
-						<label for="last-name">Last Name<span class="text-danger">*</span></label>
-						<input type="text" class="form-control" id="last_name" name="last_name" placeholder="Enter your last name" value="<%= @last_name %>"required>
+					  <%= form.label :last_name, 'Last Name<span class="text-danger">*</span>'.html_safe %>
+					  <%= form.text_field :last_name, class: 'form-control', placeholder: 'Enter your last name', value: @last_name, required: true %>
 					</div>
+				  
 					<div class="form-group mb-3">
-						<label for="first-name">First Name<span class="text-danger">*</span></label>
-						<input type="text" class="form-control" id="first_name" name="first_name" placeholder="Enter your first name" value="<%= @first_name %>"required>
+					  <%= form.label :first_name, 'First Name<span class="text-danger">*</span>'.html_safe %>
+					  <%= form.text_field :first_name, class: 'form-control', placeholder: 'Enter your first name', value: @first_name, required: true %>
 					</div>
+				  
 					<div class="form-group mb-3">
-						<label for="UIN">UIN<span class="text-danger">*</span></label>
-						<input type="text" class="form-control" id="uin" name="uin" value="<%= @uin %>" placeholder="UIN">
-					</div>
-
-
-					<%= render 'shared/gender_selector'%>
-
-					<%= render 'shared/course_selector'%>
+						<%= form.label :uin, 'UIN<span class="text-danger">*</span>'.html_safe %>
+						<%= form.text_field :uin, class: 'form-control', placeholder: 'UIN', value: @uin, required: true, maxlength: 9 %>
+						<div class="invalid-feedback">
+							Please enter exactly 9 numbers.
+						</div>
+						</div>
+				  
+					<%= render 'shared/gender_selector' %>
+					<%= render 'shared/course_selector' %>
+					<%= render 'shared/work_auth_selector' %>
+					<%= render 'shared/contract_sign_selector' %>
+					<%= render 'shared/nationality_selector' %>
+					<%= render 'shared/ethnicity_selector' %>
 					
-					<%= render 'shared/work_auth_selector'%>
-
-					<%= render 'shared/contract_sign_selector'%>
-					
-					<%= render 'shared/nationality_selector'%>
-				  	
-					<%= render 'shared/ethnicity_selector'%>
-
-					<!--<div class="form-group mb-3">
-						<%= form_with(url: '/devtest/upload_resume', multipart: true) do |form| %>
-						  <%= form.label :resume, 'Upload Resume (PDF): ' %>
-						  <br/>
-						  <%= form.file_field :resume %>
-						<% end %>
-
-						<% if flash[:resume_text].present? %>
-						  <h2>Resume Text</h2>
-						  <pre><%= flash[:resume_text] %></pre>
-						<% end %>
-
-						<% if flash[:error].present? %>
-						  <p class="error"><%= flash[:error] %></p>
-						<% end %>
-				  	</div>-->
-
 					<br/><hr/>
 					<h4>Project Preferences</h4>
 					<p>Please rank a minimum of <%= @min_number %> projects and a maximum of <%= @max_number %> projects. You can only have 1 project for each rank. Leave the field blank if you do not want the project at all.</p>
@@ -105,15 +58,20 @@
 
 					<%= render 'shared/project_ranking_table'%>
 					
-					<br/>
+					<br>
 					<hr>
-					<div class="form-group mb-3">
-						<input type="checkbox" name="cbox" id="cbox" onchange="onCbChange('cbox')"> I agree that my information can be stored and used by a professor for project matching.</input>
-					</div>	
-					<div class="text-center mt-4">
-						<button type="submit" class="btn btn-danger custom-maroon-button">Submit</button>
+
+					<div class="form-check">
+						<input class="form-check-input" type="checkbox" value="" id="invalidCheck2" required>
+						<label class="form-check-label" for="invalidCheck2">
+							By checking this box, you are agreeing to having your information stored and used by CSCE capstone professors to help match you with a capstone project.
+						</label>
 					</div>
-				</form>
+
+					<div class="text-center mt-4">
+						<%= form.button 'Submit', class: 'btn btn-danger custom-maroon-button' %>
+				  	</div>				  
+				<% end %>
 				<hr>
 			</div>
 		</div>
