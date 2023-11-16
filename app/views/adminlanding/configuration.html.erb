@@ -6,7 +6,7 @@
 <div class="d-flex justify-content-center align-items-center">
   <div>
     <div class="d-flex justify-content-center align-items-center">
-      <h1>Open and Close Student Form</h1>
+      <h1>Configuration</h1>
     </div>
 
     <% if flash[:notice].present? %>
@@ -29,15 +29,27 @@
       <p>Current Student Form Closing Date And Time: <%= config.form_close.in_time_zone("Central Time (US & Canada)").strftime("%H:%M %Y-%m-%d") %></p>
     <% end %>
 
-    <%= form_tag({controller: "adminlanding", action: "update_open_close_student_form"}, method: "post") do %>
+    <%= form_tag({controller: "adminlanding", action: "update_configuration"}, method: "post") do %>
       <div class="form-group">
         <%= label_tag(:form_open, "Form Open:") %>
-        <%= datetime_local_field_tag(:form_open, nil, class: "form-control", required: true, value: Time.current.in_time_zone("Central Time (US & Canada)").strftime("%Y-%m-%dT%H:%M")) %>
+        <%= datetime_local_field_tag(:form_open, nil, class: "form-control", required: true, value: (config.present? ? config.form_open.in_time_zone("Central Time (US & Canada)").strftime("%Y-%m-%dT%H:%M") : Time.current.in_time_zone("Central Time (US & Canada)").strftime("%Y-%m-%dT%H:%M"))) %>
       </div>
 
       <div class="form-group">
         <%= label_tag(:form_close, "Form Close:") %>
-        <%= datetime_local_field_tag(:form_close, nil, class: "form-control", required: true, value: Time.current.in_time_zone("Central Time (US & Canada)").strftime("%Y-%m-%dT%H:%M")) %>
+        <%= datetime_local_field_tag(:form_close, nil, class: "form-control", required: true, value: (config.present? ? config.form_close.in_time_zone("Central Time (US & Canada)").strftime("%Y-%m-%dT%H:%M") : Time.current.in_time_zone("Central Time (US & Canada)").strftime("%Y-%m-%dT%H:%M"))) %>
+      </div>
+
+      <br>
+
+      <div class="form-group">
+        <%= label_tag(:min_number, "Minimum Project Limit:") %>
+        <%= number_field_tag(:min_number, nil, class: "form-control", required: true, value: config.present? ? config.min_number : 1, min: 1) %>
+      </div>
+
+      <div class="form-group">
+        <%= label_tag(:max_number, "Maximum Project Limit:") %>
+        <%= number_field_tag(:max_number, nil, class: "form-control", required: true, value: config.present? ? config.max_number : 10, min: 10) %>
       </div>
 
       <br>
