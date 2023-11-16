@@ -15,7 +15,17 @@
   <div class="row justify-content-center">
     <div class="col-md-8">
       <div class="card">
-        <div class="card-header">Filter by Semester</div>
+        <div class="card-header">
+          <div class="row">
+            <div class="col">
+              Filter by Semester
+            </div>
+            <div class="col float-end">
+              <%= button_to "Add Project", addProjects_path, :method => :get , class: 'btn btn-primary mb-2 float-end' %>
+            </div>
+          </div>
+        </div>
+
         <div class="card-body">
           <%= form_tag(projects_path, method: :get, class: 'form-inline') do %>
             <div class="form-group mb-2 mr-2">

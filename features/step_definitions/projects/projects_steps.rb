@@ -45,7 +45,7 @@ Then("I should not see {string}") do |content|
 end
 
 When("I select {string} from {string}") do |option, field|
-  select(option, from: field)
+  select(option, from: field, match: :first)
 end
 
 When("I click the {string} button") do |button_text|
