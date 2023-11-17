@@ -67,4 +67,5 @@ Rails.application.routes.draw do
   get 'view_results', to: 'results#index', as: 'results'
   get 'results_export/:semester/:project.csv', to: 'results#export', as: 'results_export'
 
+  get "manageCourses", to: "manage_courses#index"
 end

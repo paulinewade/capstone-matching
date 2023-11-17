@@ -1,0 +1,36 @@
+<body>
+	<div class="container">
+		<%= render 'shared/admin_page_header' %>
+		<%= render 'shared/notification' %>
+	</div>
+
+	<div class="container">
+		<h1 class="text-center my-4">Courses</h1>
+
+		<div class="row justify-content-center">
+			<div class="col-md-8">
+				<div class="card">
+					<div class="card-header">Filter by Semester</div>
+				</div>
+				<div class="card-body">
+					<%= form_tag(manageCourses_path, method: :get, class: 'form-inline') do %>
+						<div class="form-group mb-2 mr-2">
+							<%= select_tag :semester, options_for_select(@courses, @selected_semester), include_blank: "All Semesters", class: 'form-control', id: 'Semester' %>
+						</div>
+						<%= submit_tag "Filter", class: 'btn btn-primary mb-2' %>
+					<% end %>	
+				</div>
+			</div>
+		</div>
+
+		<div class="row justify-content-center mt-4">
+			<div class="col-md-8">
+				<% @course.each do |course| %>
+					<div class="card mb-4">
+						
+					</div>
+			</div>
+		</div>
+
+	</div>
+</body>
