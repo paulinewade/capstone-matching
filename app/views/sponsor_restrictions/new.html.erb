@@ -1,6 +1,7 @@
 <!-- app/views/sponsor_restrictions/_form.html.erb -->
 
 <div class="field form-group mb-3" id="sponsorRestrictions">
+  <%= render 'shared/notification' %>
   <%= form_with(model: [@project, @sponsor_restriction], url: project_sponsor_restrictions_path(@project)) do |restriction_fields| %>
     <div class="col-md-8 offset-md-2">
 
@@ -8,14 +9,9 @@
       <h3 class="col-8">Sponsor Restriction</h3>
       <!-- You can add a button to remove this sponsor restriction if needed -->
     </div>
-      <div class="form-group mb-3">
-        <%= restriction_fields.label :restriction_type %><span class="text-danger">*</span>
-        <%= restriction_fields.text_field :restriction_type, class: "form-control", required: true %>
-      </div>
-      <div class="form-group mb-3">
-        <%= restriction_fields.label :restriction_val %><span class="text-danger">*</span>
-        <%= restriction_fields.text_field :restriction_val, class: "form-control", required: true %>
-      </div>
+
+      <%= render partial: 'shared/sponsor_restrictions', locals: { f: restriction_fields, key: ""} %>
+
       <div class="text-center mt-4">
         <%= restriction_fields.submit 'Save Sponsor Restrictions', class: "btn btn-primary" %>
       </div>
