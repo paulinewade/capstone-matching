@@ -1,0 +1,11 @@
+<div class="form-group mb-3">
+<label name="work_auth">Work Authorization<span class="text-danger">*</span></label>
+  <br/>
+  <select name="work_auth" class="form-control" required>
+    <option value="" selected disabled></option>
+    <% @work_auth.each do |auth_value| %>
+      <% selected_attribute = 'selected' if auth_value == @auth %>
+      <option value="<%= auth_value %>" <%= selected_attribute %>><%= auth_value %></option>
+    <% end %>
+  </select>
+</div>
