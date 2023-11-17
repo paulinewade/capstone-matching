@@ -62,9 +62,6 @@ Rails.application.routes.draw do
   get 'prof_projects_ranking', to: 'professor_preferences#index'
   post 'prof_projects_ranking', to: 'professor_preferences#save_rankings'
 
-  get 'manage_database', to: 'database_dump#index'
   post 'dump_database', to: 'database_dump#dump_database'
-  get 'import_database', to: 'database_dump#import_database_form'
-  post 'import_database', to: 'database_dump#import_database'
 
 end
