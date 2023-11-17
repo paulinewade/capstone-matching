@@ -5,8 +5,14 @@ require 'matrix'
 
 class StudentformController < ApplicationController
   def index
-    # user_id = session[:user_id]
-    user_id = 101
+    # remove dev_mode in prod
+    user_id = ''
+    if params[:dev_mode] == 'yes'
+      user_id = 101
+    else
+      user_id = session[:user_id]
+    end
+    
     user = User.find_by(user_id: user_id)
     if user
       @first_name = user.first_name
