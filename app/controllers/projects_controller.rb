@@ -2,11 +2,11 @@ class ProjectsController < ApplicationController
   # ToDo Check with team
   protect_from_forgery except: :destroy
   def index
-    @semesters = Project.pluck(:Semester).uniq
+    @semesters = Project.pluck(:semester).uniq
     @selected_semester = params[:semester]
 
     @projects = if @selected_semester.present?
-      Project.where(Semester: @selected_semester)
+      Project.where(semester: @selected_semester)
     else
       Project.all
     end
