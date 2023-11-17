@@ -156,7 +156,7 @@ class StudentformController < ApplicationController
       nationality: nationality, # extract other parameters as needed
       work_auth: work_auth,
       contract_sign: contract_sign,
-      resume: "After resume parsing"
+      resume: parsed_resume
     )
 
     if student.save
@@ -193,10 +193,10 @@ class StudentformController < ApplicationController
         #caluclate resume score (call helper method to compare student resume to project description here)
         # classify resume
         # need to change to upload_resume(project_description, parsed_resume)
-        similarity_score = upload_resume(course_id, parsed_resume, project_id)
+        similarity_score = upload_resume(parsed_resume, project_id)
         # flash[:most_similar_job_description] = @most_similar_job_description
         # flash[:similarity_score] = @similarity_score
-        resume_score = similarity_score * 100
+        resume_score = (similarity_score * 100).round(2)
         puts "RESUME SCORE RESUME SCORE RESUME SCORE = " + resume_score.to_s
 
         #add each score to DB under the scores_entity that it belongs to (student project pairing) THIS ADDS NEW SCORES. WHAT IF WE NEED TO REPLACE SCORES
@@ -212,17 +212,12 @@ class StudentformController < ApplicationController
     redirect_to studentform_path
   end
 
-  def upload_resume(course_id_, resume_, project_id_)
-    
-    course_id = course_id_.to_i
-    puts "course_id: " + course_id.to_s
+  def upload_resume(resume_, project_id_)
     resume = resume_.to_s
-    puts "resume: " + resume 
     project_id = project_id_.to_i
-    puts "project_id: " + project_id.to_s
 
     
-    @project_data = Project.where(course_id: course_id).pluck(:project_id, :description)
+    @project_data = Project.where(project_id: project_id_).pluck(:project_id, :description)
     @project_ids = @project_data.map { |project_id, description| project_id }
     @descriptions = @project_data.map { |project_id, description| description }
     puts "course descriptions: " + @descriptions.join(separator = ",")
