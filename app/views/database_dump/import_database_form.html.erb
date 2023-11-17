@@ -1,0 +1,25 @@
+<html>
+<head>
+  <title>Admin Landing Page</title>
+</head>
+<body>
+  <%= render 'shared/notification' %>
+  <div class="d-flex justify-content-between align-items-center">
+    <%= link_to "Log Out", logout_path, method: :delete, class: "btn btn-danger custom-maroon-button m-3", id: "logout-button" %>
+    <button class="btn btn-danger custom-maroon-button m-3" id="dark-mode-toggle">Toggle Dark Mode</button>
+  </div>
+  <div class="d-flex justify-content-center align-items-center flex-column">
+    <div class="d-flex justify-content-center align-items-center">
+      <h1>Welcome, Admin!</h1>
+    </div>
+    <%= form_tag(import_database_path, multipart: true) do %>
+    <div class="d-flex justify-content-center align-items-center flex-column">
+      <label for="dump_file">Upload Database Dump File:</label>
+
+      <%= file_field_tag :dump_file, required: true %>
+
+      <%= submit_tag "Import Database", class: "btn btn-danger custom-maroon-button custom-button mt-2", id: "button-3" %>
+    </div>
+    <% end %>
+  </div>
+</body>
