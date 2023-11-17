@@ -76,5 +76,27 @@ RSpec.describe SessionsController, type: :controller do
         expect(flash[:error]).to eq('Must login with tamu.edu email.')
       end
     end
+
+    context 'when user is of unknown type' do
+      it 'handles unknown role and redirects to root_path with an error message' do
+        unknown_user = User.create(
+          email: 'unknown_user@tamu.edu',
+          first_name: 'Unknown',
+          last_name: 'User',
+          role: 'unknown_role'
+        )
+        OmniAuth.config.mock_auth[:google] = OmniAuth::AuthHash.new(
+          info: { first_name: 'Unknown', last_name: 'User', email: 'unknown_user@tamu.edu' }
+        )
+        request.env['omniauth.auth'] = OmniAuth.config.mock_auth[:google]
+
+        auth_hash = request.env['omniauth.auth']
+        auth_hash['info']['email'] = unknown_user.email
+        get :google_auth
+        expect(response).to redirect_to(root_path)
+        expect(session[:user_id]).to be_nil
+        expect(flash[:error]).to eq('Error logging in, please contact the admin.')
+      end
+    end
   end
 end
