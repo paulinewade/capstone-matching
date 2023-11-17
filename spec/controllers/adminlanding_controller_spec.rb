@@ -13,27 +13,27 @@ RSpec.describe AdminlandingController, type: :controller do
     end
   end
 
-  describe 'GET #open_close_student_form' do
+  describe 'GET #configuration' do
     it 'returns a successful response' do
-      get :open_close_student_form
+      get :configuration
       expect(response).to have_http_status(:success)
     end
 
-    it 'renders the open_close_student_form template' do
-      get :open_close_student_form
-      expect(response).to render_template('open_close_student_form')
+    it 'renders the configuration template' do
+      get :configuration
+      expect(response).to render_template('configuration')
     end
   end
 
-  describe 'POST #update_open_close_student_form' do
+  describe 'POST #update_configuration' do
     it 'returns a successful response' do
-      post :update_open_close_student_form, params: { form_close: Time.now, form_open: Time.now }
+      post :update_configuration, params: { form_close: Time.now, form_open: Time.now, min_number: 1, max_number: 10 }
       expect(response).to have_http_status(:found)
     end
 
-    it 'renders the update_open_close_student_form template' do
-      post :update_open_close_student_form, params: { form_close: Time.now, form_open: Time.now }
-      expect(response).to redirect_to(open_close_student_form_path)
+    it 'renders the update_configuration template' do
+      post :update_configuration, params: { form_close: Time.now, form_open: Time.now, min_number: 1, max_number: 10 }
+      expect(response).to redirect_to(configuration_path)
     end
   end
 end
