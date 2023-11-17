@@ -204,15 +204,6 @@
 				<% end %>
 				<hr>
 			</div>
-			<h2>Classification Result</h2>
-		    <p>The most similar job description is:</p>
-		    <% if flash[:most_similar_job_description].present? %>
-		      <p><%= flash[:most_similar_job_description] %></p>
-		    <% end %>
-		    <p>with a score of:</p>
-		    <% if flash[:similarity_score].present? %>
-		      <p><%= flash[:similarity_score] %></p>
-		    <% end %>
 		</div>
 	</div>
 </body>
