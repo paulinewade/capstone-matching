@@ -25,8 +25,8 @@ Rails.application.routes.draw do
   post '/manageprof/save_change', to: 'manageprof#save_change', as: 'save_change'
   post '/manageprof/add_professor', to: 'manageprof#add_professor', as: 'add_professor'
 
-  get "open_close_student_form", to: "adminlanding#open_close_student_form"
-  post "open_close_student_form", to: "adminlanding#update_open_close_student_form"
+  get "configuration", to: "adminlanding#configuration"
+  post "update_configuration", to: "adminlanding#update_configuration"
 
   get "managestudents", to: "managestudents#index"
   get "/managestudents/filter_students", to: "managestudents#filter_students", as: "filter_students"
@@ -58,7 +58,7 @@ Rails.application.routes.draw do
       delete "projects/:id", to:"projects#destroy"
     end
   end
-  
+
   get 'prof_projects_ranking', to: 'professor_preferences#index'
   post 'prof_projects_ranking', to: 'professor_preferences#save_rankings'
 

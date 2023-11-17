@@ -15,6 +15,13 @@ class ProjectsController < ApplicationController
   def new
     @semesters = generate_semesters
     @project = Project.new
+    @restrictions = {}
+
+    @restrictions['gender'] = STUDENT_STATUS_CONSTANTS['gender']
+    @restrictions['work_auth'] = STUDENT_STATUS_CONSTANTS['work_auth']
+    @restrictions['contract_sign'] = STUDENT_STATUS_CONSTANTS['contract_sign']
+    @restrictions['nationality'] = STUDENT_STATUS_CONSTANTS['nationality']
+
     2.times {@project.sponsor_preferences.build}
     2.times {@project.sponsor_restrictions.build}
   end

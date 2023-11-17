@@ -1,0 +1,41 @@
+<div>
+  <script>
+      $(document).ready(function() {
+          // Event listener for change in restriction type dropdown
+          $('[name*="preference_type"]').on('change', function() {
+              var selectedType = $(this).val(); // Get the selected restriction type
+              var selectedValues = <%= @restrictions.to_json.html_safe %>[selectedType]; // Get values for selected type from Ruby variable
+              var restrictionValField = $(this).closest('#sponsorPreference').find('[name*="preference_val"]');
+              // Clear previous options
+              restrictionValField.empty();
+
+              // Add empty default option
+              restrictionValField.append($('<option>').text('').attr('value', ''));
+
+              // Add options based on selected type
+              if (selectedValues) {
+                  $.each(selectedValues, function(index, value) {
+                      restrictionValField.append($('<option>').text(value).attr('value', value));
+                  });
+              }
+          });
+      });
+  </script>
+  <div id="sponsorPreference">
+    <fieldset>
+      <%= f.label :preference_type %>
+      <%= f.select :preference_type, [''] + @restrictions.keys, {}, class: "form-control" %>
+
+      <% selected_values = key.empty? ? [''] :  @restrictions[key]  %>
+
+      <% # If restriction type is selected, show corresponding values as options %>
+      <% if selected_values.present? %>
+        <%= f.label :preference_val %>
+        <%= f.select :preference_val, selected_values, {}, class: "form-control" %>
+      <% end %>
+
+      <%= f.label :bonus_amount %>
+      <%= f.text_field :bonus_amount, :class => "form-control", :value =>'30.0' %>
+    </fieldset>
+  </div>
+</div>
