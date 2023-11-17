@@ -28,21 +28,23 @@
 				<table class="table table-bordered">
 					<thead class="thead-dark">
 						<tr>
-							<th>course_id</th>
-							<th>course_number</th>
-							<th>section</th>
-							<th>semester</th>
-							<th>professor_id</th>
+							<th>Semester</th>
+							<th>Course Number</th>
+							<th>Section</th>
+							<th>Assign Professor</th>
+							<th>Email</th>
+							<th>Change Assign Professor</th>
+
 						</tr>
 					</thead>
 					<tbody>
 						<% @courses.each do |c| %>
 							<tr>
-								<td><%= c.course_id %></td>
+								<td><%= c.semester %></td>
 								<td><%= c.course_number %></td>
 								<td><%= c.section %></td>
-								<td><%= c.semester %></td>
-								<td><%= c.professor_id %></td>
+								<td><%= c.professor&.user&.first_name %> <%= c.professor&.user&.last_name %></td>
+								<td><%= c.professor&.user&.email %></td>
 							</tr>
 						<% end %>
 					</tbody>
