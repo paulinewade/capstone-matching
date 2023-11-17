@@ -9,16 +9,12 @@ class StudentformController < ApplicationController
     user_id = 101
     user = User.find_by(user_id: user_id)
     if user
-      # @first_name = user.first_name UNCOMMENT ME
-      # @last_name = user.last_name
-      # @email = user.email
-      
-      @email = 'studentemail@tamu.edu'
-      @first_name = 'student'
-      @last_name = 'user'
+      @first_name = user.first_name
+      @last_name = user.last_name
+      @email = user.email
     else
       flash[:error] = "Please login with Google account to fill out the form."
-      # redirect_to root_path # UNCOMMENT ME
+      redirect_to root_path
     end
 
     student = Student.find_by(student_id: user_id)
@@ -66,12 +62,9 @@ class StudentformController < ApplicationController
 
   def create
     # Extract form parameters
-    # email = params[:email] UNCOMMENT ME AND REMOVE BELOW
-    # first_name = params[:first_name]
-    # last_name = params[:last_name]
-    email = 'studentemail@tamu.edu'
-    first_name = 'student'
-    last_name = 'user'
+    email = params[:email]
+    first_name = params[:first_name]
+    last_name = params[:last_name]
     uin = params[:uin]
     gender = params[:gender]
     course_id = params[:course_id]
@@ -194,12 +187,10 @@ class StudentformController < ApplicationController
         #caluclate resume score (call helper method to compare student resume to project description here)
         # classify resume
         # need to change to upload_resume(project_description, parsed_resume)
-        classification = upload_resume(course_id, parsed_resume)
-        @most_similar_job_description = classification[0]
-        @similarity_score = classification[1]
+        similarity_score = upload_resume(course_id, parsed_resume, project_id)
         # flash[:most_similar_job_description] = @most_similar_job_description
         # flash[:similarity_score] = @similarity_score
-        resume_score = @similarity_score * 100
+        resume_score = similarity_score * 100
         puts "RESUME SCORE RESUME SCORE RESUME SCORE = " + resume_score.to_s
 
         #add each score to DB under the scores_entity that it belongs to (student project pairing) THIS ADDS NEW SCORES. WHAT IF WE NEED TO REPLACE SCORES
@@ -208,8 +199,6 @@ class StudentformController < ApplicationController
         ScoresValue.create(scores_id: scores_id, attribute_id: resume_attribute_id, feature_score: resume_score)
       end
       flash[:success] = "Registration Successful!"
-      flash[:most_similar_job_description] = 'testing flash'
-      flash[:similarity_score] = 100
     else
       flash[:error] = "Failed to save student information."
     end
@@ -217,24 +206,34 @@ class StudentformController < ApplicationController
     redirect_to studentform_path
   end
 
-  def upload_resume(course_id_, resume_)
+  def upload_resume(course_id_, resume_, project_id_)
     
     course_id = course_id_.to_i
     puts "course_id: " + course_id.to_s
     resume = resume_.to_s
     puts "resume: " + resume 
+    project_id = project_id_.to_i
+    puts "project_id: " + project_id.to_s
+
     
-    @descriptions = Project.where(course_id: course_id).pluck(:description)
-    puts "course description: " + @descriptions.join(separator = ",")
+    @project_data = Project.where(course_id: course_id).pluck(:project_id, :description)
+    @project_ids = @project_data.map { |project_id, description| project_id }
+    @descriptions = @project_data.map { |project_id, description| description }
+    puts "course descriptions: " + @descriptions.join(separator = ",")
     @resume_text = resume
 
-    # You can print the extracted text or use it for further processing
-    # puts "Extracted Resume Text:"
-    # puts @resume_text
-    # flash[:resume_text] = @resume_text
-    classification = classify(@resume_text, @descriptions)
+    similarity_scores = classify(@resume_text, @descriptions) # same length as project_ids and descriptions
+    puts "similarity_scores: " + similarity_scores.join(separator = ",")
+
     
-    return classification
+    index_of_project_id = @project_ids.index(project_id) # get the index of the project_id that we are getting the match score for
+    
+    match_score = similarity_scores[index_of_project_id]
+    
+    puts "match_score: " + match_score.to_s
+
+    
+    return match_score
   end
   
   private
@@ -294,20 +293,22 @@ class StudentformController < ApplicationController
       similarity_scores[i] = matrix[model.document_index(corpus[resumeidx]), model.document_index(corpus[i])]
     end 
     
+    return similarity_scores
+    
     # Set a threshold for similarity to classify as a match
-    threshold = 0.0
+    # threshold = 0.0
     
     # Find the best match
-    best_match_index = similarity_scores.each_with_index.max[1]
+    # best_match_index = similarity_scores.each_with_index.max[1]
     
-    # Check if the best match is above the threshold
-    if similarity_scores[best_match_index] > threshold
-      puts "The resume is a match for the job description: #{job_descriptions[best_match_index]}"
-      return[ job_descriptions[best_match_index], similarity_scores[best_match_index] ]
-    else
-      puts "No suitable job description found for the resume."
-      return ["No suitable job description found for the resume.", similarity_scores[best_match_index]]
-    end
+    # # Check if the best match is above the threshold
+    # if similarity_scores[best_match_index] > threshold
+    #   puts "The resume is a match for the job description: #{job_descriptions[best_match_index]}"
+    #   return[ job_descriptions[best_match_index], similarity_scores[best_match_index] ]
+    # else
+    #   puts "No suitable job description found for the resume."
+    #   return ["No suitable job description found for the resume.", similarity_scores[best_match_index]]
+    # end
     return "done"
   end
 end
