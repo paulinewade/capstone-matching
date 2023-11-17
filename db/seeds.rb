@@ -11,7 +11,7 @@ form_open_datetime = DateTime.new(2023, 11, 6, 9, 0) # Example date and time
 form_close_datetime = DateTime.new(2023, 12, 6, 17, 0) # Example date and time
 config = Config.create(min_number: 2, max_number: 10, form_open: form_open_datetime , form_close:form_close_datetime )
 
-student_user = User.create(first_name: "student", last_name: "example", role: "student", email: "studentemail@tamu.edu")
+student_user = User.create(user_id: 101, first_name: "student", last_name: "example", role: "student", email: "studentemail@tamu.edu")
 prof_user = User.create(first_name: "professor", last_name: "example", role: "professor", email: "profemail@tamu.edu")
 admin_user  = User.create(first_name: "admin", last_name: "example", role: "admin", email: "adminemail@tamu.edu")
 
@@ -40,7 +40,7 @@ ethnicities.each do |ethnicity|
 end
 
 
-student = Student.create(student_id: student_user.user_id, course_id: course.course_id, gender: "Male", nationality: "American", work_auth: "US Citizen", contract_sign: "Ok with Any Agreements", uin: 123, resume: "Nodejs, Javascript, Java, Python")
+student = Student.create(student_id: student_user.user_id, course_id: course.course_id, gender: "Male", nationality: "American", work_auth: "US Citizen", contract_sign: "Ok with Any Agreements", uin: 123123123, resume: "Nodejs, Javascript, Java, Python")
 ethnicity_value1 = EthnicityValue.create(student_id: student.student_id, ethnicity_name: "White")
 ethnicity_value2 = EthnicityValue.create(student_id: student.student_id, ethnicity_name: "Black or African American")
 
