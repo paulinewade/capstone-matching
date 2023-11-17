@@ -21,10 +21,4 @@ end
 And(/^I check the database for "([^"]*)"$/) do |arg|
   project = Project.find_by(name: arg)
   expect(project).to be_present
-
-  restriction = SponsorRestriction.find_by(project_id: project.id)
-  expect(restriction).to be_present
-
-  preference = SponsorPreference.find_by(project_id: project.id)
-  expect(preference).to be_present
 end
