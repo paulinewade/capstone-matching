@@ -175,11 +175,11 @@
 					<%= render 'shared/ethnicity_selector' %>
 				  	
 				  	<label for="resume">Upload Resume:</label>
-      				<input type="file" id="resume" name="resume" accept=".pdf, .doc, .docx" required><br><br>
+      				<input type="file" id="resume" name="resume" accept=".pdf, .doc, .docx"><br><br>
       				
       				<input type="hidden" name="parsed_resume" id="redirectResume">
       				
-      				<button type="button" id="parseButton" onclick="parseResume()">Parse Resume</button>
+      				<button type="button" id="parseButton" onclick="parseResume()"  class="btn btn-danger custom-maroon-button">Parse Resume</button>
 
 					<br/><hr/>
 					<h4>Project Preferences</h4>
