@@ -1,30 +1,56 @@
 class DatabaseDumpController < ApplicationController
     def dump_database
-        db_config = Rails.application.config.database_configuration[Rails.env]
-        db_adapter = db_config['adapter']
+        db_adapter = current_db_adapter
 
-        case db_adapter
-        when /postgresql/
-            dump_command = "pg_dump #{db_config['database']} > #{Rails.root}/db/db_dump.sql"
-        when /mysql/
-            dump_command = "mysqldump -u#{db_config['username']} -p#{db_config['password']} #{db_config['database']} > #{Rails.root}/db/db_dump.sql"
-        when /sqlite/
-            db_path = db_config['database']
-            dump_command = "sqlite3 #{db_path} .dump > #{Rails.root}/db/db_dump.sql"
-        else
-            flash[:error] = "Database adapter not supported"
-            redirect_to adminlanding_path and return
-        end
+        begin
+            case db_adapter
+            when /postgresql/
+                dump_content = generate_postgresql_dump
+            when /mysql/
+                dump_content = generate_mysql_dump
+            when /sqlite/
+                dump_content = generate_sqlite_dump
+            else
+                flash[:error] = "Exporting database is not supported for this database type"
+                redirect_to adminlanding_path and return
+            end
 
-        success = system(dump_command)
-        # puts success
-
-        if success
-            flash[:success] = "Database exported successfully to the db folder with name db_dump.sql"
-        else
-            flash[:error] = "Failed to export the database"
+            send_database_dump(dump_content)
+        rescue StandardError => e
+            flash[:error] = "Error exporting database: #{e.message}"
         end
         
-        redirect_to adminlanding_path 
+        redirect_to adminlanding_path unless performed?
+    end
+
+    private
+
+    def current_db_adapter
+        Rails.application.config.database_configuration[Rails.env]['adapter']
+    end
+
+    def generate_sqlite_dump
+        `sqlite3 #{Rails.application.config.database_configuration[Rails.env]['database']} .dump`
+    end
+
+    def generate_mysql_dump
+        db_config = Rails.application.config.database_configuration[Rails.env]
+        username = db_config['username']
+        password = db_config['password']
+        database = db_config['database']
+        `mysqldump -u #{username} -p#{password} #{database}`
+    end
+    
+    def generate_postgresql_dump
+        db_config = Rails.application.config.database_configuration[Rails.env]
+        username = db_config['username']
+        database = db_config['database']
+        `pg_dump -U #{username} -d #{database}`
+    end
+    
+    def send_database_dump(content)
+        send_data content,
+                  filename: "database_dump_#{Time.now.strftime('%Y-%m-%d_%H-%M-%S')}.sql",
+                  type: "application/sql"
     end
 end
