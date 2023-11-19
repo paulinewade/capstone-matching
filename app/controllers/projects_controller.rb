@@ -1,5 +1,6 @@
 class ProjectsController < ApplicationController
   # ToDo Check with team
+  before_action :authorize_admin
   protect_from_forgery except: :destroy
   def index
     @semesters = Project.pluck(:semester).uniq
@@ -84,4 +85,21 @@ class ProjectsController < ApplicationController
 
       semesters
     end
+
+    private
+        def authorize_admin
+            curr_user_id = session[:user_id]
+            # print "[DEBUG] curr_user_id: #{curr_user_id}"
+            if curr_user_id
+                curr_user_role = User.find_by(user_id: curr_user_id).role
+                # print "[DEBUG] curr_user_role: #{curr_user_role}"
+                if curr_user_role != "admin"
+                    flash[:error] = 'Access Denied'
+                    redirect_to root_path
+                end
+            else
+                flash[:error] = 'Access Denied'
+                redirect_to root_path
+            end
+        end
 end
