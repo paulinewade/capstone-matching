@@ -226,7 +226,7 @@ class StudentformController < ApplicationController
       flash[:error] = "Failed to save student information."
     end
 
-    redirect_to studentform_path(dev_mode: true)
+    redirect_to studentform_path
   end
 
   def upload_resume(project_ids, resume_, project_id_)
