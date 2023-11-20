@@ -27,7 +27,8 @@ Given("a student exists with this information:") do |table|
       gender: student_info['gender'],
       nationality: student_info['nationality'],
       contract_sign: student_info['contract_sign'],
-      work_auth: student_info['work_auth']
+      work_auth: student_info['work_auth'],
+      uin: student_info['uin']
     )
     ethnicity = EthnicityValue.create(student_id: student.student_id, ethnicity_name: student_info['ethnicity'])
   end
@@ -48,7 +49,7 @@ Given('I fill in valid information') do
   fill_in 'TAMU Email Address', with: 'johndoe@tamu.edu'
   fill_in 'Last Name', with: 'Doe'
   fill_in 'First Name', with: 'John'
-  fill_in 'UIN', with: '123456789'
+  fill_in 'UIN', with: '123454321'
   select 'American', from: 'nationality'
   select 'US Citizen', from: 'work_auth'
   select 'Ok with Any Agreements', from: 'contract_sign'
