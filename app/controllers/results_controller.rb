@@ -71,6 +71,7 @@ class ResultsController < ApplicationController
     end
 
     @results = get_results(scores, project, @selected_course)
+    
     @results.sort_by!{|item| -item['total_score']}
   end
 
@@ -78,6 +79,7 @@ class ResultsController < ApplicationController
     semester = params[:semester]
     project_name = params[:project]
     course_id = params[:course]
+
 
     scores = []
     project = nil
@@ -92,6 +94,7 @@ class ResultsController < ApplicationController
     end
 
     results = get_results(scores, project, course_id)
+
     results.sort_by!{|item| -item['total_score']}
 
     respond_to do |format|
@@ -113,7 +116,6 @@ class ResultsController < ApplicationController
           next
         end
       end
-          
       result = {}
       result['student'] = student.user
       scores_values = ScoresValue.where(:scores_id => scoreEntity.scores_id)
@@ -139,7 +141,6 @@ class ResultsController < ApplicationController
     end
     results
   end
-
 
   def to_csv (list)
     score_names = ScoresAttribute.pluck(:feature).uniq

@@ -1,6 +1,129 @@
 <html>
 <head>
 	<title>Student Form</title>
+	<script type="text/javascript">
+		function onCbChange(cb) {
+		    var b = document.getElementById(cb).checked;
+
+		    var confirmBox = confirm("You have agreed to Terms and Conditions.");
+
+		    if (confirmBox == true) {
+		        if (b) {
+		            document.getElementById(cb).checked = true;
+		        } else {
+		            document.getElementById(cb).checked = false;
+		        }
+		    } else {
+		        
+		        document.getElementById(cb).checked = !b;
+		    };
+		}
+	</script>
+	
+	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.min.js"></script>
+	<script>
+  
+  function extractText(file) {
+    return new Promise((resolve, reject) => {
+        var fileReader = new FileReader();
+
+        fileReader.onload = function() {
+            var typedarray = new Uint8Array(this.result);
+
+            pdfjsLib.getDocument(typedarray).promise.then(function(pdf) {
+                var totalPages = pdf.numPages;
+                var promises = [];
+
+                for (var pageNum = 1; pageNum <= totalPages; pageNum++) {
+                    promises.push(getPageText(pageNum, pdf));
+                }
+
+                Promise.all(promises).then(function(pagesText) {
+                    var extractedText = pagesText.join(' ');
+                    console.log(extractedText);
+                    resolve(extractedText);
+                }).catch(reject);
+            }).catch(reject);
+        };
+
+        fileReader.readAsArrayBuffer(file);
+    });
+
+    
+    function getPageText(pageNum, pdf) {
+      return new Promise(function(resolve, reject) {
+          pdf.getPage(pageNum).then(function(page) {
+              page.getTextContent().then(function(textContent) {
+                  var pageText = '';
+                  textContent.items.forEach(function(textItem) {
+                      pageText += textItem.str + ' ';
+                  });
+                  resolve(pageText);
+              });
+          });
+      });
+    }
+    
+    fileReader.readAsArrayBuffer(file);
+  }
+
+
+  
+  function parseResume(event) {
+    // event.preventDefault();
+    console.log("test");
+
+    // Access the file input element
+    var fileInput = document.getElementById('resume');
+    
+    // Access the selected file
+    var file = fileInput.files[0];
+    
+    // Perform operations with the file, for example:
+    if (file) {
+      // Access file details (e.g., name, type, size)
+      console.log("File name: ", file.name);
+      console.log("File type: ", file.type);
+      console.log("File size: ", file.size);
+      // return extractText(file);
+      
+      // Assuming 'file' is obtained from your file input
+      extractText(file)
+        .then(extractedText => {
+          console.log("Extracted Text:", extractedText);
+          // You can use the extracted text here or pass it to another function
+          var courseId = document.getElementById('course_id').value; // Get the course ID value
+          var resume = extractedText;
+          
+          // Create a form, set course_id and resume as a hidden input, and submit it after a delay
+          setTimeout(function() {
+            document.getElementById('redirectResume').value = resume; // Set resume in the hidden input
+            console.log("redirectResume: ", document.getElementById('redirectResume').value);
+          }, 10); // after 10 ms
+        })
+        .catch(error => {
+          console.error("Error extracting text:", error);
+        });
+    }
+    else {
+      return '';
+    }
+  }
+  
+    // Event listener for file input change
+    // document.getElementById('parseButton').addEventListener('click', function () {
+    // 	console.log('detected change');
+    //     // const fileInput = event.target;
+    //     // const file = fileInput.files[0];
+
+    //     // // Check if a file is selected
+    //     // if (file) {
+    //         // Call the parseResume function
+    //     parseResume(file);
+    //     // }
+    // });
+  </script>
 </head>
 
 <body>
@@ -50,7 +173,14 @@
 					<%= render 'shared/contract_sign_selector' %>
 					<%= render 'shared/nationality_selector' %>
 					<%= render 'shared/ethnicity_selector' %>
-				
+				  	
+				  	<label for="resume">Upload Resume:</label>
+      				<input type="file" id="resume" name="resume" accept=".pdf, .doc, .docx"><br><br>
+      				
+      				<input type="hidden" name="parsed_resume" id="redirectResume">
+      				
+      				<button type="button" id="parseButton" onclick="parseResume()"  class="btn btn-danger custom-maroon-button">Parse Resume</button>
+
 					<br/><hr/>
 					<h4>Project Preferences</h4>
 					<p>Please rank a minimum of <%= @min_number %> projects and a maximum of <%= @max_number %> projects. You can only have 1 project for each rank. Leave the field blank if you do not want the project at all.</p>

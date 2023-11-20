@@ -1,6 +1,18 @@
+require 'pdf/reader'
+require 'tf-idf-similarity'
+require 'matrix'
+
+
 class StudentformController < ApplicationController
   def index
-    user_id = session[:user_id]
+    # remove dev_mode in prod
+    user_id = ''
+    if params[:dev_mode] == 'yes'
+      user_id = 101
+    else
+      user_id = session[:user_id]
+    end
+    
     user = User.find_by(user_id: user_id)
     if user
       @first_name = user.first_name
@@ -67,7 +79,8 @@ class StudentformController < ApplicationController
     nationality = params[:nationality]
     ethnicities = params[:ethnicity]
     project_ranks = params[:project_rank]
-
+    parsed_resume = params[:parsed_resume].to_s
+    
     config = Config.first
     @min_number = config.min_number
     @max_number = config.max_number
@@ -143,7 +156,7 @@ class StudentformController < ApplicationController
       nationality: nationality, # extract other parameters as needed
       work_auth: work_auth,
       contract_sign: contract_sign,
-      resume: "After resume parsing"
+      resume: parsed_resume
     )
 
     if student.save
@@ -178,9 +191,15 @@ class StudentformController < ApplicationController
         pref_score = (1.0 - (pref.to_i-1)*pref_decrease) * 100
         
         #caluclate resume score (call helper method to compare student resume to project description here)
-        resume_score = 100
+        # classify resume
+        # need to change to upload_resume(project_description, parsed_resume)
+        similarity_score = upload_resume(parsed_resume, project_id)
+        # flash[:most_similar_job_description] = @most_similar_job_description
+        # flash[:similarity_score] = @similarity_score
+        resume_score = (similarity_score * 100).round(2)
+        puts "RESUME SCORE RESUME SCORE RESUME SCORE = " + resume_score.to_s
 
-        #add each score to DB under the scores_entity that it belongs to (student project pairing)
+        #add each score to DB under the scores_entity that it belongs to (student project pairing) THIS ADDS NEW SCORES. WHAT IF WE NEED TO REPLACE SCORES
         ScoresValue.create(scores_id: scores_id, attribute_id: time_stamp_attribute_id, feature_score: rounded_time_score)
         ScoresValue.create(scores_id: scores_id, attribute_id: pref_attribute_id, feature_score: pref_score)
         ScoresValue.create(scores_id: scores_id, attribute_id: resume_attribute_id, feature_score: resume_score)
@@ -191,5 +210,106 @@ class StudentformController < ApplicationController
     end
 
     redirect_to studentform_path
+  end
+
+  def upload_resume(resume_, project_id_)
+    resume = resume_.to_s
+    project_id = project_id_.to_i
+
+    
+    @project_data = Project.where(project_id: project_id_).pluck(:project_id, :description)
+    @project_ids = @project_data.map { |project_id, description| project_id }
+    @descriptions = @project_data.map { |project_id, description| description }
+    puts "course descriptions: " + @descriptions.join(separator = ",")
+    @resume_text = resume
+
+    similarity_scores = classify(@resume_text, @descriptions) # same length as project_ids and descriptions
+    puts "similarity_scores: " + similarity_scores.join(separator = ",")
+
+    
+    index_of_project_id = @project_ids.index(project_id) # get the index of the project_id that we are getting the match score for
+    
+    match_score = similarity_scores[index_of_project_id]
+    
+    puts "match_score: " + match_score.to_s
+
+    
+    return match_score
+  end
+  
+  private
+  
+  # Function to remove stop words from a string
+  def remove_stop_words(input_string, stop_words)
+    words = input_string.split
+    filtered_words = words.reject { |word| stop_words.include?(word.downcase) }
+    filtered_string = filtered_words.join(' ')
+    return filtered_string
+  end
+
+  
+  def classify(resume_text, descriptions)
+    
+    stop_words = [
+      "a", "about", "above", "after", "all", "also", "am", "an", "and", "any",
+      "are", "as", "at", "be", "because", "been", "before", "being", "between",
+      "both", "but", "by", "can", "did", "do", "each", "for", "from", "has",
+      "have", "he", "her", "here", "him", "his", "how", "i", "if", "in", "is",
+      "it", "its", "just", "like", "me", "my", "of", "on", "or", "our", "she",
+      "so", "some", "that", "the", "their", "them", "then", "there", "these",
+      "they", "this", "to", "was", "we", "were", "what", "when", "where",
+      "which", "who", "will", "with", "you", "your"
+    ]
+    
+    corpus = []
+    
+    if descriptions.nil? || descriptions.empty?
+      puts 'no job descriptions detected for course_id'
+      return ['no job descriptions detected for course_id', 0]
+    else
+      job_descriptions = descriptions
+    end
+
+    
+    job_descriptions.length.times do |i|
+      cleaned = job_descriptions[i].downcase.gsub(/[^a-z\s]/, '')
+      simplified = remove_stop_words(job_descriptions[i], stop_words)
+      corpus[i] = TfIdfSimilarity::Document.new(simplified)
+    end
+    
+    resumeidx = corpus.length # last index of corpus
+    
+    # Process the resume and calculate TF-IDF scores
+    resume = resume_text
+    corpus[resumeidx] = TfIdfSimilarity::Document.new(remove_stop_words(resume.downcase.gsub(/[^a-z\s]/, ''), stop_words))
+
+    model = TfIdfSimilarity::TfIdfModel.new(corpus)
+    
+    matrix = model.similarity_matrix
+    
+    similarity_scores = []
+    
+    # Calculate the cosine similarity between the resume and job descriptions
+    (corpus.length - 1).times do |i|
+      similarity_scores[i] = matrix[model.document_index(corpus[resumeidx]), model.document_index(corpus[i])]
+    end 
+    
+    return similarity_scores
+    
+    # Set a threshold for similarity to classify as a match
+    # threshold = 0.0
+    
+    # Find the best match
+    # best_match_index = similarity_scores.each_with_index.max[1]
+    
+    # # Check if the best match is above the threshold
+    # if similarity_scores[best_match_index] > threshold
+    #   puts "The resume is a match for the job description: #{job_descriptions[best_match_index]}"
+    #   return[ job_descriptions[best_match_index], similarity_scores[best_match_index] ]
+    # else
+    #   puts "No suitable job description found for the resume."
+    #   return ["No suitable job description found for the resume.", similarity_scores[best_match_index]]
+    # end
+    return "done"
   end
 end

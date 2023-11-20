@@ -11,7 +11,7 @@ form_open_datetime = DateTime.new(2023, 11, 6, 9, 0) # Example date and time
 form_close_datetime = DateTime.new(2023, 12, 6, 17, 0) # Example date and time
 config = Config.create(min_number: 2, max_number: 10, form_open: form_open_datetime , form_close:form_close_datetime )
 
-student_user = User.create(first_name: "student", last_name: "example", role: "student", email: "studentemail@tamu.edu")
+student_user = User.create(user_id: 101, first_name: "student", last_name: "example", role: "student", email: "studentemail@tamu.edu")
 prof_user = User.create(first_name: "professor", last_name: "example", role: "professor", email: "profemail@tamu.edu")
 admin_user  = User.create(first_name: "admin", last_name: "example", role: "admin", email: "adminemail@tamu.edu")
 
@@ -40,23 +40,30 @@ ethnicities.each do |ethnicity|
 end
 
 
-student = Student.create(student_id: student_user.user_id, course_id: course.course_id, gender: "Male", nationality: "American", work_auth: "US Citizen", contract_sign: "Ok with Any Agreements", uin: 123, resume: "Nodejs, Javascript, Java, Python")
+student = Student.create(student_id: student_user.user_id, course_id: course.course_id, gender: "Male", nationality: "American", work_auth: "US Citizen", contract_sign: "Ok with Any Agreements", uin: 123123123, resume: "Nodejs, Javascript, Java, Python")
 ethnicity_value1 = EthnicityValue.create(student_id: student.student_id, ethnicity_name: "White")
 ethnicity_value2 = EthnicityValue.create(student_id: student.student_id, ethnicity_name: "Black or African American")
 
-project = Project.create(name: "Example Project", description: "Example Description", sponsor: "Example Sponsor", course_id: course.course_id, info_url: "https://www.tamu.edu", semester: "Fall 2023")
-project = Project.create(name: "Example Project2", description: "Example Description2", sponsor: "Example Sponsor2", semester: "Spring 2024")
-project = Project.create(name: "Example Project3", description: "Example Description3", sponsor: "Example Sponsor3", semester: "Fall 2023")
+project = Project.create(name: "Example Project00", description: "Example Description", sponsor: "Example Sponsor", course_id: course.course_id, info_url: "https://www.tamu.edu", semester: "Fall 2023")
+project01 = Project.create(name: "Example Project01", description: "This is a test descriptor", sponsor: "Example Sponsor", course_id: course.course_id, info_url: "https://www.tamu.edu", semester: "Fall 2023")
+project2 = Project.create(name: "Example Project2", description: "Example Description2", sponsor: "Example Sponsor2", semester: "Spring 2024")
+project3 = Project.create(name: "Example Project3", description: "Example Description3", sponsor: "Example Sponsor3", semester: "Fall 2023")
 
 attribute1 = ScoresAttribute.create(feature: "Resume/Skills Match Score", feature_weight: 0.5)
 attribute2 = ScoresAttribute.create(feature: "Preference Match Score", feature_weight: 0.25)
 attribute3 = ScoresAttribute.create(feature: "Time Submitted Score", feature_weight: 0.25)
 
 scores_entity = ScoresEntity.create(student_id: student.student_id, project_id: project.project_id, pref: 1)
+scores_entity2 = ScoresEntity.create(student_id: student.student_id, project_id: project01.project_id, pref: 2)
+
 
 scores_value1 = ScoresValue.create(scores_id: scores_entity.scores_id, attribute_id: attribute1.attribute_id, feature_score: 50)
 scores_value2 = ScoresValue.create(scores_id: scores_entity.scores_id, attribute_id: attribute2.attribute_id, feature_score: 100)
 scores_value3 = ScoresValue.create(scores_id: scores_entity.scores_id, attribute_id: attribute3.attribute_id, feature_score: 75)
+
+scores_value1_2 = ScoresValue.create(scores_id: scores_entity2.scores_id, attribute_id: attribute1.attribute_id, feature_score: 0)
+scores_value2_2 = ScoresValue.create(scores_id: scores_entity2.scores_id, attribute_id: attribute2.attribute_id, feature_score: 0)
+scores_value3_2 = ScoresValue.create(scores_id: scores_entity2.scores_id, attribute_id: attribute3.attribute_id, feature_score: 0)
 
 professor_pref = ProfessorPreference.create(project_id: project.project_id, professor_id: prof.professor_id, pref: 1)
 
