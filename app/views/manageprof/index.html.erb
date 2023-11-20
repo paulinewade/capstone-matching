@@ -1,11 +1,7 @@
 <html>
-<style>
-  .hidden {
-    display: none;
-  }
-</style>
 <head>
   <title>Admin Landing Page</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
   <%= render 'shared/generic_page_header' %>
@@ -13,20 +9,20 @@
   <div class="d-flex justify-content-center align-items-center">
       <h1>Manage Professors and Admins</h1>
   </div>
-  <div class="container table-responsive">
+  <div class="container">
     <%= form_with(url: save_change_path, method: "post", id: "change-professors-form") do |form| %>
       <table class="table table-bordered">
-        <thead class="thead-dark">
-          <tr>
-            <th>Email</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Courses</th>
-            <th>Admin Approved</th>
-            <th>Admin</th>
-            <th>Delete?</th>
-          </tr>
-        </thead>
+        <thead class="thead-light">
+            <tr>
+              <th scope="col">Email</th>
+              <th scope="col">First Name</th>
+              <th scope="col">Last Name</th>
+              <th scope="col">Courses</th>
+              <th scope="col">Admin Approved</th>
+              <th scope="col">Admin</th>
+              <th scope="col">Delete?</th>
+            </tr>
+          </thead>
         <tbody>
           <% @professors.each do |user| %>
             <% professor = user.professor %>

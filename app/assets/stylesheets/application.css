@@ -108,3 +108,7 @@ html.dark-mode table {
     color: inherit;
     text-decoration: none;
 }
+
+.hidden {
+    display: none;
+}

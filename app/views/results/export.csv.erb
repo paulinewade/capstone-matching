@@ -1,0 +1,5 @@
+<%- headers = ['Email', 'Date'] -%>
+<%= CSV.generate_line headers %>
+<%- @results.each do |lead| -%>
+  <%= CSV.generate_line([lead.data['email'], lead.created_at]) -%>
+<%- end -%>
