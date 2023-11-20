@@ -62,6 +62,9 @@ Rails.application.routes.draw do
   get 'prof_projects_ranking', to: 'professor_preferences#index'
   post 'prof_projects_ranking', to: 'professor_preferences#save_rankings'
 
+  post 'dump_database', to: 'database_dump#dump_database'
+
   get 'view_results', to: 'results#index', as: 'results'
   get 'results_export/:semester/:project.csv', to: 'results#export', as: 'results_export'
+
 end
