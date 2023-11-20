@@ -23,10 +23,13 @@
 1. ```cd capstone-matching```
 2. ```bin/rails server -p 3000 -b 0.0.0.0```
 
-## Deployment instructions (cloud only)
+## Deployment instructions (AWS cloud only) - development only
 1. initialize ec2
 2. walk through cloud-init.sh
 3. bash start-script.sh
+
+# Deployment instructions (HEROKU)
+https://github.com/Capstone-Matching/capstone-matching/blob/main/documentation/Fall2023/deploy_instructions.pdf
 
 ## Cloud Architecture
 ![Alt text](.cloud/capstone-matching-cloud.png)
