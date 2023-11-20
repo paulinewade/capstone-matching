@@ -47,11 +47,17 @@ class DatabaseDumpController < ApplicationController
     
     def generate_postgresql_dump
         dump_filename = "database_dump_#{Time.now.strftime('%Y-%m-%d_%H-%M-%S')}.sql"
-        system("heroku run 'pg_dump $DATABASE_URL' > #{dump_filename}")
-        File.read(dump_filename)
-    ensure
+        command = "pg_dump #{ENV['DATABASE_URL']} > #{dump_filename}"
+      
+        # Use backticks (`) for shell command execution
+        `#{command}`
+      
+        # Read the content of the dump file
+        dump_content = File.read(dump_filename)
+      ensure
+        # Delete the dump file
         File.delete(dump_filename) if File.exist?(dump_filename)
-    end
+      end      
     
     def send_database_dump(content)
         send_data content,
