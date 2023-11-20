@@ -7,6 +7,10 @@
 4. ```cd capstone-matching```
 5. ```git config --global pull.rebase true```
 
+## Developer Testcases
+1. ```bundle exec cucumber```
+1. ```bundle exec rspec```
+
 ## Developer Workflow
 1. An issue will be assigned to you
 2. Make a feature branch for an issue
