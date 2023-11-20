@@ -1,5 +1,3 @@
-# features/manage_professors.feature
-
 Feature: Manage Professors and Admins Page
   As an admin user
   I want to manage professors and admins

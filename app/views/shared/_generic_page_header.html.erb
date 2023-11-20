@@ -4,7 +4,7 @@
     <% if user&.role == 'admin' %>
       <%= link_to "Back to Admin Home Page", adminlanding_path, class: "btn btn-danger custom-maroon-button m-3", id: "back-button" %>
     <% elsif user&.role == 'professor' %>
-      <%= link_to "Back to Professor Home Page", professorlanding_path, class: "btn btn-danger custom-maroon-button m-3", id: "back-button" %>
+      <%= link_to "Back to Professor Home Page", profLanding_path, class: "btn btn-danger custom-maroon-button m-3", id: "back-button" %>
     <% else %>
       <%= link_to "Back", root_path, class: "btn btn-danger custom-maroon-button m-3", id: "back-button" %>
     <% end %>
