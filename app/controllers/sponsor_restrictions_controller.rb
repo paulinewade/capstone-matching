@@ -1,6 +1,7 @@
 
 class SponsorRestrictionsController < ApplicationController
   before_action :set_project
+  before_action :authorize_admin_or_prof
 
   def create
     @sponsor_restriction = @project.sponsor_restrictions.build(sponsor_restriction_params)

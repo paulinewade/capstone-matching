@@ -1,6 +1,6 @@
 # app/controllers/professor_preferences_controller.rb
 class ProfessorPreferencesController < ApplicationController
-    # before_action :authenticate_professor!
+    before_action :authorize_admin_or_prof
   
     # def index
     #   @preferred_projects = current_professor.preferred_projects
@@ -85,5 +85,5 @@ class ProfessorPreferencesController < ApplicationController
 
         redirect_to profLanding_path, notice: 'Project preferences saved successfully.'
     end
-  end
+end
   

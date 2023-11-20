@@ -1,4 +1,5 @@
 class ManagestudentsController < ApplicationController
+    before_action :authorize_admin
     def index
       @students = User.includes(:student).where.not(students: { student_id: nil })
       @courses = Course.all
@@ -66,5 +67,4 @@ class ManagestudentsController < ApplicationController
     flash[:success] = "Filtered Successfully"
     render :index
   end
-  
 end

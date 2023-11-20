@@ -1,4 +1,5 @@
 class ChangeweightsController < ApplicationController
+    before_action :authorize_admin
     def index
         @score_attributes = ScoresAttribute.all
     end

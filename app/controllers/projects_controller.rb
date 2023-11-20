@@ -1,5 +1,6 @@
 class ProjectsController < ApplicationController
   # ToDo Check with team
+  before_action :authorize_admin_or_prof
   protect_from_forgery except: :destroy
   def index
     @semesters = Project.pluck(:semester).uniq
