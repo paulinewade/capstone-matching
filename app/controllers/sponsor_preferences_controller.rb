@@ -1,5 +1,6 @@
 class SponsorPreferencesController < ApplicationController
   before_action :set_project
+  before_action :authorize_admin_or_prof
 
   def create
     @sponsor_preference = @project.sponsor_preferences.build(sponsor_preference_params)
