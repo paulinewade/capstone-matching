@@ -58,8 +58,40 @@
 					</tbody>
 				</table>
 				<div class="d-flex justify-content-center align-items-center">
-				<%= form.button "Save Changes", class: "btn btn-danger m-2", id: "save-button" %>
+				<%= form.button "Save Changes", class: "btn btn-primary m-3", id: "save-button" %>
 			<% end %>
+		</div>
+
+		<br>
+		<br>
+		<hr>
+		<div class="container">
+			<h4>Add Course</h4>
+		</div>
+		<div class="container">
+			<div class="row">
+				<div class="add-course-form hidden" id="add-course-form">
+					<%= form_with(model: @add_course, url: add_course_path, id: "add-course-form") do |form| %>
+						<div class="form-group mb-2">
+							<%= form.label :course_number, "Course Number ", class: "required" %>
+							<%= form.number_field :course_number, class: 'form-control', required: true %>
+						</div>
+						<div class="form-group mb-2">
+							<%= form.label :semester, "Semester ", class: "required" %>
+							<%= select_tag :semester, options_for_select(@semesters, @selected_semester), include_blank: "Select Semester", class: 'form-control', required: true %>
+						</div>
+						<div class="form-group mb-2">
+							<%= form.label :section, "Section ", class: "required" %>
+							<%= form.number_field :section, class: 'form-control', required: true %>
+						</div>
+						<div class="form-group mb-2">
+							<%= form.label :professor_id, "Professor" %>
+							<%= form.select :professor_id, options_for_select(@professors_for_select), { include_blank: 'Select a Professor' }, class: 'form-control' %>
+						</div>
+						<%= form.button "Add Course", class: "btn btn-primary m-3", id: "add-course-button" %>
+					<% end %>
+				</div>
+			</div>
 		</div>
 
 	</div>
