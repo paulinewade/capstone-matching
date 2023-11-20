@@ -5,7 +5,7 @@
 	</div>
 
 	<div class="container">
-		<h1 class="text-center my-4">Courses</h1>
+		<h1 class="text-center my-4">Manage Courses</h1>
 
 		<div class="row justify-content-center">
 			<div class="col-md-10">
@@ -34,7 +34,7 @@
 							<th>Assign Professor</th>
 							<th>Email</th>
 							<th>Change Assign Professor</th>
-
+							<th>Delete Courses</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -43,14 +43,24 @@
 								<td><%= c.semester %></td>
 								<td><%= c.course_number %></td>
 								<td><%= c.section %></td>
-								<td><%= c.professor&.user&.first_name %> <%= c.professor&.user&.last_name %></td>
+								<td><%= c.professor&.user&.first_name&.capitalize %> <%= c.professor&.user&.last_name&.capitalize %></td>
 								<td><%= c.professor&.user&.email %></td>
+								<td>
+									<%= form.select "course_assignments[#{c.id}]", options_for_select(@professors_for_select, c.professor_id), { include_blank: 'Select Professor' }, class: 'form-control' %>
+        						</td>
+        						<td>
+        							<div class="text-center">
+									<%= form.check_box "delete_course[]", { value: c.course_id }, c.course_id, nil %>
+									</div>
+        						</td>
 							</tr>
 						<% end %>
 					</tbody>
 				</table>
+				<div class="d-flex justify-content-center align-items-center">
+				<%= form.button "Save Changes", class: "btn btn-danger m-2", id: "save-button" %>
 			<% end %>
 		</div>
 
 	</div>
-</body>
+</body> 

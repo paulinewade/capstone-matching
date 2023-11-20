@@ -68,5 +68,5 @@ Rails.application.routes.draw do
   get 'results_export/:semester/:project.csv', to: 'results#export', as: 'results_export'
 
   get "manageCourses", to: "manage_courses#index"
-  post "manageCourses/edit_courses", to: "manage_courses#edit", as: "edit_courses"
+  post "manageCourses/edit_courses", to: "manage_courses#edit_courses", as: "edit_courses"
 end
