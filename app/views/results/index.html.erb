@@ -10,7 +10,7 @@
       projectDropdown.empty();
 
       // Add empty default option
-      projectDropdown.append($('<option>').text('').attr('value', ''));
+      projectDropdown.append($('<option>').text('').attr('value', '').attr('disabled', true));
 
       // Add options based on selected semester
       if (selectedSemester && projectsBySemester[selectedSemester]) {
@@ -35,7 +35,7 @@
 <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-<%= render 'shared/admin_page_header' %>
+<%= render 'shared/generic_page_header' %>
 <%= render 'shared/notification' %>
 <div class="container">  
 </div>

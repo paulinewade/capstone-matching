@@ -87,6 +87,12 @@ class StudentformController < ApplicationController
     @form_open = config.form_open
     @form_close = config.form_close
 
+    user = User.find_by(email: email) 
+    if user && user.role != 'student'
+      flash[:error] = "Cannot submit the student form if not a student"
+      redirect_to studentform_path
+      return
+    end
     # #form isn't open
     if DateTime.now < @form_open || DateTime.now > @form_close
       flash[:error] = "Form is not currently open, please submit during the specified window."

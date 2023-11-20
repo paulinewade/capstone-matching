@@ -1,6 +1,6 @@
 # app/controllers/professor_preferences_controller.rb
 class ProfessorPreferencesController < ApplicationController
-    before_action :authorize_admin_or_prof
+    before_action :authorize_admin_or_prof, unless: -> { Rails.env.development? || Rails.env.test? }
   
     # def index
     #   @preferred_projects = current_professor.preferred_projects

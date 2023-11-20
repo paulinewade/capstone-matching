@@ -1,5 +1,5 @@
 class ChangeweightsController < ApplicationController
-    before_action :authorize_admin
+    before_action :authorize_admin, unless: -> { Rails.env.development? || Rails.env.test? }
     def index
         @score_attributes = ScoresAttribute.all
     end

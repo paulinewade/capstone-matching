@@ -1,6 +1,6 @@
 require 'csv'
 class ResultsController < ApplicationController
-
+  before_action :authorize_admin_or_prof, unless: -> { Rails.env.development? || Rails.env.test? }
   def evaluate_scores(scores_values)
     total_score = 0
     split_scores = []

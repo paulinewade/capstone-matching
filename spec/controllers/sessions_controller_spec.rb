@@ -17,6 +17,7 @@ RSpec.describe SessionsController, type: :controller do
 
       it 'redirects to profLanding_path if user is a professor' do
         user = User.create(email: 'professor@tamu.edu', first_name: 'John', last_name: 'Doe', role: 'professor')
+        prof_user = Professor.create(professor_id: user.user_id, verified: true, admin: false)
         auth_hash = request.env['omniauth.auth']
         auth_hash['info']['email'] = user.email
         get :google_auth
