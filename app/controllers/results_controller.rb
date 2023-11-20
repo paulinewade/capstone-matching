@@ -53,8 +53,6 @@ class ResultsController < ApplicationController
       @projects_by_semester[semester] = projects_for_semester
     end
 
-    puts(@projects_by_semester)
-
     @selected_semester = params[:semester]
 
     @selected_project = params[:project]
@@ -141,6 +139,7 @@ class ResultsController < ApplicationController
     end
     results
   end
+
 
   def to_csv (list)
     score_names = ScoresAttribute.pluck(:feature).uniq
