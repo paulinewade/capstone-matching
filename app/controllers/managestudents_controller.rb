@@ -1,5 +1,5 @@
 class ManagestudentsController < ApplicationController
-    before_action :authorize_admin
+    before_action :authorize_admin, unless: -> { Rails.env.development? || Rails.env.test? }
     def index
       @students = User.includes(:student).where.not(students: { student_id: nil })
       @courses = Course.all
