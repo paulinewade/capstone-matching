@@ -1,0 +1,146 @@
+<script>
+  $(document).ready(function() {
+    var projectsBySemester = <%= @projects_by_semester.to_json.html_safe %>;
+
+    $('#Semester').on('change', function() {
+      var selectedSemester = $(this).val();
+      var projectDropdown = $('#Project');
+
+      // Clear previous options
+      projectDropdown.empty();
+
+      // Add empty default option
+      projectDropdown.append($('<option>').text('').attr('value', '').attr('disabled', true));
+
+      // Add options based on selected semester
+      if (selectedSemester && projectsBySemester[selectedSemester]) {
+        $.each(projectsBySemester[selectedSemester], function(index, projectName) {
+          projectDropdown.append($('<option>').text(projectName).attr('value', projectName));
+        });
+      }
+
+      // Set the default value to @selected_project
+      projectDropdown.val('<%= @selected_project %>');
+    });
+
+    // Initial update when the page loads
+    $('#Semester').trigger('change');
+  });
+</script>
+<head>
+  <title>View Results</title>
+</head>
+<body>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<%= render 'shared/generic_page_header' %>
+<%= render 'shared/notification' %>
+<div class="container">  
+</div>
+<div class="row justify-content-center">
+  <div class="col-md-8">
+    <div class="card">
+      <div class="card-header">
+        <div class="row">
+          <div class="col">
+            Filter by Semester & Project
+          </div>
+        </div>
+      </div>
+
+      <div class="card-body">
+        <%= form_with(url: results_path, method: :get, id: "filter-form") do |form| %>
+          <div class="row justify-content-center">
+            <div class="col-auto mr-4">
+              <%= label_tag :semester, "Select Semester:", class: 'mr-2' %>
+              <%= select_tag :semester, options_for_select(@semesters, @selected_semester), class: 'form-control', id: 'Semester' %>
+            </div>
+            <div class="col-auto mr-4">
+              <%= label_tag :project, "Select Project:", class: 'mr-2' %>
+              <%= select_tag :project, options_for_select([], @selected_project), class: 'form-control', id: 'Project' %>
+            </div>
+            <div class="col-auto">
+              <%= label_tag :course, "Select Course (optional):", class: 'mr-2' %>
+              <%= select_tag :course, options_for_select(@courses.map { |course| ["CSCE #{course.course_number}-#{course.section}-#{course.semester}", course.course_id] }, @selected_course), include_blank: true, class: 'form-control', id: 'Course' %>
+            </div>
+          </div>
+          <div class="row ml-4 mt-4 justify-content-center">
+            <div class="col-auto">
+              <%= form.submit "Filter", class: "btn btn-danger custom-maroon-button" %>
+            </div>
+            <div class = "col-auto">
+              <% if @selected_project.present? and @selected_semester.present? %>
+                <%= link_to "Download", results_export_path(semester: @selected_semester, project: @selected_project, course: @selected_course), class: 'btn btn-secondary' %>
+              <% end %>
+            </div>
+          </div>  
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row justify-content-center mt-5">
+    <div class="col-12">
+      <table class="table table-bordered" id="dataTable">
+        <thead class="thead-light">
+        <tr>
+          <th scope="col" class = "justify-content-center text-center">#</th>
+          <th scope="col" class = "justify-content-center text-center">Student Name</th>
+          <th scope="col" class = "justify-content-center text-center">Course</th>
+          <th scope="col" class = "justify-content-center text-center">Preferences</th>
+          <th scope="col" class = "justify-content-center text-center">Restrictions</th>
+          <th scope="col" class = "justify-content-center text-center">Feature Name and Weighted Score</th>
+          <th scope="col" class = "justify-content-center text-center">Total Weighted Score</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% @results.each_with_index do |result, index| %>
+          <tr>
+            <th scope="row"><%= index + 1 %></th>
+            <td class="text-center"><%= result['student'].first_name + ' ' + result['student'].last_name %></td>
+            <td class="text-center"><%= 'CSCE ' + result['student'].student.course.course_number.to_s + '-' + result['student'].student.course.section.to_s + '-' + result['student'].student.course.semester %>
+            <td>
+              <ul >
+                <% result['preference_list'].each do |item| %>
+                  <li><%= "#{item.preference_val}: #{item.bonus_amount}" %></li>
+                <% end %>
+              </ul>
+            </td>
+            <td >
+              <ul >
+                <% result['restriction_list'].each do |item| %>
+                  <li><%= item %></li>
+                <% end %>
+              </ul>
+            </td>
+            <td>
+              <ul >
+                <% result['split_scores'].each do |score| %>
+                  <li><%= "#{score['feature_name']}: #{score['feature_score']}" %></li>
+                <% end %>
+              </ul>
+            </td>
+            <td class="text-center"><%= result['total_score'] %></td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+</div>
+<script>
+  $(document).ready( function () {
+    $('#dataTable').DataTable({
+      "lengthChange": false,
+      "paging": false,
+      "info": false
+    });
+  } );
+</script>
+</body>

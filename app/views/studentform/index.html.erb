@@ -19,601 +19,189 @@
 		    };
 		}
 	</script>
+	
+	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.min.js"></script>
+	<script>
+  
+  function extractText(file) {
+    return new Promise((resolve, reject) => {
+        var fileReader = new FileReader();
+
+        fileReader.onload = function() {
+            var typedarray = new Uint8Array(this.result);
+
+            pdfjsLib.getDocument(typedarray).promise.then(function(pdf) {
+                var totalPages = pdf.numPages;
+                var promises = [];
+
+                for (var pageNum = 1; pageNum <= totalPages; pageNum++) {
+                    promises.push(getPageText(pageNum, pdf));
+                }
+
+                Promise.all(promises).then(function(pagesText) {
+                    var extractedText = pagesText.join(' ');
+                    console.log(extractedText);
+                    resolve(extractedText);
+                }).catch(reject);
+            }).catch(reject);
+        };
+
+        fileReader.readAsArrayBuffer(file);
+    });
+
+    
+    function getPageText(pageNum, pdf) {
+      return new Promise(function(resolve, reject) {
+          pdf.getPage(pageNum).then(function(page) {
+              page.getTextContent().then(function(textContent) {
+                  var pageText = '';
+                  textContent.items.forEach(function(textItem) {
+                      pageText += textItem.str + ' ';
+                  });
+                  resolve(pageText);
+              });
+          });
+      });
+    }
+    
+    fileReader.readAsArrayBuffer(file);
+  }
+
+
+  
+  function parseResume(event) {
+    // event.preventDefault();
+    console.log("test");
+
+    // Access the file input element
+    var fileInput = document.getElementById('resume');
+    
+    // Access the selected file
+    var file = fileInput.files[0];
+    
+    // Perform operations with the file, for example:
+    if (file) {
+      // Access file details (e.g., name, type, size)
+      console.log("File name: ", file.name);
+      console.log("File type: ", file.type);
+      console.log("File size: ", file.size);
+      // return extractText(file);
+      
+      // Assuming 'file' is obtained from your file input
+      extractText(file)
+        .then(extractedText => {
+          console.log("Extracted Text:", extractedText);
+          // You can use the extracted text here or pass it to another function
+          var courseId = document.getElementById('course_id').value; // Get the course ID value
+          var resume = extractedText;
+          
+          // Create a form, set course_id and resume as a hidden input, and submit it after a delay
+          setTimeout(function() {
+            document.getElementById('redirectResume').value = resume; // Set resume in the hidden input
+            console.log("redirectResume: ", document.getElementById('redirectResume').value);
+          }, 10); // after 10 ms
+        })
+        .catch(error => {
+          console.error("Error extracting text:", error);
+        });
+    }
+    else {
+      return '';
+    }
+  }
+  
+    // Event listener for file input change
+    // document.getElementById('parseButton').addEventListener('click', function () {
+    // 	console.log('detected change');
+    //     // const fileInput = event.target;
+    //     // const file = fileInput.files[0];
+
+    //     // // Check if a file is selected
+    //     // if (file) {
+    //         // Call the parseResume function
+    //     parseResume(file);
+    //     // }
+    // });
+  </script>
 </head>
 
 <body>
 	<div class="container mt-3">
       <div class="d-flex justify-content-between align-items-center">
         <button class="btn btn-danger custom-maroon-button" id="dark-mode-toggle">Toggle Dark Mode</button>
-        <%= button_to "Logout", logout_path, { class: "btn btn-danger custom-maroon-button", data: { turbo: "false" }, method: :delete } %>
+        <%= button_to "Logout", logout_path, { class: "btn btn-danger custom-maroon-button", data: { turbo: "false" }, method: :get } %>
       </div>
     </div>
 	<%= render 'shared/notification' %>
 	<div class="container">
 		<div class="row">
 			<div class="col-md-8 offset-md-2">
-				<h1 class="text-center mb-4">CSCE# Project Interests</h1>
-
+				<h1 class="text-center mb-4">CSCE Capstone Project Preference Form</h1>
 				<br/>
-				<p>Howdy! Let us know which student-proposed projects you are interested in.</p>
-				<br/>
-
-				
-
-				<!-- Registration Form -->
+				<p>Howdy! Let us know which industry projects you are interested in.</p>
+				<p>This form is open from <%= @form_open.in_time_zone("Central Time (US & Canada)").strftime("%B %d, %Y %I:%M %p %Z") %> to <%= @form_close.in_time_zone("Central Time (US & Canada)").strftime("%B %d, %Y %I:%M %p %Z") %></p>
 				<h4>Student Information</h4>
-				<br/>
-				<form action="/studentform" method="post">
+				<p> All information on this form is required.</p>
+				<%= form_with(url: '/studentform', method: 'post') do |form| %>
 					<div class="form-group mb-3">
-						<label for="email">TAMU Email Address: </label>
-						<input type="email" class="form-control" id="email" name="email" placeholder="Enter your TAMU email address">
+					  <%= form.label :email, 'TAMU Email Address<span class="text-danger">*</span>'.html_safe %>
+					  <%= form.email_field :email, class: 'form-control', placeholder: 'Enter your TAMU email address', value: @email, required: true, readonly: true %>
 					</div>
+				  
 					<div class="form-group mb-3">
-						<label for="last-name">Last Name: </label>
-						<input type="text" class="form-control" id="last_name" name="last_name" placeholder="Enter your last name">
+					  <%= form.label :last_name, 'Last Name<span class="text-danger">*</span>'.html_safe %>
+					  <%= form.text_field :last_name, class: 'form-control', placeholder: 'Enter your last name', value: @last_name, required: true %>
 					</div>
+				  
 					<div class="form-group mb-3">
-						<label for="first-name">First Name: </label>
-						<input type="text" class="form-control" id="first_name" name="first_name" placeholder="Enter your first name">
+					  <%= form.label :first_name, 'First Name<span class="text-danger">*</span>'.html_safe %>
+					  <%= form.text_field :first_name, class: 'form-control', placeholder: 'Enter your first name', value: @first_name, required: true %>
 					</div>
+				  
 					<div class="form-group mb-3">
-						<label for="UIN">UIN: </label>
-						<input type="text" class="form-control" id="uin" name="uin" placeholder="UIN">
-					</div>
-					<div class="form-group mb-3">
-						<label name="gender">Gender: </label>
-						<br/>
-						<input type="radio" name="gender" value="male"> Male
-						<input type="radio" name="gender" value="female"> Female
-						<input type="radio" name="gender" value="unknown"> Other		
-					</div>
-					<div class="form-group mb-3">
-						<label name="course">Course: </label>
-						<br/>
-						<label for="course_id">Select Course:</label>
-						<%= select_tag "course_id", options_for_select(@courses.map { |course| ["CSCE #{course.course_number}-#{course.section}-#{course.semester}", course.course_id] }), include_blank: true, class: "form-control" %>
-					</div>
-					<div class="form-group mb-3">
-						<label for="date_of_birth">Date of Birth: </label>
-						<br/>
-						<input type="date" name="Startdate">
-					</div>
-
-					<div class="form-group mb-3">
-					  <label for="work_authorization">Work Authorization Required: </label>
-					  <br/>
-					  <select name="work_authorization">
-					  	<option value="" selected disabled>None</option>
-					    <option value="citizen">Citizen</option>
-					    <option value="permanent_resident">Permanent Resident</option>
-					    <option value="work_visa">Work Visa</option>
-					    <option value="student_visa">Student Visa</option>
-					  </select>
-					</div>
-
-
-					<div class="form-group mb-3">
-						<label for="nationality">Nationality: </label>
-						<br/>
-						<select name="nationality">
-						  <option value="" selected disabled>-- select one --</option>
-						  <option value="afghan">Afghan</option>
-						  <option value="albanian">Albanian</option>
-						  <option value="algerian">Algerian</option>
-						  <option value="american">American</option>
-						  <option value="andorran">Andorran</option>
-						  <option value="angolan">Angolan</option>
-						  <option value="antiguans">Antiguans</option>
-						  <option value="argentinean">Argentinean</option>
-						  <option value="armenian">Armenian</option>
-						  <option value="australian">Australian</option>
-						  <option value="austrian">Austrian</option>
-						  <option value="azerbaijani">Azerbaijani</option>
-						  <option value="bahamian">Bahamian</option>
-						  <option value="bahraini">Bahraini</option>
-						  <option value="bangladeshi">Bangladeshi</option>
-						  <option value="barbadian">Barbadian</option>
-						  <option value="barbudans">Barbudans</option>
-						  <option value="batswana">Batswana</option>
-						  <option value="belarusian">Belarusian</option>
-						  <option value="belgian">Belgian</option>
-						  <option value="belizean">Belizean</option>
-						  <option value="beninese">Beninese</option>
-						  <option value="bhutanese">Bhutanese</option>
-						  <option value="bolivian">Bolivian</option>
-						  <option value="bosnian">Bosnian</option>
-						  <option value="brazilian">Brazilian</option>
-						  <option value="british">British</option>
-						  <option value="bruneian">Bruneian</option>
-						  <option value="bulgarian">Bulgarian</option>
-						  <option value="burkinabe">Burkinabe</option>
-						  <option value="burmese">Burmese</option>
-						  <option value="burundian">Burundian</option>
-						  <option value="cambodian">Cambodian</option>
-						  <option value="cameroonian">Cameroonian</option>
-						  <option value="canadian">Canadian</option>
-						  <option value="cape verdean">Cape Verdean</option>
-						  <option value="central african">Central African</option>
-						  <option value="chadian">Chadian</option>
-						  <option value="chilean">Chilean</option>
-						  <option value="chinese">Chinese</option>
-						  <option value="colombian">Colombian</option>
-						  <option value="comoran">Comoran</option>
-						  <option value="congolese">Congolese</option>
-						  <option value="costa rican">Costa Rican</option>
-						  <option value="croatian">Croatian</option>
-						  <option value="cuban">Cuban</option>
-						  <option value="cypriot">Cypriot</option>
-						  <option value="czech">Czech</option>
-						  <option value="danish">Danish</option>
-						  <option value="djibouti">Djibouti</option>
-						  <option value="dominican">Dominican</option>
-						  <option value="dutch">Dutch</option>
-						  <option value="east timorese">East Timorese</option>
-						  <option value="ecuadorean">Ecuadorean</option>
-						  <option value="egyptian">Egyptian</option>
-						  <option value="emirian">Emirian</option>
-						  <option value="equatorial guinean">Equatorial Guinean</option>
-						  <option value="eritrean">Eritrean</option>
-						  <option value="estonian">Estonian</option>
-						  <option value="ethiopian">Ethiopian</option>
-						  <option value="fijian">Fijian</option>
-						  <option value="filipino">Filipino</option>
-						  <option value="finnish">Finnish</option>
-						  <option value="french">French</option>
-						  <option value="gabonese">Gabonese</option>
-						  <option value="gambian">Gambian</option>
-						  <option value="georgian">Georgian</option>
-						  <option value="german">German</option>
-						  <option value="ghanaian">Ghanaian</option>
-						  <option value="greek">Greek</option>
-						  <option value="grenadian">Grenadian</option>
-						  <option value="guatemalan">Guatemalan</option>
-						  <option value="guinea-bissauan">Guinea-Bissauan</option>
-						  <option value="guinean">Guinean</option>
-						  <option value="guyanese">Guyanese</option>
-						  <option value="haitian">Haitian</option>
-						  <option value="herzegovinian">Herzegovinian</option>
-						  <option value="honduran">Honduran</option>
-						  <option value="hungarian">Hungarian</option>
-						  <option value="icelander">Icelander</option>
-						  <option value="indian">Indian</option>
-						  <option value="indonesian">Indonesian</option>
-						  <option value="iranian">Iranian</option>
-						  <option value="iraqi">Iraqi</option>
-						  <option value="irish">Irish</option>
-						  <option value="israeli">Israeli</option>
-						  <option value="italian">Italian</option>
-						  <option value="ivorian">Ivorian</option>
-						  <option value="jamaican">Jamaican</option>
-						  <option value="japanese">Japanese</option>
-						  <option value="jordanian">Jordanian</option>
-						  <option value="kazakhstani">Kazakhstani</option>
-						  <option value="kenyan">Kenyan</option>
-						  <option value="kittian and nevisian">Kittian and Nevisian</option>
-						  <option value="kuwaiti">Kuwaiti</option>
-						  <option value="kyrgyz">Kyrgyz</option>
-						  <option value="laotian">Laotian</option>
-						  <option value="latvian">Latvian</option>
-						  <option value="lebanese">Lebanese</option>
-						  <option value="liberian">Liberian</option>
-						  <option value="libyan">Libyan</option>
-						  <option value="liechtensteiner">Liechtensteiner</option>
-						  <option value="lithuanian">Lithuanian</option>
-						  <option value="luxembourger">Luxembourger</option>
-						  <option value="macedonian">Macedonian</option>
-						  <option value="malagasy">Malagasy</option>
-						  <option value="malawian">Malawian</option>
-						  <option value="malaysian">Malaysian</option>
-						  <option value="maldivan">Maldivan</option>
-						  <option value="malian">Malian</option>
-						  <option value="maltese">Maltese</option>
-						  <option value="marshallese">Marshallese</option>
-						  <option value="mauritanian">Mauritanian</option>
-						  <option value="mauritian">Mauritian</option>
-						  <option value="mexican">Mexican</option>
-						  <option value="micronesian">Micronesian</option>
-						  <option value="moldovan">Moldovan</option>
-						  <option value="monacan">Monacan</option>
-						  <option value="mongolian">Mongolian</option>
-						  <option value="moroccan">Moroccan</option>
-						  <option value="mosotho">Mosotho</option>
-						  <option value="motswana">Motswana</option>
-						  <option value="mozambican">Mozambican</option>
-						  <option value="namibian">Namibian</option>
-						  <option value="nauruan">Nauruan</option>
-						  <option value="nepalese">Nepalese</option>
-						  <option value="new zealander">New Zealander</option>
-						  <option value="ni-vanuatu">Ni-Vanuatu</option>
-						  <option value="nicaraguan">Nicaraguan</option>
-						  <option value="nigerien">Nigerien</option>
-						  <option value="north korean">North Korean</option>
-						  <option value="northern irish">Northern Irish</option>
-						  <option value="norwegian">Norwegian</option>
-						  <option value="omani">Omani</option>
-						  <option value="pakistani">Pakistani</option>
-						  <option value="palauan">Palauan</option>
-						  <option value="panamanian">Panamanian</option>
-						  <option value="papua new guinean">Papua New Guinean</option>
-						  <option value="paraguayan">Paraguayan</option>
-						  <option value="peruvian">Peruvian</option>
-						  <option value="polish">Polish</option>
-						  <option value="portuguese">Portuguese</option>
-						  <option value="qatari">Qatari</option>
-						  <option value="romanian">Romanian</option>
-						  <option value="russian">Russian</option>
-						  <option value="rwandan">Rwandan</option>
-						  <option value="saint lucian">Saint Lucian</option>
-						  <option value="salvadoran">Salvadoran</option>
-						  <option value="samoan">Samoan</option>
-						  <option value="san marinese">San Marinese</option>
-						  <option value="sao tomean">Sao Tomean</option>
-						  <option value="saudi">Saudi</option>
-						  <option value="scottish">Scottish</option>
-						  <option value="senegalese">Senegalese</option>
-						  <option value="serbian">Serbian</option>
-						  <option value="seychellois">Seychellois</option>
-						  <option value="sierra leonean">Sierra Leonean</option>
-						  <option value="singaporean">Singaporean</option>
-						  <option value="slovakian">Slovakian</option>
-						  <option value="slovenian">Slovenian</option>
-						  <option value="solomon islander">Solomon Islander</option>
-						  <option value="somali">Somali</option>
-						  <option value="south african">South African</option>
-						  <option value="south korean">South Korean</option>
-						  <option value="spanish">Spanish</option>
-						  <option value="sri lankan">Sri Lankan</option>
-						  <option value="sudanese">Sudanese</option>
-						  <option value="surinamer">Surinamer</option>
-						  <option value="swazi">Swazi</option>
-						  <option value="swedish">Swedish</option>
-						  <option value="swiss">Swiss</option>
-						  <option value="syrian">Syrian</option>
-						  <option value="taiwanese">Taiwanese</option>
-						  <option value="tajik">Tajik</option>
-						  <option value="tanzanian">Tanzanian</option>
-						  <option value="thai">Thai</option>
-						  <option value="togolese">Togolese</option>
-						  <option value="tongan">Tongan</option>
-						  <option value="trinidadian or tobagonian">Trinidadian or Tobagonian</option>
-						  <option value="tunisian">Tunisian</option>
-						  <option value="turkish">Turkish</option>
-						  <option value="tuvaluan">Tuvaluan</option>
-						  <option value="ugandan">Ugandan</option>
-						  <option value="ukrainian">Ukrainian</option>
-						  <option value="uruguayan">Uruguayan</option>
-						  <option value="uzbekistani">Uzbekistani</option>
-						  <option value="venezuelan">Venezuelan</option>
-						  <option value="vietnamese">Vietnamese</option>
-						  <option value="welsh">Welsh</option>
-						  <option value="yemenite">Yemenite</option>
-						  <option value="zambian">Zambian</option>
-						  <option value="zimbabwean">Zimbabwean</option>
-						</select>
-					</div>
-				  	<div class="form-group mb-3">
-				  	  <label for="ethnicity">Ethnicity: </label>
-				  	  <select class="form-control dropdown" id="ethnicity" name="ethnicity[]" multiple>
-				  	    <option value="" selected="selected" disabled="disabled">-- select one or more --</option>
-				  	    <option value="White">White</option>
-				  	    <option value="Black or African American">Black or African American</option>
-				  	    <option value="Asian">Asian</option>
-				  	    <option value="Hispanic or Latino">Hispanic or Latino</option>
-				  	    <option value="Two or more">Two or more</option>
-				  	    <option value="Native Hawaiian or Pacific Islander">Native Hawaiian or Pacific Islander</option>
-				  	    <option value="Native American or Alaskan Native">Native American or Alaskan Native</option>
-				  	    <option value="Other">Other</option>
-				  	  </select>
-				  	</div>
-
-				  	<div id="selectedOptions">Selected:</div>
-
-				  	<script>
-				  	  // JavaScript code to display selected options
-				  	  const selectElement = document.getElementById('ethnicity');
-				  	  const selectedOptionsDiv = document.getElementById('selectedOptions');
-
-				  	  selectElement.addEventListener('change', function () {
-				  	    const selectedOptions = Array.from(this.selectedOptions).map(option => option.text);
-				  	    selectedOptionsDiv.textContent = 'Selected Options: ' + (selectedOptions.length > 0 ? selectedOptions.join(', ') : 'None');
-				  	  });
-				  	</script>
-
-
-
-					<!-- <div class="form-group mb-3">
-						<%= form_with(url: '/devtest/upload_resume', multipart: true) do |form| %>
-						  <%= form.label :resume, 'Upload Resume (PDF): ' %>
-						  <br/>
-						  <%= form.file_field :resume %>
-						<% end %>
-
-						<% if flash[:resume_text].present? %>
-						  <h2>Resume Text</h2>
-						  <pre><%= flash[:resume_text] %></pre>
-						<% end %>
-
-						<% if flash[:error].present? %>
-						  <p class="error"><%= flash[:error] %></p>
-						<% end %>
-				  	</div> -->
-
-
+						<%= form.label :uin, 'UIN<span class="text-danger">*</span>'.html_safe %>
+						<%= form.text_field :uin, class: 'form-control', placeholder: 'UIN', value: @uin, required: true, maxlength: 9 %>
+						<div class="invalid-feedback">
+							Please enter exactly 9 numbers.
+						</div>
+						</div>
+				  
+					<%= render 'shared/gender_selector' %>
+					<%= render 'shared/course_selector' %>
+					<%= render 'shared/work_auth_selector' %>
+					<%= render 'shared/contract_sign_selector' %>
+					<%= render 'shared/nationality_selector' %>
+					<%= render 'shared/ethnicity_selector' %>
+				  	
+				  	<label for="resume">Upload Resume:</label>
+      				<input type="file" id="resume" name="resume" accept=".pdf, .doc, .docx"><br><br>
+      				
+      				<input type="hidden" name="parsed_resume" id="redirectResume">
+      				
+      				<button type="button" id="parseButton" onclick="parseResume()"  class="btn btn-danger custom-maroon-button">Parse Resume</button>
 
 					<br/><hr/>
-					<h4>Project Preference</h4>
+					<h4>Project Preferences</h4>
+					<p>Please rank a minimum of <%= @min_number %> projects and a maximum of <%= @max_number %> projects. You can only have 1 project for each rank. Leave the field blank if you do not want the project at all.</p>
 					<br/>
 
-
-					<table class="table table-bordered">
-						<thead>
-							<tr>
-								<th>Project Title</th>
-								<th>Description</th>
-								<th>Rank</th>
-							</tr>
-						</thead>
-					<tbody>
-						<tr>
-							<td>
-								<select class="project-dropdown" name="project_1">
-								<option value="">-- Select a Project --</option>
-								<option value="Project1">Project 1</option>
-								<option value="Project2">Project 2</option>
-								<option value="Project3">Project 3</option>
-								<option value="Project4">Project 4</option>
-								<option value="Project5">Project 5</option>
-								<option value="Project6">Project 6</option>
-								<option value="Project7">Project 7</option>
-								<option value="Project8">Project 8</option>
-								<option value="Project9">Project 9</option>
-								<option value="Project10">Project 10</option>
-								<option value="Project11">Project 11</option>
-								<option value="Project12">Project 12</option>
-								<option value="Project13">Project 13</option>
-								</select>
-							</td>
-							<td>This is the description of Project 1.</td>
-							<td><input type="number" name="rank_project_1" min="1" max="10"></td>
-						</tr>
-						<tr>
-							<td>
-								<select class="project-dropdown" name="project_2">
-								<option value="">-- Select a Project --</option>
-								<option value="Project1">Project 1</option>
-								<option value="Project2">Project 2</option>
-								<option value="Project3">Project 3</option>
-								<option value="Project4">Project 4</option>
-								<option value="Project5">Project 5</option>
-								<option value="Project6">Project 6</option>
-								<option value="Project7">Project 7</option>
-								<option value="Project8">Project 8</option>
-								<option value="Project9">Project 9</option>
-								<option value="Project10">Project 10</option>
-								<option value="Project11">Project 11</option>
-								<option value="Project12">Project 12</option>
-								<option value="Project13">Project 13</option>
-								</select>
-							</td>
-							<td>This is the description of Project 2.</td>
-							<td><input type="number" name="rank_project_2" min="1" max="10"></td>
-						</tr>
-						<tr>
-							<td>
-								<select class="project-dropdown" name="project_3">
-								<option value="">-- Select a Project --</option>
-								<option value="Project1">Project 1</option>
-								<option value="Project2">Project 2</option>
-								<option value="Project3">Project 3</option>
-								<option value="Project4">Project 4</option>
-								<option value="Project5">Project 5</option>
-								<option value="Project6">Project 6</option>
-								<option value="Project7">Project 7</option>
-								<option value="Project8">Project 8</option>
-								<option value="Project9">Project 9</option>
-								<option value="Project10">Project 10</option>
-								<option value="Project11">Project 11</option>
-								<option value="Project12">Project 12</option>
-								<option value="Project13">Project 13</option>
-								</select>
-							</td>
-							<td>This is the description of Project 3.</td>
-							<td><input type="number" name="rank_project_3" min="1" max="10"></td>
-						</tr>
-						<tr>
-							<td>
-								<select class="project-dropdown" name="project_4">
-								<option value="">-- Select a Project --</option>
-								<option value="Project1">Project 1</option>
-								<option value="Project2">Project 2</option>
-								<option value="Project3">Project 3</option>
-								<option value="Project4">Project 4</option>
-								<option value="Project5">Project 5</option>
-								<option value="Project6">Project 6</option>
-								<option value="Project7">Project 7</option>
-								<option value="Project8">Project 8</option>
-								<option value="Project9">Project 9</option>
-								<option value="Project10">Project 10</option>
-								<option value="Project11">Project 11</option>
-								<option value="Project12">Project 12</option>
-								<option value="Project13">Project 13</option>
-								</select>
-							</td>
-							<td>This is the description of Project 4.</td>
-							<td><input type="number" name="rank_project_4" min="1" max="10"></td>
-						</tr>
-						<tr>
-							<td>
-								<select class="project-dropdown" name="project_5">
-								<option value="">-- Select a Project --</option>
-								<option value="Project1">Project 1</option>
-								<option value="Project2">Project 2</option>
-								<option value="Project3">Project 3</option>
-								<option value="Project4">Project 4</option>
-								<option value="Project5">Project 5</option>
-								<option value="Project6">Project 6</option>
-								<option value="Project7">Project 7</option>
-								<option value="Project8">Project 8</option>
-								<option value="Project9">Project 9</option>
-								<option value="Project10">Project 10</option>
-								<option value="Project11">Project 11</option>
-								<option value="Project12">Project 12</option>
-								<option value="Project13">Project 13</option>
-								</select>
-							</td>
-							<td>This is the description of Project 5.</td>
-							<td><input type="number" name="rank_project_5" min="1" max="10"></td>
-						</tr>
-						<tr>
-							<td>
-								<select class="project-dropdown" name="project_6">
-								<option value="">-- Select a Project --</option>
-								<option value="Project1">Project 1</option>
-								<option value="Project2">Project 2</option>
-								<option value="Project3">Project 3</option>
-								<option value="Project4">Project 4</option>
-								<option value="Project5">Project 5</option>
-								<option value="Project6">Project 6</option>
-								<option value="Project7">Project 7</option>
-								<option value="Project8">Project 8</option>
-								<option value="Project9">Project 9</option>
-								<option value="Project10">Project 10</option>
-								<option value="Project11">Project 11</option>
-								<option value="Project12">Project 12</option>
-								<option value="Project13">Project 13</option>
-								</select>
-							</td>
-							<td>This is the description of Project 6.</td>
-							<td><input type="number" name="rank_project_6" min="1" max="10"></td>
-						</tr>
-						<tr>
-							<td>
-								<select class="project-dropdown" name="project_7">
-								<option value="">-- Select a Project --</option>
-								<option value="Project1">Project 1</option>
-								<option value="Project2">Project 2</option>
-								<option value="Project3">Project 3</option>
-								<option value="Project4">Project 4</option>
-								<option value="Project5">Project 5</option>
-								<option value="Project6">Project 6</option>
-								<option value="Project7">Project 7</option>
-								<option value="Project8">Project 8</option>
-								<option value="Project9">Project 9</option>
-								<option value="Project10">Project 10</option>
-								<option value="Project11">Project 11</option>
-								<option value="Project12">Project 12</option>
-								<option value="Project13">Project 13</option>
-								</select>
-							</td>
-							<td>This is the description of Project 7.</td>
-							<td><input type="number" name="rank_project_7" min="1" max="10"></td>
-						</tr>
-						<tr>
-							<td>
-								<select class="project-dropdown" name="project_8">
-								<option value="">-- Select a Project --</option>
-								<option value="Project1">Project 1</option>
-								<option value="Project2">Project 2</option>
-								<option value="Project3">Project 3</option>
-								<option value="Project4">Project 4</option>
-								<option value="Project5">Project 5</option>
-								<option value="Project6">Project 6</option>
-								<option value="Project7">Project 7</option>
-								<option value="Project8">Project 8</option>
-								<option value="Project9">Project 9</option>
-								<option value="Project10">Project 10</option>
-								<option value="Project11">Project 11</option>
-								<option value="Project12">Project 12</option>
-								<option value="Project13">Project 13</option>
-								</select>
-							</td>
-							<td>This is the description of Project 8.</td>
-							<td><input type="number" name="rank_project_8" min="1" max="10"></td>
-						</tr>
-						<tr>
-							<td>
-								<select class="project-dropdown" name="project_9">
-								<option value="">-- Select a Project --</option>
-								<option value="Project1">Project 1</option>
-								<option value="Project2">Project 2</option>
-								<option value="Project3">Project 3</option>
-								<option value="Project4">Project 4</option>
-								<option value="Project5">Project 5</option>
-								<option value="Project6">Project 6</option>
-								<option value="Project7">Project 7</option>
-								<option value="Project8">Project 8</option>
-								<option value="Project9">Project 9</option>
-								<option value="Project10">Project 10</option>
-								<option value="Project11">Project 11</option>
-								<option value="Project12">Project 12</option>
-								<option value="Project13">Project 13</option>
-								</select>
-							</td>
-							<td>This is the description of Project 9.</td>
-							<td><input type="number" name="rank_project_9" min="1" max="10"></td>
-						</tr>
-						<tr>
-							<td>
-								<select class="project-dropdown" name="project_10">
-								<option value="">-- Select a Project --</option>
-								<option value="Project1">Project 1</option>
-								<option value="Project2">Project 2</option>
-								<option value="Project3">Project 3</option>
-								<option value="Project4">Project 4</option>
-								<option value="Project5">Project 5</option>
-								<option value="Project6">Project 6</option>
-								<option value="Project7">Project 7</option>
-								<option value="Project8">Project 8</option>
-								<option value="Project9">Project 9</option>
-								<option value="Project10">Project 10</option>
-								<option value="Project11">Project 11</option>
-								<option value="Project12">Project 12</option>
-								<option value="Project13">Project 13</option>
-								</select>
-							</td>
-							<td>This is the description of Project 10.</td>
-							<td><input type="number" name="rank_project_10" min="1" max="10"></td>
-						</tr>
-					</tbody>
-					</table>
-
-
-					<script>
-					    // JavaScript to disable selected options in project dropdowns
-					    const projectDropdowns = document.querySelectorAll('.project-dropdown');
-
-					    projectDropdowns.forEach((dropdown, index) => {
-					        dropdown.addEventListener('change', (event) => {
-					            const selectedValue = event.target.value;
-					            projectDropdowns.forEach((otherDropdown, otherIndex) => {
-					                if (otherIndex !== index) {
-					                    const optionToDisable = otherDropdown.querySelector(`option[value="${selectedValue}"]`);
-					                    if (optionToDisable) {
-					                        optionToDisable.disabled = true;
-					                    }
-					                }
-					            });
-					        });
-					    });
-					</script>
-
-
-
-
-
-
-					<p>Please indicate your interest in selected student-proposed projects, with a more detailed description accessible via the link below.</p>
-
-
-					<div class="form-group mb-3">
-						<input type="checkbox" name="cbox" id="cbox" onchange="onCbChange('cbox')"> I have read and agree to the terms and conditions.</input>
-					</div>	
+					<%= render 'shared/project_ranking_table'%>
 					
+					<br>
+					<hr>
 
-						<div class="text-center mt-4">
-							<button type="submit" class="btn btn-danger custom-maroon-button">Submit</button>
-						</div>
-				</form>
+					<div class="form-check">
+						<input class="form-check-input" type="checkbox" value="" id="invalidCheck2" required>
+						<label class="form-check-label" for="invalidCheck2">
+							By checking this box, you are agreeing to having your information stored and used by CSCE capstone professors to help match you with a capstone project.
+						</label>
+					</div>
+
+					<div class="text-center mt-4">
+						<%= form.button 'Submit', class: 'btn btn-danger custom-maroon-button' %>
+				  	</div>				  
+				<% end %>
 				<hr>
 			</div>
 		</div>

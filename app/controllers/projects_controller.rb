@@ -1,12 +1,13 @@
 class ProjectsController < ApplicationController
   # ToDo Check with team
+  before_action :authorize_admin_or_prof, unless: -> { Rails.env.development? || Rails.env.test? }
   protect_from_forgery except: :destroy
   def index
-    @semesters = Project.pluck(:Semester).uniq
+    @semesters = Project.pluck(:semester).uniq
     @selected_semester = params[:semester]
 
     @projects = if @selected_semester.present?
-      Project.where(Semester: @selected_semester)
+      Project.where(semester: @selected_semester)
     else
       Project.all
     end
@@ -15,6 +16,13 @@ class ProjectsController < ApplicationController
   def new
     @semesters = generate_semesters
     @project = Project.new
+    @restrictions = {}
+
+    @restrictions['gender'] = STUDENT_STATUS_CONSTANTS['gender']
+    @restrictions['work_auth'] = STUDENT_STATUS_CONSTANTS['work_auth']
+    @restrictions['contract_sign'] = STUDENT_STATUS_CONSTANTS['contract_sign']
+    @restrictions['nationality'] = STUDENT_STATUS_CONSTANTS['nationality']
+
     2.times {@project.sponsor_preferences.build}
     2.times {@project.sponsor_restrictions.build}
   end

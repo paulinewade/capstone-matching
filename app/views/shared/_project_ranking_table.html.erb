@@ -1,0 +1,50 @@
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Sponsor</th>
+      <th>Info URL</th>
+      <th>Project Ranking</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @projects.each do |project| %>
+      <tr>
+        <td><%= project.name %></td>
+        <td><%= project.description %></td>
+        <td><%= project.sponsor %></td>
+        <td>
+          <% if project.info_url.present? %>
+            <a href="<%= project.info_url %>" class="btn btn-primary" target="_blank">
+              <i class="fas fa-external-link-alt"></i> Info Link
+            </a>
+          <% end %>
+        </td>
+        <td>
+            <input type="number" class="form-control rank-input" data-project-id="<%= project.id %>" min="1" max="<%= @projects.size %>" name="project_rank[<%= project.id %>]" value="<%= @project_ranks[project.id] || '' %>">
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<script>
+  $(document).ready(function() {
+    // Event listener for the change event on the rank dropdown
+    $('.rank-dropdown').change(function() {
+      // Get the selected rank and project ID
+      var selectedRank = $(this).val();
+      var projectId = $(this).data('project-id');
+
+      // Reset other dropdowns with the same selected rank
+      $('.rank-dropdown').not(this).find('option[value="' + selectedRank + '"]').prop('disabled', false);
+
+      // Disable the selected rank in other dropdowns
+      $('.rank-dropdown').not(this).find('option[value="' + selectedRank + '"]').prop('disabled', true);
+
+      // Update the project's rank (you might need an AJAX call to update the server)
+      console.log("Project ID: " + projectId + ", Selected Rank: " + selectedRank);
+    });
+  });
+</script>

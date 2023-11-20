@@ -1,0 +1,8 @@
+<div class="form-group mb-3">
+  <label name="gender_label">Gender<span class="text-danger">*</span></label>
+  <br/>
+  <% @genders.each do |gender_val| %>
+    <% checked_attribute = 'checked' if gender_val == @gender %>
+    <input type="radio" name="gender" value="<%= gender_val %>" <%= checked_attribute %>> <%= gender_val %>
+  <% end %>
+</div>

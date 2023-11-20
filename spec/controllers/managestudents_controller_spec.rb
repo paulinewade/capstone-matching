@@ -5,13 +5,16 @@ require 'rails_helper'
 RSpec.describe ManagestudentsController, type: :controller do
   describe '#index' do
     it 'assigns students and courses' do
-      allow(User).to receive_message_chain(:includes, :where, :not).and_return([])
-      allow(Course).to receive(:all).and_return([])
-
+      course1 = Course.create(course_number: 123, section: 456, semester: 'Fall 2023')
+      student_user1 = User.create(email: 'studentemail@tamu.edu', first_name: 'ex', last_name: 'ex', role: 'student')
+      student1 = Student.create( student_id: student_user1.user_id ,course_id: course1.course_id, gender: 'Male', nationality: 'American', work_auth: 'Citizen', contract_sign: 'all', uin: 12)
+      ethnicity1 = Ethnicity.create(ethnicity_name: 'Example')
+      ethnicity_values = EthnicityValue.create(student_id: student1.student_id, ethnicity_name: 'Example')
       get :index
 
-      expect(assigns(:students)).to eq([])
-      expect(assigns(:courses)).to eq([])
+      expect(assigns(:students)).to eq([student_user1])
+      expect(assigns(:courses)).to eq([course1])
+      expect(assigns(:ethnicity_names_by_student)).to eq({ student1.student_id => [ethnicity1.ethnicity_name] })
       expect(response).to render_template(:index)
     end
   end
@@ -40,18 +43,27 @@ RSpec.describe ManagestudentsController, type: :controller do
   end
 
   describe '#filter_students' do
+    before do
+      @course1 = Course.create(course_number: 123, section: 456, semester: 'Fall 2023')
+      @course2 = Course.create(course_number: 123, section: 456, semester: 'Fall 2024')
+      @student_user1 = User.create(email: 'studentemail@tamu.edu', first_name: 'ex', last_name: 'ex', role: 'student')
+      @student_user2 = User.create(email: 'studentemail2@tamu.edu', first_name: 'ex', last_name: 'ex', role: 'student')
+      @student1 = Student.create( student_id: @student_user1.user_id ,course_id: @course1.course_id, gender: 'Male', nationality: 'American', work_auth: 'Citizen', contract_sign: 'all', uin: 12)
+      @student2 = Student.create( student_id: @student_user2.user_id , course_id: @course2.course_id, gender: 'Male', nationality: 'American', work_auth: 'Citizen', contract_sign: 'all', uin: 123)
+    end
     it 'filters students and sets flash success' do
-      course1 = Course.create(course_number: 123, section: 456, semester: 'Fall 2023')
-      course2 = Course.create(course_number: 123, section: 456, semester: 'Fall 2024')
-      student_user1 = User.create(email: 'studentemail@tamu.edu', first_name: 'ex', last_name: 'ex', role: 'student')
-      student_user2 = User.create(email: 'studentemail2@tamu.edu', first_name: 'ex', last_name: 'ex', role: 'student')
-      student1 = Student.create( student_id: student_user1.user_id ,course_id: course1.course_id, gender: 'Male', nationality: 'American', work_auth: 'Citizen', contract_sign: 'all', uin: 12)
-      student2 = Student.create( student_id: student_user2.user_id , course_id: course2.course_id, gender: 'Male', nationality: 'American', work_auth: 'Citizen', contract_sign: 'all', uin: 123)
-
-      post :filter_students, params: { course_details: course1.course_id }
+      post :filter_students, params: { course_id: @course1.course_id }
 
       expect(assigns(:students).count).to eq(1)
-      expect(assigns(:courses)).to eq([course1, course2])
+      expect(assigns(:courses)).to eq([@course1, @course2])
+      expect(flash[:success]).to eq("Filtered Successfully")
+      expect(response).to render_template(:index)
+    end
+
+    it 'shows all students when no course is selected' do
+      post :filter_students, params: {course_id: nil}
+
+      expect(assigns(:students).count).to eq(2)
       expect(flash[:success]).to eq("Filtered Successfully")
       expect(response).to render_template(:index)
     end

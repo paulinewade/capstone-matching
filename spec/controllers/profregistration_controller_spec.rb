@@ -39,7 +39,6 @@ RSpec.describe ProfregistrationController, type: :controller do
 
     context 'with invalid parameters' do
       it 'does not create a new professor registration' do
-        # Modify params to make it invalid, for example, by using an invalid email
         invalid_params =  {email: 'professor123@gmail.com', first_name: 'John', last_name: 'Doe', course_ids: []}
 
         post :create, params: { **invalid_params }
@@ -47,6 +46,18 @@ RSpec.describe ProfregistrationController, type: :controller do
         expect(response).to render_template(:index)
         expect(flash[:error]).to be_present
         expect(User.find_by(email: invalid_params[:email])).to be_nil
+      end
+    end
+
+    context 'existing professor exists' do
+      it 'flashes an error warning them that they are already registered' do
+        User.create(email: 'existing_email@tamu.edu', first_name: 'J', last_name: 'D', role: 'professor')
+        existing_params = {email: 'existing_email@tamu.edu', first_name: 'J', last_name: 'D', course_ids: []}
+
+        post :create, params: { **existing_params }
+
+        expect(response).to render_template(:index)
+        expect(flash[:error]).to be_present
       end
     end
   end

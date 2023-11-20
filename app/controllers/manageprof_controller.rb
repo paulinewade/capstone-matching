@@ -1,18 +1,11 @@
 class ManageprofController < ApplicationController
+    before_action :authorize_admin, unless: -> { Rails.env.development? || Rails.env.test? }
     def index
       @professors = User.includes(:professor => :courses).where.not(professors: { professor_id: nil })
-      user_id = session[:user_id]
-      
-      if user_id
-        user = User.find_by(user_id: user_id)
-        puts(user.first_name)
-      else
-        puts("not logged in")
-      end
     end
     
     def save_change
-        if params[:admin_approved] || params[:admin]
+        if params[:verified] || params[:admin]
             update_values
         end
 

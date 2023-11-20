@@ -17,7 +17,7 @@ RSpec.describe ManageprofController, type: :controller do
     context 'when admin approval or admin parameter is present' do
       it 'calls update_values method' do
         allow(subject).to receive(:update_values)
-        post :save_change, params: { admin_approved: true }
+        post :save_change, params: { verified: true }
         expect(subject).to have_received(:update_values)
       end
     end
@@ -77,8 +77,8 @@ RSpec.describe ManageprofController, type: :controller do
 
     context 'with verified parameters' do
       it 'updates professor verification status' do
-        user = User.create(email: 'test@example.com', first_name: 'John', last_name: 'Doe', role: 'professor')
-        professor = Professor.create(professor_id: user.user_id, verified: true, admin: true)
+        user = User.create(email: 'test2@example.com', first_name: 'John', last_name: 'Doe', role: 'admin')
+        professor = Professor.create(professor_id: user.user_id, verified: false, admin: true)
         post :save_change, params: { verified: {user.email => 'Yes'} }
         professor.reload
         expect(professor.verified).to be true
@@ -87,12 +87,12 @@ RSpec.describe ManageprofController, type: :controller do
   
     context 'with admin parameters' do
       it 'updates professor and user roles' do
-        user = User.create(email: 'test@example.com', first_name: 'John', last_name: 'Doe', role: 'admin')
-        professor = Professor.create(professor_id: user.user_id, verified: true, admin: true)
-        user.reload
+        user1 = User.create(email: 'test3@example.com', first_name: 'John', last_name: 'Doe', role: 'professor')
+        professor = Professor.create(professor_id: user1.user_id, verified: true, admin: false)
+        post :save_change, params: { admin: {user1.email => 'Yes'} }
+        user1.reload
         professor.reload
-        post :save_change, params: { admin: {user.email => 'Yes'} }
-        expect(user.role).to eq('admin')
+        expect(user1.role).to eq('admin')
         expect(professor.admin).to be true
       end
     end
