@@ -3,6 +3,7 @@ class ManagestudentsController < ApplicationController
       @students = User.includes(:student).where.not(students: { student_id: nil })
       @courses = Course.all
       @ethnicity_names_by_student = {}
+      @cid = nil
   
       @students.each do |user|
         ethnicity_names = user.student.ethnicity_values.pluck(:ethnicity_name)
@@ -61,6 +62,7 @@ class ManagestudentsController < ApplicationController
     end
   
     @courses = Course.all # Fetch all courses for populating the dropdown
+    @cid = course_id
     flash[:success] = "Filtered Successfully"
     render :index
   end
