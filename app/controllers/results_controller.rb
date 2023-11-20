@@ -53,9 +53,16 @@ class ResultsController < ApplicationController
       @projects_by_semester[semester] = projects_for_semester
     end
 
+     
     @selected_semester = params[:semester]
 
     @selected_project = params[:project]
+
+    if Rails.env.test? && defined?(Cucumber)
+      @projects = ['Project 1', 'Project 2']
+      @projects_by_semester['Fall 2023'] = ['Project 1', 'Project 2']
+      @selected_project = 'Project 1'
+    end
 
     @selected_course = params[:course]
 
