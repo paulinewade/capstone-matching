@@ -167,7 +167,7 @@ class StudentformController < ApplicationController
       time_range = (@form_close - @form_open).to_f
       time_elapsed = DateTime.now.to_f - @form_open.to_f
       time_score = 1 - time_elapsed/time_range
-      rounded_time_score = time_score.round(2) * 100
+      rounded_time_score = (time_score * 100).round(2)
       pref_decrease = 1.0/@max_number.to_f
 
       non_blank_ranks.each do |project_id, pref|

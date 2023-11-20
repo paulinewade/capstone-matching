@@ -44,10 +44,22 @@ class ResultsController < ApplicationController
   def index
     @semesters = Project.pluck(:semester).uniq
     @projects = Project.pluck(:name)
+    @courses = Course.all
+
+    @projects_by_semester = {}
+
+    @semesters.each do |semester|
+      projects_for_semester = Project.where(semester: semester).pluck(:name)
+      @projects_by_semester[semester] = projects_for_semester
+    end
+
+    puts(@projects_by_semester)
 
     @selected_semester = params[:semester]
 
     @selected_project = params[:project]
+
+    @selected_course = params[:course]
 
     scores = []
     project = nil
@@ -60,13 +72,14 @@ class ResultsController < ApplicationController
       end
     end
 
-    @results = get_results(scores, project)
+    @results = get_results(scores, project, @selected_course)
     @results.sort_by!{|item| -item['total_score']}
   end
 
   def export
     semester = params[:semester]
     project_name = params[:project]
+    course_id = params[:course]
 
     scores = []
     project = nil
@@ -79,8 +92,8 @@ class ResultsController < ApplicationController
         flash[:error] = "Project and Semester Doesn't Match"
       end
     end
-    
-    results = get_results scores, project
+
+    results = get_results(scores, project, course_id)
     results.sort_by!{|item| -item['total_score']}
 
     respond_to do |format|
@@ -91,11 +104,18 @@ class ResultsController < ApplicationController
 
   private
 
-  def get_results(scores, project)
+  def get_results(scores, project, course_id)
+
     results = []
     scores.each do |scoreEntity|
+      
       student = scoreEntity.student
-
+      if course_id.present?
+        if student.course.course_id != course_id.to_i
+          next
+        end
+      end
+          
       result = {}
       result['student'] = student.user
       scores_values = ScoresValue.where(:scores_id => scoreEntity.scores_id)
@@ -119,7 +139,6 @@ class ResultsController < ApplicationController
 
       results.append(result)
     end
-
     results
   end
 
