@@ -46,10 +46,11 @@ class DatabaseDumpController < ApplicationController
     end
     
     def generate_postgresql_dump
-        db_config = Rails.application.config.database_configuration[Rails.env]
-        username = db_config['username']
-        database = db_config['database']
-        `pg_dump -U #{username} -d #{database}`
+        dump_filename = "database_dump_#{Time.now.strftime('%Y-%m-%d_%H-%M-%S')}.sql"
+        system("heroku run 'pg_dump $DATABASE_URL' > #{dump_filename}")
+        File.read(dump_filename)
+    ensure
+        File.delete(dump_filename) if File.exist?(dump_filename)
     end
     
     def send_database_dump(content)
