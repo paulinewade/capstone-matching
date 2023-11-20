@@ -24,8 +24,8 @@ Feature: Student Form
       | Project 2      | Description for Project 2| Sponsor 2  | Fall 2023   |
     
     Given a student exists with this information:
-    | email                | first_name | last_name | role   | course_id | gender | nationality | contract_sign | work_auth | ethnicity |
-    | student@tamu.edu    | John       | Doe       | student| 1         | Male   | American     | NDA Only       | US Citizen| White     |
+    | email                | first_name | last_name | role   | course_id | gender | nationality | contract_sign | work_auth | ethnicity | uin |
+    | student@tamu.edu    | John       | Doe       | student| 1         | Male   | American     | NDA Only       | US Citizen| White     | 123456789 |
 
   Scenario: Successful Registration
     Given I am on the student registration page
