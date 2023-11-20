@@ -193,6 +193,13 @@ class StudentformController < ApplicationController
       time_score = 1 - time_elapsed/time_range
       rounded_time_score = (time_score * 100).round(2)
       pref_decrease = 1.0/@max_number.to_f
+      
+      # collect project_ids for selected projects
+      project_ids = []
+      
+      non_blank_ranks.each do |project_id, pref|
+        project_ids.push(project_id.to_i)
+      end
 
       non_blank_ranks.each do |project_id, pref|
         entity = ScoresEntity.create(student_id: student_id, project_id: project_id, pref: pref)
@@ -203,8 +210,7 @@ class StudentformController < ApplicationController
         
         #caluclate resume score (call helper method to compare student resume to project description here)
         # classify resume
-        # need to change to upload_resume(project_description, parsed_resume)
-        similarity_score = upload_resume(parsed_resume, project_id)
+        similarity_score = upload_resume(project_ids, parsed_resume, project_id)
         # flash[:most_similar_job_description] = @most_similar_job_description
         # flash[:similarity_score] = @similarity_score
         resume_score = (similarity_score * 100).round(2)
@@ -220,25 +226,32 @@ class StudentformController < ApplicationController
       flash[:error] = "Failed to save student information."
     end
 
-    redirect_to studentform_path
+    redirect_to studentform_path(dev_mode: true)
   end
 
-  def upload_resume(resume_, project_id_)
+  def upload_resume(project_ids, resume_, project_id_)
     resume = resume_.to_s
+    puts "resume: " + resume 
     project_id = project_id_.to_i
+    puts "project_id: " + project_id.to_s
+    
+    puts "project_ids: " + project_ids.to_s
 
     
-    @project_data = Project.where(project_id: project_id_).pluck(:project_id, :description)
-    @project_ids = @project_data.map { |project_id, description| project_id }
-    @descriptions = @project_data.map { |project_id, description| description }
-    puts "course descriptions: " + @descriptions.join(separator = ",")
+    @selected_projects = Project.where(project_id: project_ids).pluck(:project_id, :description)
+    # @selected_projects = Project.where(project_id: project_ids)
+    puts "selected_projects: " + @selected_projects.to_s
+
+    @selected_project_ids = @selected_projects.map { |project_id, description| project_id }
+    @selected_descriptions = @selected_projects.map { |project_id, description| description }
+    puts "course descriptions: " + @selected_descriptions.join(separator = ",")
     @resume_text = resume
 
-    similarity_scores = classify(@resume_text, @descriptions) # same length as project_ids and descriptions
+    similarity_scores = classify(@resume_text, @selected_descriptions) # same length as project_ids and descriptions
     puts "similarity_scores: " + similarity_scores.join(separator = ",")
 
     
-    index_of_project_id = @project_ids.index(project_id) # get the index of the project_id that we are getting the match score for
+    index_of_project_id = @selected_project_ids.index(project_id) # get the index of the project_id that we are getting the match score for
     
     match_score = similarity_scores[index_of_project_id]
     
