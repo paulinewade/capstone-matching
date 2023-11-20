@@ -20,12 +20,9 @@ class DevTestController < ApplicationController
     
     course_id = params[:course_id].to_i
     # course_id = 101
-    puts "course_id: " + course_id.to_s
     resume = params[:resume].to_s
-    puts "resume: " + resume 
     
     @descriptions = Project.where(course_id: course_id).pluck(:description)
-    puts "course description: " + @descriptions.join(separator = ",")
     @resume_text = resume
 
     # You can print the extracted text or use it for further processing
@@ -99,7 +96,6 @@ class DevTestController < ApplicationController
     corpus = []
     
     if descriptions.nil? || descriptions.empty?
-      puts 'no job descriptions detected for course_id'
       return ['no job descriptions detected for course_id', 0]
     else
       job_descriptions = descriptions
@@ -139,10 +135,8 @@ class DevTestController < ApplicationController
     
     # Check if the best match is above the threshold
     if similarity_scores[best_match_index] > threshold
-      puts "The resume is a match for the job description: #{job_descriptions[best_match_index]}"
       return[ job_descriptions[best_match_index], similarity_scores[best_match_index] ]
     else
-      puts "No suitable job description found for the resume."
       return ["No suitable job description found for the resume.", similarity_scores[best_match_index]]
     end
     return "done"

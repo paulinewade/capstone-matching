@@ -23,7 +23,6 @@ Given('the following scores entities exist:') do |table|
   end
   
   Then('I should see the students that match with the project') do
-    puts page.text
     expect(page).to have_content('John Doe')
     expect(page).to have_content('John2 Doe2')
   end

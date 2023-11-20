@@ -214,7 +214,6 @@ class StudentformController < ApplicationController
         # flash[:most_similar_job_description] = @most_similar_job_description
         # flash[:similarity_score] = @similarity_score
         resume_score = (similarity_score * 100).round(2)
-        puts "RESUME SCORE RESUME SCORE RESUME SCORE = " + resume_score.to_s
 
         #add each score to DB under the scores_entity that it belongs to (student project pairing) THIS ADDS NEW SCORES. WHAT IF WE NEED TO REPLACE SCORES
         ScoresValue.create(scores_id: scores_id, attribute_id: time_stamp_attribute_id, feature_score: rounded_time_score)
@@ -231,33 +230,22 @@ class StudentformController < ApplicationController
 
   def upload_resume(project_ids, resume_, project_id_)
     resume = resume_.to_s
-    puts "resume: " + resume 
     project_id = project_id_.to_i
-    puts "project_id: " + project_id.to_s
-    
-    puts "project_ids: " + project_ids.to_s
-
     
     @selected_projects = Project.where(project_id: project_ids).pluck(:project_id, :description)
     # @selected_projects = Project.where(project_id: project_ids)
-    puts "selected_projects: " + @selected_projects.to_s
 
     @selected_project_ids = @selected_projects.map { |project_id, description| project_id }
     @selected_descriptions = @selected_projects.map { |project_id, description| description }
-    puts "course descriptions: " + @selected_descriptions.join(separator = ",")
     @resume_text = resume
 
     similarity_scores = classify(@resume_text, @selected_descriptions) # same length as project_ids and descriptions
-    puts "similarity_scores: " + similarity_scores.join(separator = ",")
 
     
     index_of_project_id = @selected_project_ids.index(project_id) # get the index of the project_id that we are getting the match score for
     
     match_score = similarity_scores[index_of_project_id]
-    
-    puts "match_score: " + match_score.to_s
 
-    
     return match_score
   end
   
@@ -288,7 +276,6 @@ class StudentformController < ApplicationController
     corpus = []
     
     if descriptions.nil? || descriptions.empty?
-      puts 'no job descriptions detected for course_id'
       return ['no job descriptions detected for course_id', 0]
     else
       job_descriptions = descriptions
