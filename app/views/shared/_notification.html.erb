@@ -1,6 +1,6 @@
 <!-- app/views/shared/_notification.html.erb -->
 <% if flash[:notice].present?%>
-<div id="notification" class="alert alert-success fixed-top w-50 mx-auto" >
+<div id="notification" class="alert alert-success fixed-top w-50 mx-auto text-center" style="width: 50%;">
   <%= flash[:notice] %>
   <%= a = flash.clear; a = '' %>
 </div>
@@ -14,7 +14,7 @@
 <% end %>
 
 <% if flash[:error].present?%>
-  <div id="notification_error" class="alert alert-danger fixed-top w-50 mx-auto" >
+  <div id="notification_error" class="alert alert-danger fixed-top w-50 mx-auto text-center" style="width: 50%;">
     <%= flash[:error] %>
     <%= a = flash.clear; a = '' %>
   </div>
@@ -28,7 +28,7 @@
 <% end %>
 
 <% if flash[:success].present?%>
-<div id="notification" class="alert alert-success fixed-top w-50 mx-auto" >
+<div id="notification" class="alert alert-success fixed-top w-50 mx-auto text-center" style="width: 50%;">
   <%= flash[:success] %>
   <%= a = flash.clear; a = '' %>
 </div>
