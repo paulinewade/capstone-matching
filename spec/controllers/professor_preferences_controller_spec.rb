@@ -43,7 +43,7 @@ RSpec.describe ProfessorPreferencesController, type: :controller do
     it 'updates project preferences for the professor' do
         #   post :save_rankings, params: { id: professor.id, preferences: { project1.project_id => 1, project2.project_id => 2 } }
         session[:user_id] = user.user_id
-        post :save_rankings, params: { preferences: { project1.project_id => 1, project2.project_id => 2 } }
+        post :save_rankings, params: { project_rank: { project1.project_id => 1, project2.project_id => 2 } }
 
         expect(ProfessorPreference.find_by(professor: professor, project: project1).pref).to eq(1)
         expect(ProfessorPreference.find_by(professor: professor, project: project2).pref).to eq(2)
@@ -51,14 +51,14 @@ RSpec.describe ProfessorPreferencesController, type: :controller do
 
     it 'redirects to profLanding when form is submitted' do
         session[:user_id] = user.user_id
-        post :save_rankings, params: { preferences: { project1.project_id => 1, project2.project_id => 2 } }
+        post :save_rankings, params: { project_rank: { project1.project_id => 1, project2.project_id => 2 } }
         expect(response).to redirect_to profLanding_path
     end
 
-    it 'shows a flash notice when form is submitted' do
+    it 'shows a flash success when form is submitted' do
         session[:user_id] = user.user_id
-        post :save_rankings, params: { preferences: { project1.project_id => 1, project2.project_id => 2 } }
-        expect(flash[:notice]).to eq('Project preferences saved successfully.')
+        post :save_rankings, params: { project_rank: { project1.project_id => 1, project2.project_id => 2 } }
+        expect(flash[:success]).to eq('Project Preferences saved successfully!')
     end
   end
 end
