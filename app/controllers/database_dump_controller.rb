@@ -1,6 +1,10 @@
 class DatabaseDumpController < ApplicationController
     def dump_database
-        db_adapter = current_db_adapter
+        if Rails.env.production?
+           db_adapter = ActiveRecord::Base.connection_db_config.configuration_hash[:adapter]
+        else
+            db_adapter = current_db_adapter
+        end
 
         begin
             case db_adapter
