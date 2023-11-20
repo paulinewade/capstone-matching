@@ -135,7 +135,7 @@ class ResultsController < ApplicationController
         total_score = 0
       end
 
-      result['total_score'] = total_score
+      result['total_score'] = total_score.round(2)
 
       results.append(result)
     end

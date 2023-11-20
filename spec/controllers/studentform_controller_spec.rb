@@ -63,6 +63,7 @@ RSpec.describe StudentformController, type: :controller do
             contract_sign: 'all',
             nationality: 'American',
             ethnicity: ['Asian'],
+            resume: "Example resume",
             project_rank: { project.project_id => '1' } # Adjust based on your project structure
           }
         end.to change(Student, :count).by(1)
