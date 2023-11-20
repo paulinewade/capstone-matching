@@ -28,8 +28,11 @@
 2. walk through cloud-init.sh
 3. bash start-script.sh
 
-# Deployment instructions (HEROKU)
+## Deployment instructions (HEROKU)
 https://github.com/Capstone-Matching/capstone-matching/blob/main/documentation/Fall2023/deploy_instructions.pdf
+
+## Figma
+https://www.figma.com/file/EpeNjNgHs6UihGPy9S9gx8/csce606db?type=whiteboard&node-id=0-1
 
 ## Cloud Architecture
 ![Alt text](.cloud/capstone-matching-cloud.png)
