@@ -1,0 +1,93 @@
+<body>
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+<div class="container">
+  <div class="d-flex justify-content-between align-items-center">
+    <%= link_to "Back", adminlanding_path, class: "btn btn-danger custom-maroon-button m-3", id: "back-button" %>
+    <button class="btn btn-danger custom-maroon-button m-3" id="dark-mode-toggle">Toggle Dark Mode</button>
+  </div>
+  <%= render 'shared/notification' %>
+</div>
+<div class="row justify-content-center">
+  <div class="col-md-8">
+    <div class="card">
+      <div class="card-header">
+        <div class="row">
+          <div class="col">
+            Filter by Semester & Project
+          </div>
+        </div>
+      </div>
+
+      <div class="card-body">
+        <%= form_tag(results_path, method: :get, class: 'form-inline') do %>
+            <div class="form-group mb-2 mr-2 ">
+              <%= select_tag :semester, options_for_select(@semesters, @selected_semester), include_blank: "Semester", class: 'form-control', id: 'Semester' %>
+            </div>
+            <div class="form-group mb-2 mr-2 ">
+              <%= select_tag :project, options_for_select(@projects, @selected_project), include_blank: "Project", class: 'form-control', id: 'Project' %>
+            </div>
+
+              <%= submit_tag "Filter", class: 'btn btn-primary mb-2 mr-2' %>
+              <% if @selected_project.present? and @selected_semester.present? %>
+              <%= link_to "Download CSV", results_export_path(semester: @selected_semester, project: @selected_project), class: 'btn btn-secondary custom-maroon-button mb-2' %>
+              <% end %>
+          <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row justify-content-center mt-5">
+    <div class="col-12">
+      <table class="table table-bordered">
+        <thead class="thead-light">
+        <tr>
+          <th scope="col" class = "justify-content-center text-center">#</th>
+          <th scope="col" class = "justify-content-center text-center">Student Name</th>
+          <th scope="col" class = "justify-content-center text-center">Preferences</th>
+          <th scope="col" class = "justify-content-center text-center">Restrictions</th>
+          <th scope="col" class = "justify-content-center text-center">Feature Name and Score</th>
+          <th scope="col" class = "justify-content-center text-center">Total Score</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% @results.each_with_index do |result, index| %>
+          <tr>
+            <th scope="row"><%= index + 1 %></th>
+            <td class="text-center"><%= result['student'].first_name + ' ' + result['student'].last_name %></td>
+
+            <td>
+              <ul >
+                <% result['preference_list'].each do |item| %>
+                  <li><%= "#{item.preference_val}: #{item.bonus_amount}" %></li>
+                <% end %>
+              </ul>
+            </td>
+            <td >
+              <ul >
+                <% result['restriction_list'].each do |item| %>
+                  <li><%= item %></li>
+                <% end %>
+              </ul>
+            </td>
+            <td>
+              <ul >
+                <% result['split_scores'].each do |score| %>
+                  <li><%= "#{score['feature_name']}: #{score['feature_score']}" %></li>
+                <% end %>
+              </ul>
+            </td>
+            <td class="text-center"><%= result['total_score'] %></td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+</div>
+
+</body>
