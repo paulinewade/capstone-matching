@@ -24,7 +24,6 @@ class SessionsController < ApplicationController
       end
     
       if user.valid?
-        flash[:success] = "Logged in sucessfully."
         session[:user_id] = user.user_id
       else
         flash[:error] = "User creation failed: #{user.errors.full_messages.join(', ')}"
@@ -35,10 +34,27 @@ class SessionsController < ApplicationController
 
       
       if user.role == 'student'
+        flash[:success] = "Logged in sucessfully."
         redirect_to studentform_path
       elsif user.role == 'professor'
-        redirect_to profLanding_path
+        professor = Professor.where(professor_id: user.user_id)
+        if professor.exists?
+          professor = professor.first
+          if professor.verified == false
+            flash[:error] = "Please wait for admin to approve you before logging in."
+            session[:user_id] = nil
+            redirect_to root_path
+          else
+            flash[:success] = "Logged in sucessfully."
+            redirect_to profLanding_path
+          end
+        else
+         session[:user_id] = nil
+          flash[:error] = "Have role: professor, but not found in Professor table, contact admin."
+          redirect_to root_path
+        end
       elsif user.role == 'admin'
+        flash[:success] = "Logged in sucessfully."
         redirect_to adminlanding_path
       else
         session[:user_id] = nil

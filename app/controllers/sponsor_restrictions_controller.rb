@@ -1,7 +1,7 @@
 
 class SponsorRestrictionsController < ApplicationController
   before_action :set_project
-  before_action :authorize_admin
+  before_action :authorize_admin_or_prof
 
   def create
     @sponsor_restriction = @project.sponsor_restrictions.build(sponsor_restriction_params)
@@ -61,22 +61,5 @@ class SponsorRestrictionsController < ApplicationController
 
     @restrictions
   end
-
-  private
-      def authorize_admin
-          curr_user_id = session[:user_id]
-          # print "[DEBUG] curr_user_id: #{curr_user_id}"
-          if curr_user_id
-              curr_user_role = User.find_by(user_id: curr_user_id).role
-              # print "[DEBUG] curr_user_role: #{curr_user_role}"
-              if curr_user_role != "admin"
-                  flash[:error] = 'Access Denied'
-                  redirect_to root_path
-              end
-          else
-              flash[:error] = 'Access Denied'
-              redirect_to root_path
-          end
-      end
 end
 

@@ -7,6 +7,28 @@
 #   Character.create(name: "Luke", movie: movies.first)
 # db/seeds.rb
 # Seed data for the "scores_attributes" table
+profwade = User.create(email: 'paulinewade@tamu.edu', first_name: 'Pauline', last_name: 'Wade', role: 'admin')
+adminwade = Professor.create(professor_id: profwade.user_id, verified: true, admin: true)
+
+hunter = User.create(email: 'hunterzacha@tamu.edu', first_name: 'Hunter', last_name: 'Zacha', role: 'admin')
+adminhunter = Professor.create(professor_id: hunter.user_id, verified: true, admin: true)
+
+aakash = User.create(email: 'asil@tamu.edu', first_name: 'Aakashdeep', last_name: 'Sil', role: 'admin')
+adminaakash = Professor.create(professor_id: aakash.user_id, verified: true, admin: true)
+
+yash = User.create(email: 'yapatil@tamu.edu', first_name: 'Yash', last_name: 'Patil', role: 'admin')
+adminyash = Professor.create(professor_id: yash.user_id, verified: true, admin: true)
+
+shripad = User.create(email: 'shripad@tamu.edu', first_name: 'Shripad', last_name: 'Kulkarni', role: 'admin')
+adminshripad = Professor.create(professor_id: shripad.user_id, verified: true, admin: true)
+
+zach = User.create(email: 'zacharylaguna@tamu.edu', first_name: 'Zachary', last_name: 'Laguna', role: 'admin' )
+adminzach = Professor.create(professor_id: zach.user_id, verified: true, admin: true)
+
+sathvik = User.create(email: 'sathvikkote@tamu.edu', first_name: 'Sathvik', last_name: 'Kote', role: 'admin')
+adminsathvik = Professor.create(professor_id: sathvik.user_id, verified: true, admin: true)
+
+
 form_open_datetime = DateTime.new(2023, 11, 6, 9, 0) # Example date and time
 form_close_datetime = DateTime.new(2023, 12, 6, 17, 0) # Example date and time
 config = Config.create(min_number: 2, max_number: 10, form_open: form_open_datetime , form_close:form_close_datetime )
