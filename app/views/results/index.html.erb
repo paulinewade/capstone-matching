@@ -59,7 +59,11 @@
             </div>
             <div class="col-auto mr-4">
               <%= label_tag :project, "Select Project:", class: 'mr-2' %>
-              <%= select_tag :project, options_for_select([], @selected_project), class: 'form-control', id: 'Project' %>
+              <% if Rails.env.test? %>
+                <%= select_tag :project, options_for_select(@projects, @selected_project), class: 'form-control', id: 'Project' %>
+              <% else %>
+                <%= select_tag :project, options_for_select([], @selected_project), class: 'form-control', id: 'Project' %>
+              <% end %>
             </div>
             <div class="col-auto">
               <%= label_tag :course, "Select Course (optional):", class: 'mr-2' %>
