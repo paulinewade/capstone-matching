@@ -1,14 +1,41 @@
-<%= render 'shared/generic_page_header' %>
-<h1>Rank Projects</h1>
-<%= form_tag  method: :post do %>
-  <% @projects.each do |project| %>
-    <div class="form-group">
-      <%= label_tag "preferences[#{project.id}]", "Rank #{project.name}" %>
-      <%= select_tag "preferences[#{project.id}]", options_for_select((1..@projects.length).to_a,
-                                                                       selected: @preferences.find_by(project_id: project.id)&.pref),
-                      prompt: 'Select a Rank' %>
-    </div>
-  <% end %>
+<html>
+  <head>
+    <title>Professor Project Preference Form</title>
+  </head>
 
-  <%= submit_tag 'Submit' %>
-<% end %>
+  <body>
+    <%= render 'shared/generic_page_header' %>
+    <%= render 'shared/notification' %>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8 offset-md-2">
+          <h1 class="text-center mb-4">
+            CSCE Capstone Professor Project Preference Form
+          </h1>
+          <br />
+          <p>
+            Howdy! Choose the industry projects that you would prefer to have in your courses.
+          </p>
+          
+          <%= form_with(url: '/prof_projects_ranking', method: 'post') do |form| %>
+
+          <p>
+            Please rank the projects. You can only have 1 project for each rank. Leave the field blank if you do not want the project at all.
+          </p>
+          <br />
+
+          <%= render 'shared/project_ranking_table'%>
+
+          <br />
+
+          <div class="text-center mt-4">
+            <%= form.button 'Submit', class: 'btn btn-danger
+            custom-maroon-button' %>
+          </div>
+          <% end %>
+          <hr />
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
