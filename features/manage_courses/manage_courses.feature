@@ -1,5 +1,7 @@
 Feature: Manage Courses Functionality
-
+	As an admin
+	So that I can manage the existing courses
+	I want to be able to update the professor assigned to a course and add and delete courses
 	
 	Scenario: Filtering Courses by Semester
 		Given I am on the Manage Courses page
