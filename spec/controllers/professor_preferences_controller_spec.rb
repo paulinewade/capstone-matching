@@ -60,5 +60,25 @@ RSpec.describe ProfessorPreferencesController, type: :controller do
         post :save_rankings, params: { project_rank: { project1.project_id => 1, project2.project_id => 2 } }
         expect(flash[:success]).to eq('Project Preferences saved successfully!')
     end
+
+    it 'shows error message when multiple projects are given same preference' do
+        session[:user_id] = user.user_id
+        post :save_rankings, params: { project_rank: { project1.project_id => 1, project2.project_id => 1 } }
+        expect(flash[:error]).to eq('Duplicate ranks found for different projects. Please ensure each project has a unique rank.')
+    end
+
+    it 'shows error message when ranks are skipped' do
+        session[:user_id] = user.user_id
+        post :save_rankings, params: { project_rank: { project1.project_id => 1, project2.project_id => 3 } }
+        expect(flash[:error]).to eq('Invalid rank sequence. Please ensure ranks are consecutive without skipping any numbers.')
+    end
+
+    it 'updates the project ranks when the form is resubmitted' do
+        session[:user_id] = user.user_id
+        post :save_rankings, params: { project_rank: { project1.project_id => 1, project2.project_id => 2 } }
+        post :save_rankings, params: { project_rank: { project1.project_id => 2, project2.project_id => 1 } }
+        expect(ProfessorPreference.find_by(professor: professor, project: project1).pref).to eq(2)
+        expect(ProfessorPreference.find_by(professor: professor, project: project2).pref).to eq(1)
+    end
   end
 end
