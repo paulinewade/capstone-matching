@@ -4,17 +4,7 @@
   </head>
 
   <body>
-    <div class="container mt-3">
-      <div class="d-flex justify-content-between align-items-center">
-        <button
-          class="btn btn-danger custom-maroon-button"
-          id="dark-mode-toggle"
-        >
-          Toggle Dark Mode
-        </button>
-        <%= button_to "Logout", logout_path, { class: "btn btn-danger custom-maroon-button", data: { turbo: "false" }, method: :get } %>
-      </div>
-    </div>
+    <%= render 'shared/generic_page_header' %>
     <%= render 'shared/notification' %>
     <div class="container">
       <div class="row">
@@ -24,12 +14,11 @@
           </h1>
           <br />
           <p>
-            Howdy! Let us know which industry projects you are interested in.
+            Howdy! Choose the industry projects that you would prefer to have in your courses.
           </p>
           
           <%= form_with(url: '/prof_projects_ranking', method: 'post') do |form| %>
 
-          <h4>Project Preferences</h4>
           <p>
             Please rank the projects. You can only have 1 project for each rank. Leave the field blank if you do not want the project at all.
           </p>

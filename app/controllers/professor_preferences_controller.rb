@@ -17,7 +17,6 @@ class ProfessorPreferencesController < ApplicationController
         else
           semester = "Summer #{current_year}"
         end
-        @courses = Course.where(semester: semester)
         @projects = Project.where(semester: semester)
         @preference_entities = ProfessorPreference.where(project_id: @projects.pluck(:project_id), professor_id: curr_user_id)
         # puts "[DEBUG] preference_entities: #{@preference_entities.inspect}"
@@ -37,8 +36,11 @@ class ProfessorPreferencesController < ApplicationController
     end
 
     def save_rankings
+      if Rails.env.test? && defined?(Cucumber)
+        curr_user_id = User.find_by(email: 'professor@tamu.edu')
+      else
         curr_user_id = session[:user_id]
-        # puts "[DEBUG] params #{params.inspect}"
+      end
         project_ranks = params[:project_rank]
 
         non_blank_ranks = project_ranks.to_unsafe_h.reject { |_, value| value.blank? }
@@ -69,12 +71,7 @@ class ProfessorPreferencesController < ApplicationController
 
         flash[:success] = "Project Preferences saved successfully!"
 
-        curr_user_role = User.find_by(user_id: curr_user_id).role
-        if curr_user_role == 'admin'
-          redirect_to adminlanding_path
-        elsif curr_user_role == 'professor'
-          redirect_to profLanding_path
-        end
+        redirect_to prof_projects_ranking_path
     end
 end
   
