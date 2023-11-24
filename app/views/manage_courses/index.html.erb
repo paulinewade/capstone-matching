@@ -1,0 +1,98 @@
+<body>
+	<div class="container">
+		<%= render 'shared/admin_page_header' %>
+		<%= render 'shared/notification' %>
+	</div>
+
+	<div class="container">
+		<h1 class="text-center my-4">Manage Courses</h1>
+
+		<div class="row justify-content-center">
+			<div class="col-md-10">
+				<div class="card">
+					<div class="card-header">Filter by Semester</div>
+					<div class="card-body">
+						<%= form_tag(manageCourses_path, method: :get, class: 'form-inline') do %>
+							<div class="form-group mb-2 mr-2">
+								<%= select_tag :semester, options_for_select(@course, @selected_semester), include_blank: "All Semesters", class: 'form-control', id: 'Semester' %>
+							</div>
+							<%= submit_tag "Filter", class: 'btn btn-primary mb-2' %>
+						<% end %>	
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="container table-responsive">
+			<%= form_with(url: edit_courses_path, method: "post", id: "change-courses-form") do |form| %>
+				<table class="table table-bordered">
+					<thead class="thead-dark">
+						<tr>
+							<th>Semester</th>
+							<th>Course Number</th>
+							<th>Section</th>
+							<th>Assign Professor</th>
+							<th>Email</th>
+							<th>Change Assign Professor</th>
+							<th>Delete Courses</th>
+						</tr>
+					</thead>
+					<tbody>
+						<% @courses.each do |c| %>
+							<tr>
+								<td><%= c.semester %></td>
+								<td><%= c.course_number %></td>
+								<td><%= c.section %></td>
+								<td><%= c.professor&.user&.first_name&.capitalize %> <%= c.professor&.user&.last_name&.capitalize %></td>
+								<td><%= c.professor&.user&.email %></td>
+								<td>
+									<%= form.select "course_assignments[#{c.id}]", options_for_select(@professors_for_select, c.professor_id), { include_blank: 'Select Professor' }, class: 'form-control' %>
+        						</td>
+        						<td>
+        							<div class="text-center">
+									<%= form.check_box "delete_course[]", { value: c.course_id }, c.course_id, nil %>
+									</div>
+        						</td>
+							</tr>
+						<% end %>
+					</tbody>
+				</table>
+				<div class="d-flex justify-content-center align-items-center">
+				<%= form.button "Save Changes", class: "btn btn-primary m-3", id: "save-button" %>
+			<% end %>
+		</div>
+
+		<br>
+		<br>
+		<hr>
+		<div class="container">
+			<h4>Add Course</h4>
+		</div>
+		<div class="container">
+			<div class="row">
+				<div class="add-course-form" id="add-course-form">
+					<%= form_with(model: @add_course, url: add_course_path, id: "add-course-form") do |form| %>
+						<div class="form-group mb-2">
+							<%= form.label :course_number, "Course Number ", class: "required" %>
+							<%= form.number_field :course_number, class: 'form-control', required: true %>
+						</div>
+						<div class="form-group mb-2">
+							<%= form.label :semester_add, "Semester ", class: "required" %>
+							<%= select_tag :semester_add, options_for_select(@semesters, @selected_semester), include_blank: "Select Semester", class: 'form-control', required: true %>
+						</div>
+						<div class="form-group mb-2">
+							<%= form.label :section, "Section ", class: "required" %>
+							<%= form.number_field :section, class: 'form-control', required: true %>
+						</div>
+						<div class="form-group mb-2">
+							<%= form.label :professor_id, "Professor" %>
+							<%= form.select :professor_id, options_for_select(@professors_for_select), { include_blank: 'Select a Professor' }, class: 'form-control' %>
+						</div>
+						<%= form.button "Add Course", class: "btn btn-primary m-3", id: "add-course-button" %>
+					<% end %>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</body> 
