@@ -18,4 +18,20 @@ RSpec.describe ManageCoursesController, type: :controller do
       expect(assigns(:courses)).to eq(Course.where(semester: semester))
     end
   end
+
+  describe 'POST #edit_courses' do
+    it 'updates professor assignments and deletes courses' do
+      # Implement this test based on your specific scenario
+    end
+
+    it 'redirects to manageCourses_path' do
+      post :edit_courses
+      expect(response).to redirect_to(manageCourses_path)
+    end
+
+    it 'sets a success flash message' do
+      post :edit_courses
+      expect(flash[:success]).to eq('Changes Saved.')
+    end
+  end
 end
