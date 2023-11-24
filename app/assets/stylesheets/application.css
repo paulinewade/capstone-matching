@@ -53,6 +53,12 @@ html.dark-mode table {
     color: #fff; /* Set text color for table content in dark mode */
 }
 
+html.dark-mode .card {
+  background-color: #333;
+  color: #fff;
+  border: 1px solid #555;
+}
+
 .form-check-input:checked + .form-check-label::before {
     background-color: maroon;
   }
@@ -111,4 +117,9 @@ html.dark-mode table {
 
 .hidden {
     display: none;
+}
+
+.required::after {
+  content: " *";
+  color: red; 
 }
