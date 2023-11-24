@@ -16,7 +16,8 @@
         <td><%= project.sponsor %></td>
         <td>
           <% if project.info_url.present? %>
-            <a href="<%= project.info_url %>" class="btn btn-primary" target="_blank">
+            <% url = project.info_url.start_with?('http') || project.info_url.start_with?('https') ? project.info_url : "https://#{project.info_url}" %>
+            <a href="<%= url %>" class="btn btn-primary" target="_blank">
               <i class="fas fa-external-link-alt"></i> Info Link
             </a>
           <% end %>
