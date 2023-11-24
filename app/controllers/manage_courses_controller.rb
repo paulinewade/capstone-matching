@@ -25,7 +25,7 @@ class ManageCoursesController < ApplicationController
 	def add_course
 		@course_number = params[:course_number]
 		@section = params[:section]
-		@semester = params[:semester]
+		@semester = params[:semester_add]
 		@professor = params[:professor_id]
 
 		@new_course = Course.new(course_number: @course_number, section: @section, semester: @semester, professor_id: @professor)

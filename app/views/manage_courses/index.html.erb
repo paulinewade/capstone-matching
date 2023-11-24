@@ -70,15 +70,15 @@
 		</div>
 		<div class="container">
 			<div class="row">
-				<div class="add-course-form hidden" id="add-course-form">
+				<div class="add-course-form" id="add-course-form">
 					<%= form_with(model: @add_course, url: add_course_path, id: "add-course-form") do |form| %>
 						<div class="form-group mb-2">
 							<%= form.label :course_number, "Course Number ", class: "required" %>
 							<%= form.number_field :course_number, class: 'form-control', required: true %>
 						</div>
 						<div class="form-group mb-2">
-							<%= form.label :semester, "Semester ", class: "required" %>
-							<%= select_tag :semester, options_for_select(@semesters, @selected_semester), include_blank: "Select Semester", class: 'form-control', required: true %>
+							<%= form.label :semester_add, "Semester ", class: "required" %>
+							<%= select_tag :semester_add, options_for_select(@semesters, @selected_semester), include_blank: "Select Semester", class: 'form-control', required: true %>
 						</div>
 						<div class="form-group mb-2">
 							<%= form.label :section, "Section ", class: "required" %>
