@@ -1,0 +1,70 @@
+<body>
+	<div class="container">
+		<%= render 'shared/admin_page_header' %>
+		<%= render 'shared/notification' %>
+	</div>
+
+	<div class="container">
+		<h1 class="text-center my-4">View Professor Project Preferences</h1>
+
+		<div class="row justify-content-center">
+			<div class="col-md-10">
+				<div class="card">
+					<div class="card-header">Filter by Project</div>
+					<div class="card-body">
+						<%= form_tag(viewProfProjectPreferences_path, method: :get, class: 'form-inline') do %>
+							<div class="form-group mb-2 mr-2">
+								<%= select_tag :project, options_for_select(@project_names, @selected_project), include_blank: "All Projects", class: 'form-control', id: 'Project' %>
+							</div>
+							<%= submit_tag "Filter", class: 'btn btn-primary mb-2' %>
+						<% end %>	
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="container">
+		<% @projects.each do |project| %>
+			<h3 class="mt-4">Professors Preferences for <%= project.name %></h3>
+
+			<table class="table table-bordered">
+			<thead class="thead-dark">
+				<tr>
+					<th>Professor Name</th>
+					<th>Preference Rank</th>
+					<th>Delete</th>
+				</tr>
+			</thead>
+			<tbody>
+				<%= form_tag(update_professor_preferences_path, method: :post, class: 'form-inline') do %>
+				<%= hidden_field_tag :project_id, project.id %>
+				<% professors_preferences_for_project = @professor_preferences.where(project_id: project.id).order(pref: :desc) %>
+				<% professors_preferences_for_project.each do |professor_preference| %>
+				<tr>
+					<td><%= "#{professor_preference.professor.user.first_name.capitalize} #{professor_preference.professor.user.last_name.capitalize}" %></td>
+					<td><%= professor_preference.pref %></td>
+					<td>
+						<%= check_box_tag "professor_ids[]", professor_preference.professor.id %>
+					</td>
+				</tr>
+				<% end %>
+				<tr>
+					<td colspan="3">
+						<div class="form-group mb-3">
+							<%= label_tag :professor, "Assign Professor:" %>
+							<%= select_tag :professor_id, options_for_select([["Select Professor", nil]] + Professor.all.map { |professor| ["#{professor.user.first_name.capitalize} #{professor.user.last_name.capitalize}", professor.id] }), class: 'form-control' %>
+						</div>
+						<%= label_tag :rank, "Project rank by professor:" %>
+						<%= number_field_tag :rank, nil, class: 'form-control', min: 0 %>
+						<br>
+						<%= submit_tag "Assign Professor", class: 'btn btn-primary mb-2', name: 'commit_type', value: 'Assign' %>
+						<%= submit_tag "Delete Selected Professors", class: 'btn btn-danger mb-2', name: 'commit_type', value: 'Delete' %>
+					</td>
+				</tr>
+				<% end %>
+			</tbody>
+			</table>
+		<% end %>
+	</div>
+</body>
