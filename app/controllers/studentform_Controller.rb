@@ -9,6 +9,8 @@ class StudentformController < ApplicationController
     user_id = ''
     if params[:dev_mode] == 'yes'
       user_id = 101
+    elsif Rails.env.test? && defined?(Cucumber)
+      user_id = 1
     else
       user_id = session[:user_id]
     end

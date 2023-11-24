@@ -1,8 +1,6 @@
 Given("the following courses exist:") do |table|
   # Convert the table to an array of hashes
   courses_data = table.hashes
-
-
   # Create courses in the database
   courses_data.each do |course_data|
     course = Course.create(course_data)
@@ -65,5 +63,62 @@ end
 
 Given('I fill in an invalid UIN') do
   fill_in 'UIN', with: '1234'
+end
+
+Given('the form is not open') do
+  config = Config.first
+  config.update(
+    form_open: Date.yesterday,
+    form_close: Date.yesterday
+  )
+end
+
+Given('I fill in the wrong number of projects') do
+  config = Config.first
+  config.update(
+    min_number: 50,
+    max_number: 100
+  )
+  fill_in 'TAMU Email Address', with: 'johndoe@tamu.edu'
+  fill_in 'Last Name', with: 'Doe'
+  fill_in 'First Name', with: 'John'
+  fill_in 'UIN', with: '123454321'
+  select 'American', from: 'nationality'
+  select 'US Citizen', from: 'work_auth'
+  select 'Ok with Any Agreements', from: 'contract_sign'
+  select 'White', from: 'ethnicity[]'
+  select 'CSCE 670-600-Fall 2023', from: 'course_id'
+  find('input[type=radio][name=gender][value="Male"]').click
+  find('.rank-input[data-project-id="1"]').set('1') 
+end
+
+Given('I rank duplicate projects') do
+  fill_in 'TAMU Email Address', with: 'johndoe@tamu.edu'
+  fill_in 'Last Name', with: 'Doe'
+  fill_in 'First Name', with: 'John'
+  fill_in 'UIN', with: '123454321'
+  select 'American', from: 'nationality'
+  select 'US Citizen', from: 'work_auth'
+  select 'Ok with Any Agreements', from: 'contract_sign'
+  select 'White', from: 'ethnicity[]'
+  select 'CSCE 670-600-Fall 2023', from: 'course_id'
+  find('input[type=radio][name=gender][value="Male"]').click
+  find('.rank-input[data-project-id="1"]').set('1')
+  find('.rank-input[data-project-id="2"]').set('1')  
+end
+
+Given('I skip a project ranking') do
+  fill_in 'TAMU Email Address', with: 'johndoe@tamu.edu'
+  fill_in 'Last Name', with: 'Doe'
+  fill_in 'First Name', with: 'John'
+  fill_in 'UIN', with: '123454321'
+  select 'American', from: 'nationality'
+  select 'US Citizen', from: 'work_auth'
+  select 'Ok with Any Agreements', from: 'contract_sign'
+  select 'White', from: 'ethnicity[]'
+  select 'CSCE 670-600-Fall 2023', from: 'course_id'
+  find('input[type=radio][name=gender][value="Male"]').click
+  find('.rank-input[data-project-id="1"]').set('1')
+  find('.rank-input[data-project-id="2"]').set('3')  
 end
 
