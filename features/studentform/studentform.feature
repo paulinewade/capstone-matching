@@ -41,4 +41,33 @@ Feature: Student Form
     And I press "Submit"
     Then I should see "Invalid UIN, make sure your UIN is 9 digits."
 
+  Scenario: Student form is not open
+    Given I am on the student registration page
+    And the form is not open
+    And I fill in valid information
+    And I check the terms box
+    And I press "Submit"
+    Then I should see "Form is not currently open, please submit during the specified window."
+
+  Scenario: Wrong Ranks for project
+    Given I am on the student registration page
+    When I fill in the wrong number of projects
+    And I check the terms box
+    And I press "Submit"
+    Then I should see "Must rank between 50 and 100 (inclusive) projects."
+
+  Scenario: Duplicate ranks for projects
+    Given I am on the student registration page
+    And I rank duplicate projects
+    And I check the terms box
+    And I press "Submit"
+    Then I should see "Duplicate ranks found for different projects. Please ensure each project has a unique rank."
+
+  Scenario: Skip ranks on project
+    Given I am on the student registration page
+    And I skip a project ranking
+    And I check the terms box
+    And I press "Submit"
+    Then I should see "Invalid rank sequence. Please ensure ranks are consecutive without skipping any numbers."
+
 
