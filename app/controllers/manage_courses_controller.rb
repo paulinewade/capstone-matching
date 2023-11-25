@@ -1,6 +1,6 @@
 class ManageCoursesController < ApplicationController
 	def index
-		@course = Course.pluck(:Semester).uniq
+		@course = Course.pluck(:semester).uniq
 		@selected_semester = params[:semester]
 		@semesters = generate_semesters
 
