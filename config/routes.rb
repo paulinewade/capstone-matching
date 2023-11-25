@@ -74,4 +74,10 @@ Rails.application.routes.draw do
   post "manageCourses/edit_courses", to: "manage_courses#edit_courses", as: "edit_courses"
 	post "manageCourses/add_course", to: "manage_courses#add_course", as: "add_course"
 
+	get "viewProfProjectPreferences", to: "view_prof_project_preferences#index"
+	post '/update_professor_preferences', to: 'view_prof_project_preferences#update_professor_preferences', as: 'update_professor_preferences'
+	resources :view_prof_project_preferences do
+		post 'assign_professor', on: :collection
+	end
+
 end
