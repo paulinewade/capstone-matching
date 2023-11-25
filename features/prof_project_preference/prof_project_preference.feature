@@ -26,3 +26,13 @@ Feature: Manage Professor Preferences for Projects
     And there are selected professors for deletion
     When I visit the professor preferences page
     Then I should see the updated preferences
+    
+  Scenario: Check Warnings on Professor Preference Page
+    When  I visit the professor preferences page
+    And I click on "Assign"
+    Then I should see "Invalid professor or action."
+
+  Scenario: Check Warnings on Professor Preference Page 2
+    When  I visit the professor preferences page
+    And I click on "Delete"
+    Then I should see "No professors selected for deletion."

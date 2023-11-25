@@ -4,7 +4,7 @@ When("I am on the edit project page of {string}") do |project_name|
 end
 
 When("I click on {string}") do |link_text|
-  click_on link_text
+  click_on link_text, match: :first
 end
 
 Then("I should be on the edit project page") do
