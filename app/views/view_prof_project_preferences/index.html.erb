@@ -37,7 +37,7 @@
 			<tbody>
 				<%= form_tag(update_professor_preferences_path, method: :post, class: 'form-inline') do %>
 				<%= hidden_field_tag :project_id, project.id %>
-				<% professors_preferences_for_project = @professor_preferences.where(project_id: project.id).order(pref: :desc) %>
+				<% professors_preferences_for_project = @professor_preferences.where(project_id: project.id) %>
 				<% professors_preferences_for_project.each do |professor_preference| %>
 				<tr>
 					<td><%= "#{professor_preference.professor.user.first_name.capitalize} #{professor_preference.professor.user.last_name.capitalize}" %></td>
