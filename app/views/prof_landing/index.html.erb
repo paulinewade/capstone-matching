@@ -10,9 +10,13 @@
     <button class="btn btn-danger custom-maroon-button m-3" id="dark-mode-toggle">Toggle Dark Mode</button>
   </div>
   <div class="d-flex justify-content-center align-items-center flex-column">
-    <div class="d-flex justify-content-center align-items-center">
-      <h1>Welcome, Professor!</h1>
-    </div>
+  <div>
+    <% if @current_user %>
+      <p>Welcome, <%= @first_name %> <%= @last_name %>!</p>
+    <% else %>
+      <p>Welcome, Admin!</p>
+    <% end %>
+  </div>
     <div class="d-flex justify-content-center align-items-center">
       <%= link_to "View Class Results", results_path, class: "btn btn-danger custom-maroon-button custom-button m-4", id: "button-1" %>
     </div>
