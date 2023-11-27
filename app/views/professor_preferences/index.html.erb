@@ -10,11 +10,11 @@
       <div class="row">
         <div class="col-md-8 offset-md-2">
           <h1 class="text-center mb-4">
-            CSCE Capstone Professor Project Preference Form
+            CSCE Capstone Professor Project Preference Form <%= @current_semester %>
           </h1>
           <br />
           <p>
-            Howdy! Choose the industry projects that you would prefer to have in your courses.
+            Howdy! Choose the industry projects that you would prefer to have in your courses for <%= @current_semester %>.
           </p>
           
           <%= form_with(url: '/prof_projects_ranking', method: 'post') do |form| %>
