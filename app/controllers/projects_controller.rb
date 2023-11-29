@@ -3,6 +3,14 @@ class ProjectsController < ApplicationController
   before_action :authorize_admin_or_prof, unless: -> { Rails.env.development? || Rails.env.test? }
   protect_from_forgery except: :destroy
   def index
+    @role = nil
+
+    if session[:user_id]
+      user_id = session[:user_id]
+      user = User.find(user_id)
+      @role = user.role
+    end
+
     @semesters = Project.pluck(:semester).uniq
     @selected_semester = params[:semester]
 

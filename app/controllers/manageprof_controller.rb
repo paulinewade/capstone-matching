@@ -38,12 +38,13 @@ class ManageprofController < ApplicationController
         first_name = params[:first_name]
         last_name = params[:last_name]
 
-        if params[:admin] == 'on'
+        admin = nil
+        if params[:admin] == "1"
             admin = true
         else
             admin = false
         end
-
+        
         if admin == true
             user = User.new( email: email, first_name: first_name, last_name: last_name, role: 'admin')
         else
