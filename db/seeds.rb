@@ -83,9 +83,9 @@ scores_value1 = ScoresValue.create(scores_id: scores_entity.scores_id, attribute
 scores_value2 = ScoresValue.create(scores_id: scores_entity.scores_id, attribute_id: attribute2.attribute_id, feature_score: 100)
 scores_value3 = ScoresValue.create(scores_id: scores_entity.scores_id, attribute_id: attribute3.attribute_id, feature_score: 75)
 
-scores_value1_2 = ScoresValue.create(scores_id: scores_entity2.scores_id, attribute_id: attribute1.attribute_id, feature_score: 0)
-scores_value2_2 = ScoresValue.create(scores_id: scores_entity2.scores_id, attribute_id: attribute2.attribute_id, feature_score: 0)
-scores_value3_2 = ScoresValue.create(scores_id: scores_entity2.scores_id, attribute_id: attribute3.attribute_id, feature_score: 0)
+scores_value1_2 = ScoresValue.create(scores_id: scores_entity2.scores_id, attribute_id: attribute1.attribute_id, feature_score: 100)
+scores_value2_2 = ScoresValue.create(scores_id: scores_entity2.scores_id, attribute_id: attribute2.attribute_id, feature_score: 100)
+scores_value3_2 = ScoresValue.create(scores_id: scores_entity2.scores_id, attribute_id: attribute3.attribute_id, feature_score: 100)
 
 professor_pref = ProfessorPreference.create(project_id: project.project_id, professor_id: prof.professor_id, pref: 1)
 
