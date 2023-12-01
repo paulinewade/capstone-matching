@@ -31,10 +31,10 @@ Feature: Manage Professor Preferences for Projects
     And there are selected professors for deletion
     Then I should see the updated preferences
     
-  Scenario: Check Warnings on Professor Preference Page
+  Scenario: Unassign course by selecting blank
     When  I visit the professor preferences page
     And I click on "Assign"
-    Then I should see "Invalid professor or action."
+    Then I should see "Professor unassigned successfully."
 
   Scenario: Check Warnings on Professor Preference Page 2
     When  I visit the professor preferences page
