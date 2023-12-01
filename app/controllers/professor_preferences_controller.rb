@@ -17,6 +17,11 @@ class ProfessorPreferencesController < ApplicationController
         else
           semester = "Summer #{current_year}"
         end
+
+        if semester
+          @current_semester = semester
+        end
+
         @projects = Project.where(semester: semester)
         @preference_entities = ProfessorPreference.where(project_id: @projects.pluck(:project_id), professor_id: curr_user_id)
         # puts "[DEBUG] preference_entities: #{@preference_entities.inspect}"

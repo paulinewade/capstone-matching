@@ -129,7 +129,6 @@
 <body>
 	<div class="container mt-3">
       <div class="d-flex justify-content-between align-items-center">
-        <button class="btn btn-danger custom-maroon-button" id="dark-mode-toggle">Toggle Dark Mode</button>
         <%= button_to "Logout", logout_path, { class: "btn btn-danger custom-maroon-button", data: { turbo: "false" }, method: :get } %>
       </div>
     </div>
@@ -168,6 +167,7 @@
 						</div>
 				  
 					<%= render 'shared/gender_selector' %>
+          <label for="course_id">Select Course<span class="text-danger">*</span></label>
 					<%= render 'shared/course_selector' %>
 					<%= render 'shared/work_auth_selector' %>
 					<%= render 'shared/contract_sign_selector' %>
