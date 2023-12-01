@@ -32,6 +32,10 @@ class ViewProfProjectPreferencesController < ApplicationController
 				project = Project.find_by(project_id: project_id)
 				project.update(course_id: course_id)
 				flash[:success] = "Professor assigned successfully."
+			elsif commit_type == 'Assign' && !course_id.present?
+				project = Project.find_by(project_id: project_id)
+				project.update(course_id: nil)
+				flash[:success] = "Professor unassigned successfully."
 			elsif commit_type == 'Delete'
 				# Delete selected professors from project preferences
 				professor_ids = params[:professor_ids]
