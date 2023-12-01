@@ -1,3 +1,11 @@
+<% def course_option_text(course) %>
+  <%= "#{professor_name(course)} CSCE #{course.course_number}-#{course.section} #{course.semester}" %>
+<% end %>
+
+<% def professor_name(course) %>
+	<% professor = course.professor %>
+	<%= professor.present? ? "#{professor.user.first_name.capitalize} #{professor.user.last_name.capitalize}" : "No Professor Assigned" %>
+<% end %>
 <body>
 	<%= render 'shared/generic_page_header' %>
 	<%= render 'shared/notification' %>
@@ -24,9 +32,17 @@
 
 	<div class="container">
 		<% @projects.each do |project| %>
-			<h3 class="mt-4">Professors Preferences for <%= project.name %></h3>
+			<h3 class="mt-4">Professors Preferences for <%= project.name %> (<%= project.semester %>)</h3>
+			<h4>
+				Assigned Professor and Course: 
+				<% if (course = project.course) && (prof = course.professor) %>
+					<%= "#{professor_name(course)} CSCE #{course.course_number}-#{course.section} #{course.semester}" %>
+				<% else %>
+					None
+				<% end %>
+			</h4>
 
-			<table class="table table-bordered">
+			<table class="table table-bordered mb-2">
 			<thead class="thead-dark">
 				<tr>
 					<th>Professor Name</th>
@@ -49,12 +65,14 @@
 				<% end %>
 				<tr>
 					<td colspan="3">
-						<div class="form-group mb-3">
-							<%= label_tag :professor, "Assign Professor:" %>
-							<%= select_tag :professor_id, options_for_select([["Select Professor", nil]] + Professor.all.map { |professor| ["#{professor.user.first_name.capitalize} #{professor.user.last_name.capitalize}", professor.id] }), class: 'form-control' %>
-						</div>
-						<%= label_tag :rank, "Project rank by professor:" %>
-						<%= number_field_tag :rank, nil, class: 'form-control', min: 0 %>
+					<div class="form-group mb-3">
+						<%= label_tag :course, "Assign Project to Course:" %>
+						<% if @courses_by_semester[project.semester].present? %>
+						<%= select_tag "course_id", options_for_select(@courses_by_semester[project.semester].map { |course| ["#{course.professor.user.first_name.capitalize} #{course.professor.user.last_name.capitalize} CSCE #{course.course_number}-#{course.section}-#{course.semester}", course.course_id] }, @cid), include_blank: true, class: "form-control"%>
+						<% else %>
+							<%= select_tag :course_id, options_for_select([]), class: 'form-control' %>
+						<% end %>
+					</div>
 						<br>
 						<%= submit_tag "Assign Professor", class: 'btn btn-primary mb-2', name: 'commit_type', value: 'Assign' %>
 						<%= submit_tag "Delete Selected Professors", class: 'btn btn-danger mb-2', name: 'commit_type', value: 'Delete' %>
@@ -66,3 +84,4 @@
 		<% end %>
 	</div>
 </body>
+

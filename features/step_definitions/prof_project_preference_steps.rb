@@ -76,3 +76,11 @@ Then('I should see the updated preferences') do
     # Add more assertions based on your HTML structure
   end
 end
+
+When('I select a professor to assign to a project') do
+  first('#course_id').select('Jim Doe CSCE 600-601-Fall 2023')
+end
+
+Then('I should see the professors name next to the project they are assigned to') do
+  expect(page).to have_content('Assigned Professor and Course: Jim Doe CSCE 600-601 Fall 2023')
+end

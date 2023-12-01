@@ -10,31 +10,28 @@ class ViewProfProjectPreferencesController < ApplicationController
 		end
 
 	    @professor_preferences = ProfessorPreference.where(project_id: @projects.pluck(:project_id))
+
+		@courses_by_semester = {}
+
+		Course.all.each do |course|
+			next if course.professor_id.nil?
+
+			semester = course.semester
+			@courses_by_semester[semester] ||= [] # Initialize the array if it doesn't exist
+			@courses_by_semester[semester] << course
+		end
 	end
 
 	def update_professor_preferences
 		project_id = params[:project_id]
-		professor_id = params[:professor_id]
+		course_id = params[:course_id]
 		commit_type = params[:commit_type]
 
 		if project_id.present? && commit_type.present?
-			if commit_type == 'Assign' && professor_id.present?
-				existing_preference = ProfessorPreference.find_by(project_id: project_id, professor_id: professor_id)
-
-				if existing_preference
-					# Update the existing preference if it already exists
-					existing_preference.update(pref: params[:rank])  # Update other attributes as needed
-					flash[:success] = "Professor assignment already exits."
-				else
-					# Create a new preference if it doesn't exist
-					if params[:rank].present?
-						rank = params[:rank]
-					else
-						rank = 0
-					end
-					ProfessorPreference.create(professor_id: professor_id, project_id: project_id, pref: rank)
-					flash[:success] = "Professor assigned successfully."
-				end
+			if commit_type == 'Assign' && course_id.present?
+				project = Project.find_by(project_id: project_id)
+				project.update(course_id: course_id)
+				flash[:success] = "Professor assigned successfully."
 			elsif commit_type == 'Delete'
 				# Delete selected professors from project preferences
 				professor_ids = params[:professor_ids]
