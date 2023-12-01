@@ -63,7 +63,7 @@ we will redeploy to heroku after completion
 
 AWS Cloud9 is an optional IDE
 
-## Detailed Deployment Instructions
+## Detailed Deployment Instructions (AWS ONLY)
 ```
 # SETUP GITHUB CONNECTION
 ssh-keygen -t ed25519 -C "lagunazachary@gmail.com"
