@@ -64,14 +64,10 @@ class ProfessorPreferencesController < ApplicationController
           return
         end
 
+        ProfessorPreference.where(professor_id: curr_user_id).destroy_all
+
         non_blank_ranks.each do |project_id, pref|
-          entity = ProfessorPreference.find_by(professor_id: curr_user_id, project_id: project_id)
-          # puts "[DEBUG] entity #{entity.inspect}"
-          if entity
-            ProfessorPreference.where(:professor_id => curr_user_id, :project_id => project_id).update(pref: pref)
-          else
             ProfessorPreference.create(professor_id: curr_user_id, project_id: project_id, pref: pref)
-          end
         end
 
         flash[:success] = "Project Preferences saved successfully!"
