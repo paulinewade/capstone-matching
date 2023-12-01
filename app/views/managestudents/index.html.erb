@@ -29,7 +29,7 @@
       </div>
     </div>
   </div>
-  <div class="container table-responsive">
+  <div class="container">
     <%= form_with(url: delete_students_path, method: "post", id: "manage-students-form") do |form| %>
       <table class="table table-bordered">
         <thead class="thead-light">
@@ -83,5 +83,6 @@
       <div class="d-flex justify-content-center align-items-center">
         <%= form.button "Delete Students", class: "btn btn-danger m-2", id: "save-button" %>
       </div>
-    <% end %>  
+    <% end %>
+  </div  
 </body>
