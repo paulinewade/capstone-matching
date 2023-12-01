@@ -36,7 +36,7 @@ class ViewProfProjectPreferencesController < ApplicationController
 				# Delete selected professors from project preferences
 				professor_ids = params[:professor_ids]
 				if professor_ids.present?
-					ProfessorPreference.where(professor_id: professor_ids).destroy_all
+					ProfessorPreference.where(professor_id: professor_ids, project_id: project_id).destroy_all
 					flash[:success] = "Selected professors deleted successfully."
 				else
 					flash[:error] = "No professors selected for deletion."
