@@ -25,7 +25,8 @@
             <td><%= number_with_precision(score_attribute.feature_weight * 100, precision: 2) %>%</td>
             <td>
               <div class="input-group">
-                <%= form.text_field "feature_weights[]", value: number_with_precision(score_attribute.feature_weight * 100, precision: 2), class: 'form-control' %>
+              <%= form.text_field "feature_weights[#{score_attribute.attribute_id}]", value: number_with_precision(score_attribute.feature_weight * 100, precision: 2), class: 'form-control' %>
+              <div class="input-group-append">
                 <div class="input-group-append">
                   <span class="input-group-text">%</span>
                 </div>

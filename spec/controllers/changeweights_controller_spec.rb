@@ -26,14 +26,14 @@ RSpec.describe ChangeweightsController, type: :controller do
           feature: 'Feature 2',
           feature_weight: 0.2
         )
-        post :save_weights, params: { feature_weights: ['50', '50'] }
+        post :save_weights, params: { feature_weights: {1=>'50', 2=>'50'} }
         expect(response).to redirect_to(changeweights_path)
         expect(flash[:success]).to eq("Feature weights updated successfully.")
       end
     end
 
     context 'with invalid feature_weights' do
-      let(:invalid_feature_weights) { ['40', '30', '25'] }
+      let(:invalid_feature_weights) { {'1'=>'40', 2=>'30', 3=>'25'} }
 
       it 'does not update feature weights and redirects to changeweights_path with error message' do
         post :save_weights, params: { feature_weights: invalid_feature_weights }
@@ -52,7 +52,7 @@ RSpec.describe ChangeweightsController, type: :controller do
 
     context 'with invalid attribute_id' do
       it 'redirects to changeweights_path with error message' do
-        post :save_weights, params: {feature_weights: [100]}
+        post :save_weights, params: {feature_weights: {1=>100}}
         expect(response).to redirect_to(changeweights_path)
         expect(flash[:error]).to include("No record found for attribute_id:")
       end
