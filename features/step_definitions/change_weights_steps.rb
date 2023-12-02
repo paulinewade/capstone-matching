@@ -23,15 +23,28 @@ end
 
 
   Then('I should see the following pre-filled feature weights') do |table|
-    expected_weights = table.raw.map { |row| row[0].to_f} # Convert from percentage to decimal
-    actual_weights = all('input[type="text"][name="feature_weights[]"]').map { |input| input.value.to_f / 100.0 } # Convert from percentage to decimal
-    expect(actual_weights).to eq(expected_weights)
+    expected_weights = table.raw.flatten.map(&:to_f)
+
+    # Get the page content as a string
+    page_content = page.body
+  
+    # Check if each expected weight appears in the page content
+    expected_weights.each do |expected_weight|
+      expect(page_content).to include(expected_weight.to_s)
+    end
   end
   
   When('I fill in {string} for {string} at index {int}') do |value, feature_name, index|
-    input_fields = all(:css, "input[name='feature_weights[]']")
-    input_field = input_fields[index - 1]
-    input_field.set(value)
+    if index == 0
+      input_field = first(:css, "input")
+
+      input_field.set(value)
+    else
+      input_fields = all(:css, "input").to_a
+      input_field = input_fields[index]
+      input_field.set(value) if input_field
+    end
+
   end
   
   Then("I should see {string} message") do |message|

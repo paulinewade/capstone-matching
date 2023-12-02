@@ -11,9 +11,8 @@ class ChangeweightsController < ApplicationController
             redirect_to changeweights_path
             return
         end
-        total = feature_weights.sum do |weight|
-            weight.to_f
-        end
+        
+        total = feature_weights.values.sum(&:to_f)
       
         if total != 100
             flash[:error] = "Weights do not add up to 100%, try again."
@@ -22,10 +21,9 @@ class ChangeweightsController < ApplicationController
         end
 
         
-        feature_weights.each_with_index do |weight, index|
+        feature_weights.each do |attribute_id, weight|
             parsed_weight = weight.to_f / 100.0
 
-            attribute_id = index + 1
             score_attribute = ScoresAttribute.find_by(attribute_id: attribute_id)
 
             if score_attribute

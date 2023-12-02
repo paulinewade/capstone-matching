@@ -22,9 +22,9 @@ Feature: Change Weights Page
   Scenario: Verify Pre-filled Feature Weights
     When I visit the change weights page
     Then I should see the following pre-filled feature weights
-      | .5 |
-      | .25  |
-      | .25  |
+      | 50.0 |
+      | 25.0  |
+      | 25.0  |
 
   Scenario: Verify Feature Weight Change
     When I visit the change weights page
