@@ -92,7 +92,7 @@ RSpec.describe ResultsController, type: :controller do
 
                 csv_data = CSV.parse(response.body, headers: true)
                 # Add more specific expectations based on the structure of your CSV
-                expect(csv_data.headers).to eq(['Student_name', 'feature name', 'Total_Scores'])
+                expect(csv_data.headers).to eq(['Student_name', 'Professor', 'Course', 'feature name', 'Total_Scores'])
             end
         end
 

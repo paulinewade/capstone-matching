@@ -94,9 +94,10 @@
         <tr>
           <th scope="col" class = "justify-content-center text-center">#</th>
           <th scope="col" class = "justify-content-center text-center">Student Name</th>
+          <th scope="col" class = "justify-content-center text-center">Professor</th>
           <th scope="col" class = "justify-content-center text-center">Course</th>
-          <th scope="col" class = "justify-content-center text-center">Preferences</th>
-          <th scope="col" class = "justify-content-center text-center">Restrictions</th>
+          <th scope="col" class = "justify-content-center text-center">Sponsor Preferences</th>
+          <th scope="col" class = "justify-content-center text-center">Sponsor Restrictions</th>
           <th scope="col" class = "justify-content-center text-center">Feature Name and Weighted Score</th>
           <th scope="col" class = "justify-content-center text-center">Total Weighted Score</th>
         </tr>
@@ -106,6 +107,13 @@
           <tr>
             <th scope="row"><%= index + 1 %></th>
             <td class="text-center"><%= result['student'].first_name + ' ' + result['student'].last_name %></td>
+            <td class="text-center">
+              <% if result['student'].student.course.professor.present? %>
+                <%= result['student'].student.course.professor.user.first_name + ' ' + result['student'].student.course.professor.user.last_name %>
+              <% else %>
+                No Professor Assigned for Course
+              <% end %>
+            </td>
             <td class="text-center"><%= 'CSCE ' + result['student'].student.course.course_number.to_s + '-' + result['student'].student.course.section.to_s + '-' + result['student'].student.course.semester %>
             <td>
               <ul >

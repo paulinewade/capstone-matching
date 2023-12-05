@@ -97,16 +97,18 @@ class ResultsController < ApplicationController
         scores = ScoresEntity.where(:project_id => project.project_id)
       else
         flash[:error] = "Project and Semester Doesn't Match"
+        return
       end
     end
 
     results = get_results(scores, project, course_id)
 
     results.sort_by!{|item| -item['total_score']}
+    projectid = project.project_id
 
     respond_to do |format|
       format.html
-      format.csv { send_data to_csv(results), filename: "#{semester+'_'+project_name}-#{DateTime.now.strftime("%d%m%Y%H%M")}.csv"}
+      format.csv { send_data to_csv(projectid,results), filename: "#{semester+'_'+project_name}-#{DateTime.now.strftime("%d%m%Y%H%M")}.csv"}
     end
   end
 
@@ -149,15 +151,53 @@ class ResultsController < ApplicationController
     results
   end
 
-  def to_csv (list)
+  def to_csv (project_id, list)
+    restrictions = SponsorRestriction.where(project_id: project_id)
+    preferences = SponsorPreference.where(project_id: project_id)
+
+    restriction_cols = restrictions.map { |restriction| "Restriction:#{restriction.restriction_type}-#{restriction.restriction_val}" }
+    preference_cols = preferences.map { |preference| "Preference:#{preference.preference_type}-#{preference.preference_val}" }
+
     score_names = ScoresAttribute.pluck(:feature).uniq
     score_names.sort!
     CSV.generate do |csv|
-      csv << ['Student_name' , *score_names , 'Total_Scores']
+      csv << ['Student_name' , 'Professor', 'Course', *preference_cols, *restriction_cols, *score_names , 'Total_Scores']
       list.each do |result|
         if result
           row = []
           row.append result['student'].first_name + ' ' + result['student'].last_name
+
+          #professor col
+          student = result['student'].student
+          course = student.course
+          if course.professor
+            row.append student.course.professor.user.first_name + ' ' + student.course.professor.user.last_name
+          else
+            row.append 'No Professor Assigned for Course'
+          end
+
+          #course col
+          row.append 'CSCE ' + course.course_number.to_s + '-' + course.section.to_s + '-' + course.semester
+          
+          #preference_col
+          preferences.each do |preference|
+            type = preference.preference_type
+            if student[type] == preference.preference_val
+              row.append(preference.preference_val)
+            else
+              row.append(nil)
+            end
+          end
+
+          #restriction col
+          restrictions.each do |restriction|
+            type = restriction.restriction_type
+            if student[type] == restriction.restriction_val
+              row.append(restriction.restriction_val)
+            else
+              row.append(nil)
+            end
+          end
 
           split_scores = result['split_scores']
           split_scores.sort_by {|item| item['feature_name']}.each do |score|
