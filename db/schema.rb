@@ -16,6 +16,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_03_013524) do
     t.integer "max_number", default: 1, null: false
     t.datetime "form_open", null: false
     t.datetime "form_close", null: false
+    t.integer "fall_semester_month", null: false
+    t.integer "spring_semester_month", null: false
+    t.integer "summer_semester_month", null: false
+    t.integer "fall_semester_day", null: false
+    t.integer "spring_semester_day", null: false
+    t.integer "summer_semester_day", null: false
   end
 
   create_table "courses", primary_key: "course_id", force: :cascade do |t|

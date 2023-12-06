@@ -44,14 +44,21 @@ class StudentformController < ApplicationController
     end
 
     today = Date.today
+    config = Config.first
     current_year = today.year
-    semester = ""
-    if today.month >= 8 || today.month < 1
-      semester = "Fall #{current_year}"
-    elsif today.month >= 1 && today.month <= 5
+
+    spring_start_date = Date.new(current_year, config.spring_semester_month, config.spring_semester_day)
+    summer_start_date = Date.new(current_year, config.summer_semester_month, config.summer_semester_day)
+    fall_start_date = Date.new(current_year, config.fall_semester_month, config.fall_semester_day)
+
+    if (config.present? && today >= spring_start_date) && (today < summer_start_date)
       semester = "Spring #{current_year}"
-    else
+    elsif (config.present? && today >= summer_start_date) && (today < fall_start_date)
       semester = "Summer #{current_year}"
+    elsif (config.present? && today >= fall_start_date) && (today <= Date.new(current_year, 12, 31))
+      semester = "Fall #{current_year}"
+    else
+      semester = "Fall 2023"
     end
 
     @courses = Course.where(semester: semester)
@@ -61,7 +68,6 @@ class StudentformController < ApplicationController
     @work_auth = Rails.application.config.student_status_constants['work_auth']
     @contract_sign = Rails.application.config.student_status_constants['contract_sign']
     @nationality = Rails.application.config.student_status_constants['nationality']
-    config = Config.first
     @min_number = config.min_number
     @max_number = config.max_number
     @form_open = config.form_open

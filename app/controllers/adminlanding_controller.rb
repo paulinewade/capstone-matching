@@ -13,16 +13,52 @@ class AdminlandingController < ApplicationController
 
     def update_configuration
         @config = Config.first_or_initialize
+      
+        # Convert semester dates to UTC
+        params[:fall_semester_day] = params[:fall_semester_day].to_i
+        params[:spring_semester_day] = params[:spring_semester_day].to_i
+        params[:summer_semester_day] = params[:summer_semester_day].to_i
 
-        params[:form_open] = params[:form_open].in_time_zone('Central Time (US & Canada)').utc
-        params[:form_close] = params[:form_close].in_time_zone('Central Time (US & Canada)').utc
+        params[:fall_semester_month] = params[:fall_semester_month].to_i
+        params[:spring_semester_month] = params[:spring_semester_month].to_i
+        params[:summer_semester_month] = params[:summer_semester_month].to_i
 
-        if @config.update(form_open: params[:form_open], form_close: params[:form_close], min_number: params[:min_number], max_number: params[:max_number])
-            flash[:notice] = "Changes made successfully"
+        if semester_order_valid? && @config.update(
+            form_open: params[:form_open],
+            form_close: params[:form_close],
+            min_number: params[:min_number],
+            max_number: params[:max_number],
+            fall_semester_day: params[:fall_semester_day],
+            fall_semester_month: params[:fall_semester_month],
+            spring_semester_day: params[:spring_semester_day],
+            spring_semester_month: params[:spring_semester_month],
+            summer_semester_day: params[:summer_semester_day],
+            summer_semester_month: params[:summer_semester_month]
+          )
+          flash[:notice] = "Changes made successfully"
         else
-            flash[:alert] = "Error updating the fields"
+          flash[:error] = "Error updating the fields, ensure that dates are in the correct order and that all fields have values."
         end
+      
+        redirect_to configuration_path
+      end
+    
+    private
 
-        redirect_to configuration_path, status: :found
+    def semester_order_valid?
+      year = Time.current.year
+      spring_date = build_date(year, params[:spring_semester_month], params[:spring_semester_day])
+      summer_date = build_date(year, params[:summer_semester_month], params[:summer_semester_day])
+      fall_date = build_date(year, params[:fall_semester_month], params[:fall_semester_day])
+    
+      if spring_date && summer_date && fall_date && spring_date < summer_date && summer_date < fall_date
+        return true
+      else
+        return false
+      end
+    end
+    
+    def build_date(year, month, day)
+      Date.new(year, month.to_i, day.to_i) rescue nil
     end
 end

@@ -31,7 +31,15 @@ adminsathvik = Professor.create(professor_id: sathvik.user_id, verified: true, a
 
 form_open_datetime = DateTime.new(2023, 11, 6, 9, 0) # Example date and time
 form_close_datetime = DateTime.new(2023, 12, 6, 17, 0) # Example date and time
-config = Config.create(min_number: 2, max_number: 10, form_open: form_open_datetime , form_close:form_close_datetime )
+fall_sem_month = 8
+spring_sem_month = 1
+summer_sem_month = 6
+fall_sem_day = 15
+spring_sem_day = 20
+summer_sem_day = 1
+
+config = Config.create(min_number: 2, max_number: 10, form_open: form_open_datetime , form_close:form_close_datetime, fall_semester_month: fall_sem_month , fall_semester_day: fall_sem_day, spring_semester_month: spring_sem_month , 
+spring_semester_day: spring_sem_day, summer_semester_month: summer_sem_month, summer_semester_day: summer_sem_day)
 
 student_user = User.create(user_id: 101, first_name: "student", last_name: "example", role: "student", email: "studentemail@tamu.edu")
 prof_user = User.create(first_name: "professor", last_name: "example", role: "professor", email: "profemail@tamu.edu")
