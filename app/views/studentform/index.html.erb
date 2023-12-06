@@ -129,7 +129,7 @@
 <body>
 	<div class="container mt-3">
       <div class="d-flex justify-content-between align-items-center">
-        <%= button_to "Logout", logout_path, { class: "btn btn-danger custom-maroon-button", data: { turbo: "false" }, method: :get } %>
+        <%= button_to "Logout", logout_path, { class: "btn btn-primary", data: { turbo: "false" }, method: :get } %>
       </div>
     </div>
 	<%= render 'shared/notification' %>
@@ -179,7 +179,7 @@
       				
       				<input type="hidden" name="parsed_resume" id="redirectResume">
       				
-      				<button type="button" id="parseButton" onclick="parseResume()"  class="btn btn-danger custom-maroon-button">Parse Resume</button>
+      				<button type="button" id="parseButton" onclick="parseResume()"  class="btn btn-primary">Parse Resume</button>
 
 					<br/><hr/>
 					<h4>Project Preferences</h4>
@@ -199,7 +199,7 @@
 					</div>
 
 					<div class="text-center mt-4">
-						<%= form.button 'Submit', class: 'btn btn-danger custom-maroon-button' %>
+						<%= form.button 'Submit', class: 'btn btn-primary' %>
 				  	</div>				  
 				<% end %>
 				<hr>

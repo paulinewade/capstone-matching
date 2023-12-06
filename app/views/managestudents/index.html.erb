@@ -1,5 +1,4 @@
 <head>
-<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
   <title>Admin Landing Page</title>
 </head>
 <body>
@@ -9,7 +8,7 @@
     <div class="row">
       <div class="col">
         <div class="card">
-          <div class="card-header">
+          <div class="card-header custom-card-header">
             <div class="row">
               <div class="col">
                 Filter by Course
@@ -21,8 +20,8 @@
               <label for="course_id">Select Course</label>
               <div class="form-group d-flex align-items-center">
                   <%= render 'shared/course_selector' %>
-                  <%= form.submit "Filter", class: "btn btn-danger custom-maroon-button mt-3 ml-2" %>
               </div>
+                <%= form.submit "Filter", class: "btn btn-primary mb-3" %>
             <% end %>
           </div>
         </div>
@@ -81,7 +80,9 @@
         </tbody>
       </table>
       <div class="d-flex justify-content-center align-items-center">
-        <%= form.button "Delete Students", class: "btn btn-danger m-2", id: "save-button" %>
+      <%= form.button "Delete Students", class: "btn btn-danger m-2", id: "save-button", onclick: "return confirm('Are you sure you want to delete the selected students?');" do %>
+        <i class="fas fa-trash-alt"></i> Delete Students
+      <% end %>
       </div>
     <% end %>
   </div  

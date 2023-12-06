@@ -16,7 +16,7 @@
 		<div class="row justify-content-center">
 			<div class="col-md-10">
 				<div class="card">
-					<div class="card-header">Filter by Project</div>
+					<div class="card-header custom-card-header">Filter by Project</div>
 					<div class="card-body">
 						<%= form_tag(viewProfProjectPreferences_path, method: :get, class: 'form-inline') do %>
 							<div class="form-group mb-2 mr-2">
@@ -32,55 +32,62 @@
 
 	<div class="container">
 		<% @projects.each do |project| %>
-			<h3 class="mt-4">Professors Preferences for <%= project.name %> (<%= project.semester %>)</h3>
-			<h4>
-				Assigned Professor and Course: 
-				<% if (course = project.course) && (prof = course.professor) %>
-					<%= "#{professor_name(course)} CSCE #{course.course_number}-#{course.section} #{course.semester}" %>
-				<% else %>
-					None
-				<% end %>
-			</h4>
+			<div class="card mb-4" style="border: none !important;">
+				<div class="card-header custom-card-header">
+				<strong><%= project.name %> (<%= project.semester %>)</strong>
+				<br>
+					<strong> Assigned Professor and Course: </strong> 
+					<% if (course = project.course) && (prof = course.professor) %>
+						<%= "#{professor_name(course)} CSCE #{course.course_number}-#{course.section} #{course.semester}" %>
+					<% else %>
+						None
+					<% end %>
+				</div>
 
-			<table class="table table-bordered mb-2">
-			<thead class="thead-dark">
-				<tr>
-					<th>Professor Name</th>
-					<th>Preference Rank</th>
-					<th>Delete</th>
-				</tr>
-			</thead>
-			<tbody>
-				<%= form_tag(update_professor_preferences_path, method: :post, class: 'form-inline') do %>
-				<%= hidden_field_tag :project_id, project.id %>
-				<% professors_preferences_for_project = @professor_preferences.where(project_id: project.id) %>
-				<% professors_preferences_for_project.each do |professor_preference| %>
-				<tr>
-					<td><%= "#{professor_preference.professor.user.first_name.capitalize} #{professor_preference.professor.user.last_name.capitalize}" %></td>
-					<td><%= professor_preference.pref %></td>
-					<td>
-						<%= check_box_tag "professor_ids[]", professor_preference.professor.id %>
-					</td>
-				</tr>
-				<% end %>
-				<tr>
-					<td colspan="3">
-					<div class="form-group mb-3">
-						<%= label_tag :course, "Assign Project to Course:" %>
-						<% if @courses_by_semester[project.semester].present? %>
-						<%= select_tag "course_id", options_for_select(@courses_by_semester[project.semester].map { |course| ["#{course.professor.user.first_name.capitalize} #{course.professor.user.last_name.capitalize} CSCE #{course.course_number}-#{course.section}-#{course.semester}", course.course_id] }, @cid), include_blank: true, class: "form-control"%>
-						<% else %>
-							<%= select_tag :course_id, options_for_select([]), class: 'form-control' %>
-						<% end %>
-					</div>
-						<br>
-						<%= submit_tag "Assign Professor", class: 'btn btn-primary mb-2', name: 'commit_type', value: 'Assign' %>
-						<%= submit_tag "Delete Selected Professors", class: 'btn btn-danger mb-2', name: 'commit_type', value: 'Delete' %>
-					</td>
-				</tr>
-				<% end %>
-			</tbody>
-			</table>
+				<table class="table table-bordered">
+				<thead class="thead-dark">
+					<tr>
+						<th>Professor Name</th>
+						<th>Preference Rank</th>
+						<th>Delete</th>
+					</tr>
+				</thead>
+				<tbody>
+					<%= form_tag(update_professor_preferences_path, method: :post, class: 'form-inline') do %>
+					<%= hidden_field_tag :project_id, project.id %>
+					<% professors_preferences_for_project = @professor_preferences.where(project_id: project.id) %>
+					<% professors_preferences_for_project.each do |professor_preference| %>
+					<tr>
+						<td><%= "#{professor_preference.professor.user.first_name.capitalize} #{professor_preference.professor.user.last_name.capitalize}" %></td>
+						<td><%= professor_preference.pref %></td>
+						<td>
+							<%= check_box_tag "professor_ids[]", professor_preference.professor.id %>
+						</td>
+					</tr>
+					<% end %>
+					<tr>
+						<td colspan="3">
+						<div class="form-group mt-4">
+							<%= label_tag :course, "Assign Project to Course:" %>
+							<% if @courses_by_semester[project.semester].present? %>
+							<%= select_tag "course_id", options_for_select(@courses_by_semester[project.semester].map { |course| ["#{course.professor.user.first_name.capitalize} #{course.professor.user.last_name.capitalize} CSCE #{course.course_number}-#{course.section}-#{course.semester}", course.course_id] }, @cid), include_blank: true, class: "form-control"%>
+							<% else %>
+								<%= select_tag :course_id, options_for_select([]), class: 'form-control' %>
+							<% end %>
+						</div>
+							<br>
+						<div class="text-center">
+							<%= submit_tag "Assign Professor", class: 'btn btn-primary m-2', name: 'commit_type', value: 'Assign' %>
+							<%= button_tag type: 'submit', name: 'commit_type', value: 'Delete', class: 'btn btn-danger m-2', onclick: 'return confirm("Are you sure you want to delete the selected professor preferences?");' do %>
+								<i class="fas fa-trash-alt"></i> Delete
+							  <% end %>							  
+						</div>
+						</td>
+					</tr>
+					<% end %>
+				</tbody>
+				</table>
+			</div>
 		<% end %>
 	</div>
 </body>
