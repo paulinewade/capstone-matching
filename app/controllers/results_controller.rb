@@ -183,7 +183,7 @@ class ResultsController < ApplicationController
           preferences.each do |preference|
             type = preference.preference_type
             if student[type] == preference.preference_val
-              row.append(preference.preference_val)
+              row.append(preference.bonus_amount)
             else
               row.append(nil)
             end
