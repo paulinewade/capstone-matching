@@ -121,4 +121,27 @@ sudo apt install python2
 # install from the aws console
 # this may be helpful: https://linux.how2shout.com/how-to-install-python-2-7-on-ubuntu-20-04-lts/
 
+# INSTRUCTIONS FOR USER
+
+
+Fork the repo https://github.com/Capstone-Matching/capstone-matching)https://github.com/Capstone-Matching/capstone-matching
+
+If applicable, uncheck "copy the main branch only"
+
+Get https link from my forked repo
+
+in the terminal screen, git clone <https link> in the target directory
+
+git checkout <preferred branch>
+
+go to the heroku deployment instructions using the URL below:
+https://github.com/Capstone-Matching/capstone-matching/blob/main/documentation/Fall2023/deploy_instructions.pdf
+OR go to my repo documentation/fall2023 folder
+
+go Google OAuth Setup and download as pdf
+
+
+
+
+
 ```
