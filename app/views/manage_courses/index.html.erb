@@ -8,7 +8,7 @@
 		<div class="row justify-content-center">
 			<div class="col-md-10">
 				<div class="card">
-					<div class="card-header">Filter by Semester</div>
+					<div class="card-header custom-card-header">Filter by Semester</div>
 					<div class="card-body">
 						<%= form_tag(manageCourses_path, method: :get, class: 'form-inline') do %>
 							<div class="form-group mb-2 mr-2">
@@ -56,7 +56,8 @@
 					</tbody>
 				</table>
 				<div class="d-flex justify-content-center align-items-center">
-				<%= form.button "Save Changes", class: "btn btn-primary m-3", id: "save-button" %>
+					<%= form.button "Save Changes", class: "btn btn-primary", id: "save-button", onclick: "return confirm('Are you sure you want to save changes?');" %>
+				</div>
 			<% end %>
 		</div>
 
@@ -86,7 +87,9 @@
 							<%= form.label :professor_id, "Professor" %>
 							<%= form.select :professor_id, options_for_select(@professors_for_select), { include_blank: 'Select a Professor' }, class: 'form-control' %>
 						</div>
-						<%= form.button "Add Course", class: "btn btn-primary m-3", id: "add-course-button" %>
+						<div class="d-flex justify-content-center align-items-center">
+							<%= form.button "Add Course", class: "btn btn-success m-3", id: "add-course-button" %>
+						</div>
 					<% end %>
 				</div>
 			</div>

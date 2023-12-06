@@ -1,7 +1,6 @@
 <html>
 <head>
   <title>Admin Landing Page</title>
-  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
   <%= render 'shared/generic_page_header' %>
@@ -53,7 +52,7 @@
         </tbody>
       </table>
       <div class="d-flex justify-content-center align-items-center">
-        <%= form.button "Save Changes", class: "btn btn-danger m-2", id: "save-button" %>
+        <%= form.button "Save Changes", class: "btn btn-primary m-2", id: "save-button",onclick: "return confirm('Are you sure you want to save changes?');"%>
       </div>
     <% end %>  
   </div>
