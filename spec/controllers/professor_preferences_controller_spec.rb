@@ -1,14 +1,13 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
-
 RSpec.describe ProfessorPreferencesController, type: :controller do
     describe '#index' do
         let(:user) { create(:user) } # You may need to adjust this based on your User model and factory
-
         before do
             # Assuming your controller requires authentication, you may need to sign in the user
             session[:user_id] = user.user_id
+            create(:config)
         end
 
         it 'assigns the correct instance variables' do

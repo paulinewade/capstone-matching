@@ -1,3 +1,43 @@
+<script>
+  $(document).ready(function () {
+    // Function to update the days based on the selected month
+    function updateDays(monthSelect, daySelect) {
+      var selectedMonth = $(monthSelect).val();
+      var daysInMonth = new Date(2023, selectedMonth, 0).getDate(); // Get the number of days in the selected month
+      var currentSelectedDay = $(daySelect).val();
+
+      // Update the days in the dropdown
+      $(daySelect).empty();
+      for (var i = 1; i <= daysInMonth; i++) {
+        $(daySelect).append($('<option>', { value: i, text: i }));
+      }
+
+      // Restore the selected day if it's still valid for the new month
+      if (currentSelectedDay <= daysInMonth) {
+        $(daySelect).val(currentSelectedDay);
+      }
+    }
+
+    // Event handlers for month dropdowns
+    $('#spring_semester_month').change(function () {
+      updateDays('#spring_semester_month', '#spring_semester_day');
+    });
+
+    $('#summer_semester_month').change(function () {
+      updateDays('#summer_semester_month', '#summer_semester_day');
+    });
+
+    $('#fall_semester_month').change(function () {
+      updateDays('#fall_semester_month', '#fall_semester_day');
+    });
+
+    // Initial update on page load
+    updateDays('#spring_semester_month', '#spring_semester_day');
+    updateDays('#summer_semester_month', '#summer_semester_day');
+    updateDays('#fall_semester_month', '#fall_semester_day');
+  });
+</script>
+
 <%= render 'shared/generic_page_header' %>
 <%= render 'shared/notification' %>
 <div class="d-flex justify-content-center align-items-center">
@@ -25,8 +65,8 @@
         <%= datetime_local_field_tag(:form_close, nil, class: "form-control", required: true, value: (config.present? ? config.form_close.in_time_zone("Central Time (US & Canada)").strftime("%Y-%m-%dT%H:%M") : Time.current.in_time_zone("Central Time (US & Canada)").strftime("%Y-%m-%dT%H:%M"))) %>
       </div>
 
-      <br>
-
+      <hr>
+      <p> Choose the minimum and maximum number of projects that you want students to be able to select.</p>
       <div class="form-group">
         <%= label_tag(:min_number, "Minimum Project Limit:") %>
         <%= number_field_tag(:min_number, nil, class: "form-control", required: true, value: config.present? ? config.min_number : 1, min: 1) %>
@@ -37,7 +77,43 @@
         <%= number_field_tag(:max_number, nil, class: "form-control", required: true, value: config.present? ? config.max_number : 10, min: 10) %>
       </div>
 
+      <hr>
+      <p> Choose the day and month that each semester starts.</p>
+      <div class="form-group">
+        <%= label_tag(:spring_semester_month, "Spring Semester Month:") %>
+        <%= select_tag(:spring_semester_month, options_for_select(Date::MONTHNAMES[1..12].each_with_index.map { |month, index| [month, index + 1] }, config.present? ? config.spring_semester_month : nil), class: "form-control") %>
+      </div>
+      <div class="form-group">
+        <%= label_tag(:spring_semester_day, "Spring Semester Day:") %>
+        <%= select_tag(:spring_semester_day, options_for_select((1..31).to_a, config.present? ? config.spring_semester_day : nil), class: "form-control") %>
+      </div>
+
       <br>
+
+      <!-- Summer Semester -->
+      <div class="form-group">
+        <%= label_tag(:summer_semester_month, "Summer Semester Month:") %>
+        <%= select_tag(:summer_semester_month, options_for_select(Date::MONTHNAMES[1..12].each_with_index.map { |month, index| [month, index + 1] }, config.present? ? config.summer_semester_month : nil), class: "form-control") %>
+      </div>
+      <div class="form-group">
+        <%= label_tag(:summer_semester_day, "Summer Semester Day:") %>
+        <%= select_tag(:summer_semester_day, options_for_select((1..31).to_a, config.present? ? config.summer_semester_day : nil), class: "form-control") %>
+      </div>
+
+      <br>
+
+      <!-- Fall Semester -->
+      <div class="form-group">
+        <%= label_tag(:fall_semester_month, "Fall Semester Month:") %>
+        <%= select_tag(:fall_semester_month, options_for_select(Date::MONTHNAMES[1..12].each_with_index.map { |month, index| [month, index + 1] }, config.present? ? config.fall_semester_month : nil), class: "form-control") %>
+      </div>
+      <div class="form-group">
+        <%= label_tag(:fall_semester_day, "Fall Semester Day:") %>
+        <%= select_tag(:fall_semester_day, options_for_select((1..31).to_a, config.present? ? config.fall_semester_day : nil), class: "form-control") %>
+      </div>
+
+      <hr>
+
       <div class="d-flex justify-content-center align-items-center">
         <%= submit_tag("Save", class: "btn btn-primary") %>
       </div>

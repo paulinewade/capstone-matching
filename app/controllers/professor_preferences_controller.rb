@@ -3,26 +3,28 @@ class ProfessorPreferencesController < ApplicationController
     before_action :authorize_admin_or_prof, unless: -> { Rails.env.development? || Rails.env.test? }
   
     def index
-
         curr_user_id = session[:user_id]
         # @curr_professor = User.find_by(user_id: curr_user_id)
 
         today = Date.today
+        config = Config.first
         current_year = today.year
-        semester = ""
-        if today.month >= 8 || today.month < 1
-          semester = "Fall #{current_year}"
-        elsif today.month >= 1 && today.month <= 5
-          semester = "Spring #{current_year}"
+
+        spring_start_date = Date.new(current_year, config.spring_semester_month, config.spring_semester_day)
+        summer_start_date = Date.new(current_year, config.summer_semester_month, config.summer_semester_day)
+        fall_start_date = Date.new(current_year, config.fall_semester_month, config.fall_semester_day)
+
+        if (config.present? && today >= spring_start_date) && (today < summer_start_date)
+          @current_semester = "Spring #{current_year}"
+        elsif (config.present? && today >= summer_start_date) && (today < fall_start_date)
+          @current_semester = "Summer #{current_year}"
+        elsif (config.present? && today >= fall_start_date) && (today <= Date.new(current_year, 12, 31))
+          @current_semester = "Fall #{current_year}"
         else
-          semester = "Summer #{current_year}"
+          @current_semester = "Fall 2023"
         end
 
-        if semester
-          @current_semester = semester
-        end
-
-        @projects = Project.where(semester: semester)
+        @projects = Project.where(semester: @current_semester)
         @preference_entities = ProfessorPreference.where(project_id: @projects.pluck(:project_id), professor_id: curr_user_id)
         # puts "[DEBUG] preference_entities: #{@preference_entities.inspect}"
         @project_ranks = {}

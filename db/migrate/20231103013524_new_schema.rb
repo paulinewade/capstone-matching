@@ -12,6 +12,12 @@ class NewSchema < ActiveRecord::Migration[7.0]
       t.integer :max_number, default: 1,  null: false
       t.datetime :form_open, null: false
       t.datetime :form_close, null: false
+      t.integer :fall_semester_month, null: false
+      t.integer :spring_semester_month, null:false
+      t.integer :summer_semester_month, null: false
+      t.integer :fall_semester_day, null: false
+      t.integer :spring_semester_day, null:false
+      t.integer :summer_semester_day, null: false
     end
 
     create_table :users, id: false, primary_key: :user_id do |t|
