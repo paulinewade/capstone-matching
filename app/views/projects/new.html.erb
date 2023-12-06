@@ -8,6 +8,7 @@
   <div class="container">
     <%= render 'shared/notification' %>
   </div>
+
   <style>
       /* Light Mode Styles */
   </style>
@@ -22,6 +23,26 @@
   <div class="row">
     <div class="col-md-8 offset-md-2">
       <h1 class="text-center mb-4">Project Registration</h1>
+
+<!--      <label>Number of Restrictions</label>-->
+      <%#= form_tag(addProjects_path, method: :get, class: 'form-inline') do %>
+<!--        <div class="form-group mb-2 mr-2">-->
+          <%#= hidden_field_tag :preference_count, @preference_count %>
+<!--          <input type="number" class="form-control rank-input"  min="0" max="100" name="restriction_count"-->
+<!--          value="<%#=@restriction_count %>">-->
+<!--        </div>-->
+        <%#= submit_tag "Add", class: 'btn btn-primary mb-2', id: "Add_Sponsor_Preference" %>
+      <%# end %>
+
+<!--      <label>Number of Preferences</label>-->
+      <%#= form_tag(addProjects_path, method: :get, class: 'form-inline') do %>
+<!--        <div class="form-group mb-2 mr-2">-->
+          <%#= hidden_field_tag :restriction_count, @restriction_count %>
+<!--          <input type="number" class="form-control rank-input"  min="0" max="100" name="preference_count"-->
+<!--                 value="<%#=@preference_count %>">-->
+<!--        </div>-->
+        <%#= submit_tag "Add", class: 'btn btn-primary mb-2' %>
+      <%# end %>
 
       <%= form_with(model: @project, url: "/addProjects", local: true) do |form| %>
         <div class="form-group mb-3">
@@ -51,14 +72,33 @@
 
         <!-- Sponsor Restrictions -->
         <div class="row">
-          <h3 class="col-8">Sponsor Restrictions</h3>
           <%#= link_to 'Add Sponsor Restriction', 'javascript:void(0)', onclick: "addFields('sponsor_restrictions', '#{j(render partial: 'sponsor_restriction_fields', locals: { f: form })}')" %>
+          <div class="row">
+            <div class="col text-left">
+              <h3 class="col-8">Sponsor Restrictions</h3>
+            </div>
+            <div class="col text-right">
+              <%= button_to '#', class: "btn btn-primary float-end hidden" do %>
+                <i class="fas fa-plus text-right"></i>
+              <% end %>
 
+            </div>
+
+          </div>
 <!--          <button type="button" class="col-4 btn-primary" onclick="addField('sponsorRestriction')">Add Sponsor Restriction</button>-->
         </div>
 
-        <div class="field form-group mb-3" id="sponsorRestrictions">
+        <label>Number of Restrictions</label>
+        <%= form_tag(addProjects_path, method: :get, class: 'form-inline') do %>
+          <div class="form-group mb-2 mr-2">
+            <%= hidden_field_tag :preference_count, @preference_count %>
+            <input type="number" class="form-control rank-input"  min="0" max="100" name="restriction_count"
+                   value="<%=@restriction_count %>">
+          </div>
+          <%= submit_tag "Add", class: 'btn btn-primary mb-2', id: "Add_Sponsor_Preference" %>
+        <% end %>
 
+        <div class="field form-group mb-3" id="sponsorRestrictions">
             <%= form.fields_for :sponsor_restrictions do |restriction_fields| %>
             <%= render partial: 'shared/sponsor_restrictions', locals: { f: restriction_fields, key: ""} %>
             <% end %>
@@ -66,8 +106,22 @@
 
         <!-- Sponsor Preferences -->
         <div class="row">
-          <h3 class="col-8">Sponsor Preferences</h3>
+          <div class="col text-left">
+            <h3 class="col-8">Sponsor Preferences</h3>
+          </div>
+          <div class="col text-right">
+
+          </div>
         </div>
+        <label>Number of Preferences</label>
+        <%= form_tag(addProjects_path, method: :get, class: 'form-inline') do %>
+          <div class="form-group mb-2 mr-2">
+            <%= hidden_field_tag :restriction_count, @restriction_count %>
+            <input type="number" class="form-control rank-input"  min="0" max="100" name="preference_count"
+                   value="<%=@preference_count %>">
+          </div>
+          <%= submit_tag "Add", class: 'btn btn-primary mb-2' %>
+        <% end %>
 
         <div class="field form-group mb-3" id="sponsorPreferences">
             <%= form.fields_for :sponsor_preferences do |preference_fields| %>
@@ -122,7 +176,6 @@
         console.log(newElement)
         container.innerHTML += newElement;
     }
-
 
 </script>
 </body>

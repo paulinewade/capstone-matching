@@ -25,14 +25,39 @@ class ProjectsController < ApplicationController
     @semesters = generate_semesters
     @project = Project.new
     @restrictions = {}
+    @restriction_count = params[:restriction_count]
+    @preference_count = params[:preference_count]
+    render_to_string =render_to_string
 
     @restrictions['gender'] = STUDENT_STATUS_CONSTANTS['gender']
     @restrictions['work_auth'] = STUDENT_STATUS_CONSTANTS['work_auth']
     @restrictions['contract_sign'] = STUDENT_STATUS_CONSTANTS['contract_sign']
     @restrictions['nationality'] = STUDENT_STATUS_CONSTANTS['nationality']
 
-    2.times {@project.sponsor_preferences.build}
-    2.times {@project.sponsor_restrictions.build}
+    if @restriction_count.present?
+      n = @restriction_count.to_i
+      (1..n).each { |i|
+        @project.sponsor_restrictions.build
+      }
+    end
+
+    if @preference_count.present?
+      n = @preference_count.to_i
+      n.times {@project.sponsor_preferences.build}
+    end
+  end
+
+  def append_sponsor
+    len = @project.sponsor_restrictions.length
+    @project.sponsor_restrictions.clear
+
+    len = len + 1
+    len.times {@project.sponsor_restrictions.build}
+    @content = ''
+    for i in 1..len do
+      @content += render_to_string(partial: 'shared/sponsor_restrictions', locals: { f: @project.sponsor_restrictions[i], key: '' })
+    end
+    render plain:@content
   end
 
   def create

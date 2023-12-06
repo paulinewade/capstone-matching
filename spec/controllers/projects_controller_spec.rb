@@ -78,8 +78,8 @@ RSpec.describe ProjectsController, type: :controller do
     it 'builds sponsor preferences and restrictions for the new project' do
       get :new
 
-      expect(assigns(:project).sponsor_preferences.length).to eq(2)
-      expect(assigns(:project).sponsor_restrictions.length).to eq(2)
+      expect(assigns(:project).sponsor_preferences.length).to eq(0)
+      expect(assigns(:project).sponsor_restrictions.length).to eq(0)
     end
   end
 
