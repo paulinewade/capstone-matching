@@ -79,6 +79,9 @@
     
     // Access the selected file
     var file = fileInput.files[0];
+
+    // Access the alert message span element
+    var alertMessage = document.getElementById('alertMessage');
     
     // Perform operations with the file, for example:
     if (file) {
@@ -105,6 +108,7 @@
         .catch(error => {
           console.error("Error extracting text:", error);
         });
+        alertMessage.innerText = "Resume parsing is complete, please proceed!";     
     }
     else {
       return '';
@@ -180,6 +184,7 @@
       				<input type="hidden" name="parsed_resume" id="redirectResume">
       				
       				<button type="button" id="parseButton" onclick="parseResume()"  class="btn btn-primary">Parse Resume</button>
+              <span id="alertMessage" style="margin-left: 10px;">No resume input or resume is not yet parsed.</span>
 
 					<br/><hr/>
 					<h4>Project Preferences</h4>
