@@ -12,7 +12,6 @@ Feature: Project Creation
     And I fill in "Sponsor" with "Sponsor Name"
     And I fill in "Description" with "This is a test project"
     And I fill in "Info url" with "https://example.com"
-    And I fill in "Bonus amount" with "30.0"
     And I press "Create Project"
     Then I should see "Project was successfully created"
     And I should be on the home page
